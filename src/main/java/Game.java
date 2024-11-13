@@ -92,8 +92,27 @@ public class Game {
                     KeyStroke swapkey = screen.readInput();
                     switch (swapkey.getKeyType()) {
                         case ArrowRight:
-                            Tile currTile = board.currentTile;
-                            board.swapTiles(currTile, board.getTile(currTile.getGridCoordinates().getX()+1, currTile.getGridCoordinates().getY()));
+                            board.swapTiles(board.currentTile, board.getTile(
+                                    board.currentTile.getGridCoordinates().getX()+1,
+                                    board.currentTile.getGridCoordinates().getY()));
+                            board.draw(screen.newTextGraphics());
+                            break;
+                        case ArrowLeft:
+                            board.swapTiles(board.currentTile, board.getTile(
+                                    board.currentTile.getGridCoordinates().getX()-1,
+                                    board.currentTile.getGridCoordinates().getY()));
+                            board.draw(screen.newTextGraphics());
+                            break;
+                        case ArrowUp:
+                            board.swapTiles(board.currentTile, board.getTile(
+                                    board.currentTile.getGridCoordinates().getX(),
+                                    board.currentTile.getGridCoordinates().getY()-1));
+                            board.draw(screen.newTextGraphics());
+                            break;
+                        case ArrowDown:
+                            board.swapTiles(board.currentTile, board.getTile(
+                                    board.currentTile.getGridCoordinates().getX(),
+                                    board.currentTile.getGridCoordinates().getY()+1));
                             board.draw(screen.newTextGraphics());
                             break;
                     }

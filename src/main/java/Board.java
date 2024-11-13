@@ -65,8 +65,12 @@ public class Board {
 
     public void swapTiles(Tile t1, Tile t2) {
         // Swaps tile t1 with tile t2
+        if (t1 == null || t2 == null) {
+            return;
+        }
         Position t1GridCoord = t1.getGridCoordinates();
         Position t2GridCoord = t2.getGridCoordinates();
+
         if (areTilesAdjacent(t1GridCoord, t2GridCoord)) {
             int t1Row = t1GridCoord.getX();
             int t1Col = t1GridCoord.getY();
