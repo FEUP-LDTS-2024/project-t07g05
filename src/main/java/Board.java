@@ -4,15 +4,16 @@ import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 
 public class Board {
-    private Tile[][] grid;
+    private final Tile[][] grid;
     private final int rows;
     private final int columns;
     private final int rowSpacing;
     private final int columnSpacing;
-    private int startX;
-    private int startY;
+    private final int startX;
+    private final int startY;
     int width;
     int height;
+    Tile currentTile;
 
     public Board(int rows, int columns, int width, int height, int rowSpacing, int columnSpacing) {
         this.rows = rows;
@@ -26,19 +27,28 @@ public class Board {
         this.startY = Math.round(height * 0.1f);
 
         initializeBoard();
+        this.currentTile = getTile(0, 0);
+        currentTile.setCursorOn(true);
     }
 
     private void initializeBoard() {
-        String[] TYPES = {"jewel", "bomb", "powerup"};
+        String[] TYPES = {"jewel", "bomb"};
         String[] COLORS = {"diamond", "ruby", "emerald", "sapphire", "amethyst"};
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < columns; col++) {
-                Position pos = new Position(startX + row * rowSpacing, startY + col * columnSpacing);
+                Position gridco = new Position(row, col);
+                Position screenpos = calculateScreenPosition(gridco);
                 String color = COLORS[(int) (Math.random() * COLORS.length)];
-                grid[row][col] = new Tile("jewel", color, pos);
+                grid[row][col] = new Tile("jewel", color, screenpos, gridco);
             }
         }
     }
+
+    private Position calculateScreenPosition(Position gridcoordinate) {
+        int row = gridcoordinate.getX();
+        int column = gridcoordinate.getY();
+        return new Position(startX + row * rowSpacing, startY + column * columnSpacing);
+    };
 
     public Tile getTile(int row, int column) {
         if (isValidPosition(row, column)) {
@@ -53,8 +63,51 @@ public class Board {
         }
     }
 
+    public void swapTiles(Tile t1, Tile t2) {
+        // Swaps tile t1 with tile t2
+        Position t1GridCoord = t1.getGridCoordinates();
+        Position t2GridCoord = t2.getGridCoordinates();
+        if (areTilesAdjacent(t1GridCoord, t2GridCoord)) {
+            int t1Row = t1GridCoord.getX();
+            int t1Col = t1GridCoord.getY();
+            int t2Row = t2GridCoord.getX();
+            int t2Col = t2GridCoord.getY();
+
+            Tile temp = getTile(t1Row, t1Col);
+            setTile(t1Row, t1Col, getTile(t2Row, t2Col));
+            setTile(t2Row, t2Col, temp);
+
+            // Updating grid coordinates and screen positions for each tile
+            t1.setGridCoordinates(t2GridCoord);
+            t2.setGridCoordinates(t1GridCoord);
+
+            Position t1ScreenPos = calculateScreenPosition(t2GridCoord);
+            Position t2ScreenPos = calculateScreenPosition(t1GridCoord);
+            t1.setScreenPosition(t1ScreenPos);
+            t2.setScreenPosition(t2ScreenPos);
+        }
+    }
+
+    private boolean areTilesAdjacent (Position pos1, Position pos2) {
+        // validate if tiles are next to each other horizontally or vertically
+        int deltaX = Math.abs(pos1.getX() - pos2.getX());
+        int deltaY = Math.abs(pos1.getY() - pos2.getY());
+
+        return (deltaX == 1 && deltaY == 0) || (deltaX == 0 && deltaY == 1);
+    }
+
     private boolean isValidPosition(int row, int column) {
         return (row >= 0 && row < rows) && (column >= 0 && column < columns);
+    }
+
+    public void moveCurrentTile(int row, int column) {
+        if (isValidPosition(row, column)) {
+            Tile prev = currentTile;
+            prev.setCursorOn(false);
+            Tile curr = getTile(row, column);
+            this.currentTile = curr;
+            curr.setCursorOn(true);
+        }
     }
 
     public void draw(TextGraphics graphics) {

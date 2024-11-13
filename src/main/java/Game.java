@@ -2,6 +2,8 @@ import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
+import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
@@ -51,7 +53,51 @@ public class Game {
 
     public void run() {
         // Starts a new game match
-        board = new Board(8, 8, (width-30), height, 3, 3);
-        draw();
+        try {
+            board = new Board(8, 10, (width - 30), height, 4, 4);
+            boolean game_loop = true;
+            while (game_loop) {
+                draw();
+                KeyStroke key = screen.readInput();
+                processKey(key);
+                if (key.getKeyType() == KeyType.EOF) {
+                    game_loop = false;
+                }
+            }
+        } catch (RuntimeException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void processKey(KeyStroke key) throws IOException {
+        switch (key.getKeyType()) {
+            case ArrowRight:
+                board.moveCurrentTile(board.currentTile.getGridCoordinates().getX()+1, board.currentTile.getGridCoordinates().getY());
+                break;
+            case ArrowLeft:
+                board.moveCurrentTile(board.currentTile.getGridCoordinates().getX()-1, board.currentTile.getGridCoordinates().getY());
+                break;
+            case ArrowUp:
+                board.moveCurrentTile(board.currentTile.getGridCoordinates().getX(), board.currentTile.getGridCoordinates().getY()-1);
+                break;
+            case ArrowDown:
+                board.moveCurrentTile(board.currentTile.getGridCoordinates().getX(), board.currentTile.getGridCoordinates().getY()+1);
+                break;
+            case Character:
+                if (key.getCharacter() == 'q') {
+                    screen.stopScreen();
+                    break;
+                }
+                if (key.getCharacter() == ' ') {
+                    KeyStroke swapkey = screen.readInput();
+                    switch (swapkey.getKeyType()) {
+                        case ArrowRight:
+                            Tile currTile = board.currentTile;
+                            board.swapTiles(currTile, board.getTile(currTile.getGridCoordinates().getX()+1, currTile.getGridCoordinates().getY()));
+                            board.draw(screen.newTextGraphics());
+                            break;
+                    }
+                }
+        }
     }
 }

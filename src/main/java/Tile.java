@@ -6,14 +6,18 @@ public class Tile {
     private String type;
     private String color;
     private String symbol;
-    private Position position;
+    private Position screenPosition;
+    private Position gridCoordinates;
+    public boolean cursorOn;
 
-    public Tile(String type, String color, Position position) {
+    public Tile(String type, String color, Position screenPosition, Position gridCoordinates) {
         // Generates a tile
         this.type = type;
         this.color = determineColor(color);
-        this.position = position;
+        this.screenPosition = screenPosition;
+        this.gridCoordinates = gridCoordinates;
         this.symbol = determineSymbol();
+        this.cursorOn = false;
     }
 
     private String determineColor(String color) {
@@ -35,9 +39,7 @@ public class Tile {
 
     private String determineSymbol() {
         switch (type) {
-            case "colorbomb":
-                return "⊛";
-            case "rowbomb":
+            case "bomb":
                 return "⊖";
             default:
                 return "◼";
@@ -52,16 +54,45 @@ public class Tile {
         return color;
     }
 
+    public void setColor(String color) {
+        this.color = color;
+    }
+
     public String getSymbol() {
         return symbol;
     }
 
-    public Position getPosition() {
-        return position;
+    public Position getScreenPosition() {
+        return screenPosition;
+    }
+
+    public void setScreenPosition(Position screenPosition) {
+        this.screenPosition = screenPosition;
+    }
+
+    public Position getGridCoordinates() {
+        return gridCoordinates;
+    }
+
+    public void setGridCoordinates(Position gridCoordinates) {
+        this.gridCoordinates = gridCoordinates;
+    }
+
+    public void setCursorOn(boolean cursorOn) {
+        this.cursorOn = cursorOn;
+    }
+
+    public boolean isCursorOn() {
+        return cursorOn;
     }
 
     public void draw(TextGraphics graphics) {
         graphics.setForegroundColor(TextColor.Factory.fromString(color));
-        graphics.putString(new TerminalPosition(this.getPosition().getX(), this.getPosition().getY()), getSymbol());
+        if (isCursorOn()) {
+            graphics.setBackgroundColor(TextColor.Factory.fromString("#FFFFFF"));
+        } else {
+            graphics.setBackgroundColor(TextColor.Factory.fromString("#2e4045"));
+        }
+        graphics.putString(new TerminalPosition(this.getScreenPosition().getX(), this.getScreenPosition().getY()), getSymbol());
     }
 }
