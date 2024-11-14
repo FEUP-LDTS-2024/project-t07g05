@@ -31,6 +31,14 @@ public class Board {
         currentTile.setCursorOn(true);
     }
 
+    public int getRows() {
+        return rows;
+    }
+
+    public int getColumns() {
+        return columns;
+    }
+
     private void initializeBoard() {
         String[] TYPES = {"jewel", "bomb"};
         String[] COLORS = {"diamond", "ruby", "emerald", "sapphire", "amethyst"};
@@ -39,7 +47,11 @@ public class Board {
                 Position gridco = new Position(row, col);
                 Position screenpos = calculateScreenPosition(gridco);
                 String color = COLORS[(int) (Math.random() * COLORS.length)];
-                grid[row][col] = new Tile("jewel", color, screenpos, gridco);
+                Tile tile = new Tile("jewel", color, screenpos, gridco);
+                if (tile == null) {
+                    System.out.println("Tile initialization failed at (" + row + "," + col + ")");
+                }
+                grid[row][col] = tile;
             }
         }
     }
@@ -64,6 +76,7 @@ public class Board {
     }
 
     public void swapTiles(Tile t1, Tile t2) {
+        System.out.println("Swapping tiles: " + t1 + " and " + t2);
         // Swaps tile t1 with tile t2
         if (t1 == null || t2 == null) {
             return;
@@ -89,6 +102,7 @@ public class Board {
             Position t2ScreenPos = calculateScreenPosition(t1GridCoord);
             t1.setScreenPosition(t1ScreenPos);
             t2.setScreenPosition(t2ScreenPos);
+            System.out.println("Tile positions before swap: t1: " + t1.getGridCoordinates() + " and t2: " + t2.getGridCoordinates());
         }
     }
 

@@ -39,6 +39,8 @@ public class Tile {
 
     private String determineSymbol() {
         switch (type) {
+            case "empty":
+                return " ";
             case "bomb":
                 return "⊖";
             default:
@@ -56,6 +58,10 @@ public class Tile {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getSymbol() {
