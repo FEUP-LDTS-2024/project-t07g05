@@ -116,6 +116,19 @@ public class BoardTest {
     }
 
 
+    @Test
+    public void testSwapTilesNonAdjacent(){
+
+        Board board = new Board(8,10,100, 40,4,4);
+
+        Tile tile1 = board.getTile(0,0);
+        Tile tile2 = board.getTile(2,2);
+
+        board.swapTiles(tile1,tile2);
+
+        Assertions.assertEquals(tile1, board.getTile(0,0), "tile1 should not have moved.");
+        Assertions.assertEquals(tile2, board.getTile(2,2), "tile2 should not have moved.");
+    }
 }
 
 
