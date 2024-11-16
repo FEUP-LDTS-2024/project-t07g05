@@ -70,6 +70,26 @@ public class BoardTest {
 
         Assertions.assertFalse(initialTile.isCursorOn(), "The cursor should be off the tile at position (" + startRow + ", " + startCol + ").");
     }
+
+    @Test
+    public void testInvalidMove(){
+
+        Board board = new Board(8,10,100, 40,4,4);
+
+        Tile initialTile = board.getTile(0,0);
+
+        board.moveCurrentTile(-1, 0); //Invalid move: row <0
+        Assertions.assertEquals(initialTile, board.currentTile, "The tile should not have moved outside the board.");
+
+        board.moveCurrentTile(0, -1); //Invalid move: col <0
+        Assertion.assertEquals(initialTile, board.currentTile, "The tile should not have moved outside the board.");
+
+        board.moveCurrentTile(8,0); //Invalid move: row >= rows
+        Assertion.assertEquals(initialTile, board.currentTile, "The tile should not have moved outside the board.");
+
+        board.moveCurrentTile(0,10); //Invalid move: col >= columns
+        Assertion.assertEquals(initialTile, board.currentTile, "The tile should not have moved outside the board.");
+    }
 }
 
 
