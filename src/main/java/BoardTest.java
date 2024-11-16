@@ -38,6 +38,38 @@ public class BoardTest {
             }
         }
     }
+
+
+    @Test
+    public void testMoveCurrentTile(){
+
+        Board board = new Board(8,10,100, 40,4,4);
+
+        //Test movement from the top-left corner (0,0)
+        testTileMovement(board, 0, 0,1,0); //Move right
+        testTileMovement(board, 1, 0,1,1); //Move down
+        testTileMovement(board, 1, 1,0,1); //Move left
+        testTileMovement(board, 0, 1,0,0); //Move up
+
+        //Test movement from a different position
+        testTileMovement(board, 7, 9, 6, 9); // Move up
+        testTileMovement(board, 6, 9, 6, 8); // Move left
+        testTileMovement(board, 6, 8, 7, 8); // Move down
+        testTileMovement(board, 7, 8, 7, 9); // Move right
+    }
+
+    private void testTileMovement(Board board, int startRow, int startCol, int endRow, int endCol){
+        Tile initialTile = board.getTile(startRow, startCol);
+        board.moveCurrentTile(endRow, endCol);
+
+        Tile newTile = board.getTile(endRow, endCol);
+
+        Assertions.assertEquals(newTile, board.currentTile, "The current tile should be moved to position (" + endRow + ", " + endCol + ").");
+
+        Assertions.assertTrue(newTile.isCursorOn(), "The cursor should be on the tile at position (" + endRow + ", " + endCol + ").");
+
+        Assertions.assertFalse(initialTile.isCursorOn(), "The cursor should be off the tile at position (" + startRow + ", " + startCol + ").");
+    }
 }
 
 
