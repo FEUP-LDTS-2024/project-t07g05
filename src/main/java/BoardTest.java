@@ -1,9 +1,18 @@
+import com.googlecode.lanterna.TerminalPosition;
+import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.TextColor;
+import com.googlecode.lanterna.graphics.TextGraphics;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+
+import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.*;
+
+
 
 
 public class BoardTest {
@@ -155,6 +164,37 @@ public class BoardTest {
         }
 
         Assertions.assertTrue(observedColors.containsAll(Arrays.asList(validColors)), "All valid colors should appear after multiple board initializations.");
+    }
+
+
+    @Test
+    public void testDraw(){
+
+        Board board = new Board(2,2,20,10,4,4);
+
+        TextGraphics mockGraphics = mock(TextGraphics.class);
+
+        Tile mockTile1 = mock(Tile.class);
+        Tile mockTile2 = mock(Tile.class);
+        Tile mockTile3 = mock(Tile.class);
+        Tile mockTile4 = mock(Tile.class);
+
+        board.setTile(0,0,mockTile1);
+        board.setTile(0,1,mockTile2);
+        board.setTile(1,0,mockTile3);
+        board.setTile(1,1,mockTile4);
+
+        board.draw(mockGraphics);
+
+        verify(mockGraphics).setBackgroundColor(TextColor.Factory.fromString("#2e3440"));
+        verify(mockGraphics).fillRectangle(any(TerminalPosition.class), any(TerminalSize.class), eq(' '));
+
+        verify(mockTile1).draw(mockGraphics);
+        verify(mockTile2).draw(mockGraphics);
+        verify(mockTile3).draw(mockGraphics);
+        verify(mockTile4).draw(mockGraphics);
+
+
     }
 }
 
