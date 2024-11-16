@@ -57,4 +57,25 @@ public class TileTest {
         Tile defaultTile = new Tile("default", "ruby", new Position(0, 0), new Position(0, 0));
         Assertions.assertEquals("◼", defaultTile.getSymbol(), "The tile symbol should be ◼ for default tiles.");
     }
+
+    @Test
+    public void testPositionUpdates(){
+
+        Position newScreenPosition = new Position(5, 5);
+
+        tile.setScreenPosition(newScreenPosition);
+        Assertions.assertEquals(newScreenPosition, tile.getScreenPosition(), "The screen position should be updated.");
+
+        Position newGridCoordinates = new Position(2, 2);
+
+        tile.setGridCoordinates(newGridCoordinates);
+        Assertions.assertEquals(newGridCoordinates, tile.getGridCoordinates(), "The grid coordinates should be updated.");
+    }
+
+    @Test
+    public void testInvalidColor() {
+
+        Tile tileWithInvalidColor = new Tile("default", "unknown", new Position(0, 0), new Position(0, 0));
+        Assertions.assertEquals("#f3fafb", tileWithInvalidColor.getColor(), "The tile color should default to #f3fafb for invalid colors.");
+    }
 }
