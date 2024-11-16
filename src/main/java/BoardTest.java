@@ -93,6 +93,29 @@ public class BoardTest {
         board.moveCurrentTile(0,10); //Invalid move: col >= columns
         Assertions.assertEquals(initialTile, board.currentTile, "The tile should not have moved outside the board.");
     }
+
+
+    @Test
+    public void testSwapTiles(){
+
+        Board board = new Board(8,10,100, 40,4,4);
+
+        Tile tile1 = board.getTile(0,0);
+        Tile tile2 = board.getTile(0,1);
+
+        Position originalPos1 = tile1.getGridCoordinates();
+        Position originalPos2 = tile2.getGridCoordinates();
+
+        board.swapTiles(tile1, tile2);
+
+        Assertions.assertEquals(originalPos2, tile1.getGridCoordinates(), "tile1 should have moved to tile2's position.");
+        Assertions.assertEquals(originalPos1, tile2.getGridCoordinates(), "tile2 should have moved to tile1's position.");
+
+        Assertions.assertEquals(tile2, board.getTile(0,0), "tile1 should now be at tile1's position.");
+        Assertions.assertEquals(tile1, board.getTile(0,1), "tile1 should now be at tile2's position.");
+    }
+
+
 }
 
 
