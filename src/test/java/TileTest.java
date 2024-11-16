@@ -32,4 +32,12 @@ public class TileTest {
     }
 
 
+    @Test
+    public void testTileInitialization(){
+        Assertions.assertNotNull(tile, "Tile should be initialized.");
+        Assertions.assertEquals("ruby", tile.getColor(), "The tile color should be ruby.");
+        Assertions.assertEquals("◼", tile.getSymbol(), "The tile should be ◼.");
+    }
+
+
 }
