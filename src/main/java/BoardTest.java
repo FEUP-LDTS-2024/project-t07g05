@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
+
 public class BoardTest {
     @Test
     public void testBoardInitialization(){
@@ -58,6 +59,7 @@ public class BoardTest {
         testTileMovement(board, 7, 8, 7, 9); // Move right
     }
 
+
     private void testTileMovement(Board board, int startRow, int startCol, int endRow, int endCol){
         Tile initialTile = board.getTile(startRow, startCol);
         board.moveCurrentTile(endRow, endCol);
@@ -71,6 +73,7 @@ public class BoardTest {
         Assertions.assertFalse(initialTile.isCursorOn(), "The cursor should be off the tile at position (" + startRow + ", " + startCol + ").");
     }
 
+
     @Test
     public void testInvalidMove(){
 
@@ -82,13 +85,13 @@ public class BoardTest {
         Assertions.assertEquals(initialTile, board.currentTile, "The tile should not have moved outside the board.");
 
         board.moveCurrentTile(0, -1); //Invalid move: col <0
-        Assertion.assertEquals(initialTile, board.currentTile, "The tile should not have moved outside the board.");
+        Assertions.assertEquals(initialTile, board.currentTile, "The tile should not have moved outside the board.");
 
         board.moveCurrentTile(8,0); //Invalid move: row >= rows
-        Assertion.assertEquals(initialTile, board.currentTile, "The tile should not have moved outside the board.");
+        Assertions.assertEquals(initialTile, board.currentTile, "The tile should not have moved outside the board.");
 
         board.moveCurrentTile(0,10); //Invalid move: col >= columns
-        Assertion.assertEquals(initialTile, board.currentTile, "The tile should not have moved outside the board.");
+        Assertions.assertEquals(initialTile, board.currentTile, "The tile should not have moved outside the board.");
     }
 }
 
