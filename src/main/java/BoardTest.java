@@ -1,6 +1,10 @@
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 
 public class BoardTest {
     @Test
@@ -20,7 +24,6 @@ public class BoardTest {
             }
         }
     }
-
 
     @Test
     public void testTileInitialization(){
@@ -128,6 +131,30 @@ public class BoardTest {
 
         Assertions.assertEquals(tile1, board.getTile(0,0), "tile1 should not have moved.");
         Assertions.assertEquals(tile2, board.getTile(2,2), "tile2 should not have moved.");
+    }
+
+    @Test
+    public void testTileColorDistribution(){
+
+        String[] validColors = {"diamond", "ruby", "emerald", "sapphire", "amethyst"};
+        Set<String> observedColors = new HashSet<>();
+
+        for (int i = 0; i < 100; i++){
+            Board board = new Board(8,10,100, 40,4,4);
+
+            for(int row = 0; row < board.getRows(); row ++){
+                for(int col = 0; col < board.getColumns(); col++){
+                    Tile tile = board.getTile(row,col);
+                    observedColors.add(tile.getColor());
+
+                }
+            }
+            if (observedColors.size() == validColors.length){
+                break;
+            }
+        }
+
+        Assertions.assertTrue(observedColors.containsAll(Arrays.asList(validColors)), "All valid colors should appear after multiple board initializations.");
     }
 }
 
