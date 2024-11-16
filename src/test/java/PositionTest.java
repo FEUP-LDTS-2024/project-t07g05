@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 public class PositionTest {
 
     @Test
-    public void testInitialization(){
+    public void testPositionInitialization(){
 
         Position position = new Position(5,10);
 
@@ -13,7 +13,16 @@ public class PositionTest {
 
     }
 
+    @Test
+    public void testSetXAndY(){
 
+        Position position = new Position(0,0);
+        position.setX(15);
+        position.setY(20);
+
+        Assertions.assertEquals(15, position.getX(), "X coordinate should be updated to 15.");
+        Assertions.assertEquals(20,position.getY(), "Y coordinate should be updated to 20.");
+    }
 
 
 

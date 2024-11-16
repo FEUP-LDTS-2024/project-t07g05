@@ -16,6 +16,7 @@ import static org.mockito.ArgumentMatchers.*;
 
 
 public class BoardTest {
+
     @Test
     public void testBoardInitialization(){
 
