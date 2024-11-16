@@ -15,6 +15,15 @@ public class Board {
     int height;
     Tile currentTile;
 
+    public int getRows(){
+        return rows;
+    }
+
+    public int getColumns(){
+        return columns;
+    }
+
+
     public Board(int rows, int columns, int width, int height, int rowSpacing, int columnSpacing) {
         this.rows = rows;
         this.columns = columns;
