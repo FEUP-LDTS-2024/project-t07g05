@@ -53,11 +53,11 @@ public class Board {
         }
     }
 
-    private Position calculateScreenPosition(Position gridcoordinate) {
+    protected Position calculateScreenPosition(Position gridcoordinate) {
         int row = gridcoordinate.getX();
         int column = gridcoordinate.getY();
         return new Position(startX + row * rowSpacing, startY + column * columnSpacing);
-    };
+    }
 
     public Tile getTile(int row, int column) {
         if (isValidPosition(row, column)) {

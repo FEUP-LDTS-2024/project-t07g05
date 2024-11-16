@@ -194,8 +194,20 @@ public class BoardTest {
         verify(mockTile3).draw(mockGraphics);
         verify(mockTile4).draw(mockGraphics);
 
-
     }
+
+
+    @Test
+    public void testScreenPositionCalculation(){
+
+        Board board = new Board(3,3,100,40,10,10);
+
+        Position pos = board.calculateScreenPosition(new Position(1,1));
+
+        Assertions.assertEquals(20, pos.getX(),"X coordinate should match expected screen position.");
+        Assertions.assertEquals(20, pos.getY(),"Y coordinate should match expected screen position.");
+    }
+
 }
 
 
