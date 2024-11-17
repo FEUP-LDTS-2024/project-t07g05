@@ -51,23 +51,35 @@ public class Game {
         }
     }
 
+
     public void run() {
-        // Starts a new game match
-        try {
-            board = new Board(8, 10, (width - 30), height, 4, 4);
-            boolean game_loop = true;
-            while (game_loop) {
-                draw();
-                KeyStroke key = screen.readInput();
-                processKey(key);
-                if (key.getKeyType() == KeyType.EOF) {
-                    game_loop = false;
+
+        Menu menu = new Menu(screen);
+        int choice = menu.show();
+
+
+        if (choice == 0) {
+            try {
+                board = new Board(8, 10, (width - 30), height, 4, 4);
+                boolean gameLoop = true;
+                while (gameLoop) {
+                    draw();
+                    KeyStroke key = screen.readInput();
+                    processKey(key);
+                    if (key.getKeyType() == KeyType.EOF) {
+                        gameLoop = false;
+                    }
                 }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-        } catch (RuntimeException | IOException e) {
-            throw new RuntimeException(e);
+        } else if (choice == 1) { //implementar mais tarde: mostrar os scores
+            System.out.println(); //score
+        } else if (choice == 2) {  // EXIT
+            exitGame();
         }
     }
+
 
     private void processKey(KeyStroke key) throws IOException {
         switch (key.getKeyType()) {
@@ -79,9 +91,6 @@ public class Game {
                 break;
             case ArrowUp:
                 board.moveCurrentTile(board.currentTile.getGridCoordinates().getX(), board.currentTile.getGridCoordinates().getY()-1);
-                break;
-            case ArrowDown:
-                board.moveCurrentTile(board.currentTile.getGridCoordinates().getX(), board.currentTile.getGridCoordinates().getY()+1);
                 break;
             case Character:
                 if (key.getCharacter() == 'q') {
@@ -119,4 +128,13 @@ public class Game {
                 }
         }
     }
+    private void exitGame() {
+        try {
+            screen.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        System.exit(0);
+    }
 }
+
