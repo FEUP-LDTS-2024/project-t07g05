@@ -1,4 +1,3 @@
-
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
@@ -17,6 +16,7 @@ import static org.mockito.ArgumentMatchers.*;
 
 
 public class BoardTest {
+
     @Test
     public void testBoardInitialization(){
 
@@ -210,5 +210,3 @@ public class BoardTest {
     }
 
 }
-
-

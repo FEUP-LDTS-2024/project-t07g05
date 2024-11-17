@@ -54,8 +54,8 @@ public class Board {
     }
 
     protected Position calculateScreenPosition(Position gridcoordinate) {
-        int row = gridcoordinate.getX();
-        int column = gridcoordinate.getY();
+        int row = gridcoordinate.getY();
+        int column = gridcoordinate.getX();
         return new Position(startX + row * rowSpacing, startY + column * columnSpacing);
     }
 
