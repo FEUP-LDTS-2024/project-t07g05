@@ -23,6 +23,7 @@ public class GameTest {
     private Board mockBoard;
     private TextGraphics mockGraphics;
 
+
     @BeforeEach
     public void setUp(){
 
@@ -40,6 +41,7 @@ public class GameTest {
 
     }
 
+
     private void injectMockDependencies(Object target, String fieldName, Object value){
         try{
             var field = target.getClass().getDeclaredField(fieldName);
@@ -51,6 +53,7 @@ public class GameTest {
         }
     }
 
+
     private KeyStroke createMockKeyStroke(KeyType keyType, Character character){
         KeyStroke mockKey = mock(KeyStroke.class);
         when(mockKey.getKeyType()).thenReturn(keyType);
@@ -60,6 +63,7 @@ public class GameTest {
         }
         return mockKey;
     }
+
 
     private void invokePrivateMethod(Object target, String methodName, Class <?>[] parameterTypes,Object... args){
         try{
@@ -92,6 +96,7 @@ public class GameTest {
         verify(mockScreen).refresh();
         verify(mockBoard).draw(mockGraphics);
     }
+
 
     @Test
     public void testProcessKeyArrowKeys() {
@@ -149,6 +154,7 @@ public class GameTest {
         verify(mockScreen, atLeastOnce()).readInput();
         verify(mockScreen).stopScreen();
     }
+
 
     @Test
     public void testRunProcessesValidInput() throws IOException{

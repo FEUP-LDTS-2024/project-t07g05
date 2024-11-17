@@ -10,7 +10,7 @@ public class PositionTest {
         Position position = new Position(5,10);
 
         Assertions.assertEquals(5, position.getX(), "X coordinate should be initialized to 5");
-        Assertions.assertEquals(10, position.getY(), "Y should be initialized to 10");
+        Assertions.assertEquals(10, position.getY(), "Y coordinate should be initialized to 10");
 
     }
 
