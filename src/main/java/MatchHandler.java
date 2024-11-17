@@ -88,10 +88,10 @@ public class MatchHandler {
                 if (tile != null && !(tile instanceof EmptyTile)) {
                     matchList.add(tile);
                 } else {
-                    System.out.println("WARNING: Encountered null tile at [" + row + ", " + col + "] during match detection.");
+                    //System.out.println("WARNING: Encountered null tile at [" + row + ", " + col + "] during match detection.");
                 }
             } else {
-                System.out.println("WARNING: Invalid tile position at [" + row + ", " + col + "] during match detection.");
+                // System.out.println("WARNING: Invalid tile position at [" + row + ", " + col + "] during match detection.");
             }
         }
     }
@@ -117,6 +117,23 @@ public class MatchHandler {
 
 
     public void shiftTilesDown() {
+        for (int col = 0; col < board.getColumns(); col++) {
+            for (int row = board.getRows()-1; row >= 0; row--) {
+                if (board.getTile(row, col) instanceof EmptyTile) {
+                    int currentRow = row;
+                    while ((currentRow > 0) && (board.getTile(currentRow-1, col) instanceof EmptyTile)) {
+                        currentRow--;
+                    }
+
+                    if (currentRow > 0) {
+                        board.swapTiles(
+                                board.getTile(row, col),
+                                board.getTile(currentRow-1, col)
+                        );
+                    }
+                }
+            }
+        }
     }
 
     public void refillBoard() {}

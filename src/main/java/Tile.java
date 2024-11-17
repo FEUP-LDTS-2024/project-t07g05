@@ -6,8 +6,8 @@ public class Tile {
     private String type;
     private String color;
     private String symbol;
-    private Position screenPosition;
-    private Position gridCoordinates;
+    private Position screenPosition; // (X, Y) being X for columns and Y for rows
+    private Position gridCoordinates; // (X, Y) being X for columns and Y for rows
     public boolean cursorOn;
 
     public Tile(String type, String color, Position screenPosition, Position gridCoordinates) {

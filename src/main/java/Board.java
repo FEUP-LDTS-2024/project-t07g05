@@ -84,7 +84,6 @@ public class Board {
         Position t1GridCoord = t1.getGridCoordinates();
         Position t2GridCoord = t2.getGridCoordinates();
 
-        if (areTilesAdjacent(t1GridCoord, t2GridCoord)) {
             int t1Row = t1GridCoord.getX();
             int t1Col = t1GridCoord.getY();
             int t2Row = t2GridCoord.getX();
@@ -103,7 +102,6 @@ public class Board {
             t1.setScreenPosition(t1ScreenPos);
             t2.setScreenPosition(t2ScreenPos);
             System.out.println("Tile positions before swap: t1: " + t1.getGridCoordinates() + " and t2: " + t2.getGridCoordinates());
-        }
     }
 
     private boolean areTilesAdjacent (Position pos1, Position pos2) {

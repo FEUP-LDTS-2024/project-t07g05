@@ -69,6 +69,7 @@ public class Game {
                 matchhandler.findMatches();
                 System.out.println(matchhandler.matches);
                 matchhandler.popMatches();
+                matchhandler.shiftTilesDown();
             }
         } catch (RuntimeException | IOException e) {
             throw new RuntimeException(e);
@@ -97,25 +98,25 @@ public class Game {
                 if (key.getCharacter() == ' ') {
                     KeyStroke swapkey = screen.readInput();
                     switch (swapkey.getKeyType()) {
-                        case ArrowRight:
+                        case ArrowUp:
                             board.swapTiles(board.currentTile, board.getTile(
                                     board.currentTile.getGridCoordinates().getX()+1,
                                     board.currentTile.getGridCoordinates().getY()));
                             board.draw(screen.newTextGraphics());
                             break;
-                        case ArrowLeft:
+                        case ArrowDown:
                             board.swapTiles(board.currentTile, board.getTile(
                                     board.currentTile.getGridCoordinates().getX()-1,
                                     board.currentTile.getGridCoordinates().getY()));
                             board.draw(screen.newTextGraphics());
                             break;
-                        case ArrowUp:
+                        case ArrowLeft:
                             board.swapTiles(board.currentTile, board.getTile(
                                     board.currentTile.getGridCoordinates().getX(),
                                     board.currentTile.getGridCoordinates().getY()-1));
                             board.draw(screen.newTextGraphics());
                             break;
-                        case ArrowDown:
+                        case ArrowRight:
                             board.swapTiles(board.currentTile, board.getTile(
                                     board.currentTile.getGridCoordinates().getX(),
                                     board.currentTile.getGridCoordinates().getY()+1));
