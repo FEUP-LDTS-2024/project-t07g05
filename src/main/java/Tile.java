@@ -46,9 +46,7 @@ public class Tile {
         }
     }
 
-    public String getType() {
-        return type;
-    }
+    public String getType() {return type;}
 
     public String getColor() {
         return color;
