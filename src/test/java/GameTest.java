@@ -56,4 +56,14 @@ public class GameTest {
     }
 
 
+    @Test
+    public void testDraw() throws IOException{
+        when(mockScreen.newTextGraphics()).thenReturn(mockGraphics);
+
+        game.draw();
+
+        verify(mockScreen).clear();
+        verify(mockScreen).refresh();
+        verify(mockBoard).draw(mockGraphics);
+    }
 }
