@@ -17,6 +17,25 @@ public class Menu {
         this.screen = screen;
     }
 
+    public void logodraw(TextGraphics graphics, int startX, int startY){
+        String[] crystalClash = new String[]{
+                "                              _             _            _                 _       " +
+                        "                             | |           | |          | |               | |      \n" ,
+                "   ___   _ __   _   _   ___  | |_    __ _  | |     ___  | |   __ _   ___  | |__    \n" ,
+                "  / __| | '__| | | | | / __| | __|  / _` | | |    / __| | |  / _` | / __| | '_ \\   \n" ,
+                " | (__  | |    | |_| | \\__ \\ | |_  | (_| | | |   | (__  | | | (_| | \\__ \\ | | | |  \n",
+                "  \\___| |_|     \\__, | |___/  \\__|  \\__,_| |_|    \\___| |_|  \\__,_| |___/ |_| |_|  \n" ,
+                "                 __/ |                                                             \n" ,
+                "                |___/                                                              \n",};
+
+        for (int i = 0; i < crystalClash.length; i++) {
+            graphics.putString(startX, startY + i, crystalClash[i]);
+
+            //usei https://patorjk.com/software/taag/#p=display&h=0&v=0&f=Big&t=crystal%20clash%20
+        }
+
+    }
+
     public int show() {
         try {
             String[] menuOptions = {"PLAY", "SCORES", "EXIT"};
@@ -24,11 +43,14 @@ public class Menu {
             TextGraphics graphics = screen.newTextGraphics();
 
             while (true) {
+
                 screen.clear();
 
 
                 graphics.setForegroundColor(TextColor.Factory.fromString("#FFA500"));
-                graphics.putString(50, 3, "CRYSTAL CLASH");
+                logodraw(graphics,17,5);
+
+
                 graphics.enableModifiers(SGR.BOLD);//negrito
 
 
@@ -55,7 +77,7 @@ public class Menu {
 
 
                 KeyStroke key = screen.readInput();
-                if (key.getKeyType() == KeyType.ArrowUp) {
+                if (key.getKeyType() == KeyType.ArrowUp){
                     selectedOption = (selectedOption == 0) ? menuOptions.length - 1 : selectedOption - 1;
                 } else if (key.getKeyType() == KeyType.ArrowDown) {
                     selectedOption = (selectedOption == menuOptions.length - 1) ? 0 : selectedOption + 1;
