@@ -47,7 +47,7 @@ public class Board {
     private Position calculateScreenPosition(Position gridcoordinate) {
         int row = gridcoordinate.getX();
         int column = gridcoordinate.getY();
-        return new Position(startX + row * rowSpacing, startY + column * columnSpacing);
+        return new Position(startX + column * columnSpacing, startY + row * rowSpacing);
     };
 
     public Tile getTile(int row, int column) {
