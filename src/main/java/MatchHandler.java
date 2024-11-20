@@ -136,5 +136,20 @@ public class MatchHandler {
         }
     }
 
-    public void refillBoard() {}
+    public void refillBoard() {
+        for (int col = 0; col < board.getColumns(); col++) {
+            for (int row = 0; row < board.getRows(); row++) {
+                if (board.getTile(row, col) instanceof EmptyTile) {
+                    Tile prev = board.getTile(row, col);
+                    Position screenpos = prev.getScreenPosition();
+                    Position gridco = prev.getGridCoordinates();
+                    String[] TYPES = {"jewel", "bomb"};
+                    String[] COLORS = {"diamond", "ruby", "emerald", "sapphire", "amethyst"};
+                    String color = COLORS[(int) (Math.random() * COLORS.length)];
+                    Tile tile = new Tile("jewel", color, screenpos, gridco);
+                    board.setTile(row, col, tile);
+                }
+            }
+        }
+    }
 }

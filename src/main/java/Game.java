@@ -70,6 +70,7 @@ public class Game {
                 System.out.println(matchhandler.matches);
                 matchhandler.popMatches();
                 matchhandler.shiftTilesDown();
+                matchhandler.refillBoard();
             }
         } catch (RuntimeException | IOException e) {
             throw new RuntimeException(e);
