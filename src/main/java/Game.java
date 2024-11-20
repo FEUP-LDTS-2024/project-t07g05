@@ -79,16 +79,20 @@ public class Game {
     private void processKey(KeyStroke key) throws IOException {
         switch (key.getKeyType()) {
             case ArrowRight:
-                board.moveCurrentTile(board.currentTile.getGridCoordinates().getX()+1, board.currentTile.getGridCoordinates().getY());
+                board.moveCurrentTile(board.currentTile.getGridCoordinates().getX(),
+                        board.currentTile.getGridCoordinates().getY() + 1);
                 break;
             case ArrowLeft:
-                board.moveCurrentTile(board.currentTile.getGridCoordinates().getX()-1, board.currentTile.getGridCoordinates().getY());
+                board.moveCurrentTile(board.currentTile.getGridCoordinates().getX(),
+                        board.currentTile.getGridCoordinates().getY() - 1);
                 break;
             case ArrowUp:
-                board.moveCurrentTile(board.currentTile.getGridCoordinates().getX(), board.currentTile.getGridCoordinates().getY()-1);
+                board.moveCurrentTile(board.currentTile.getGridCoordinates().getX() - 1,
+                        board.currentTile.getGridCoordinates().getY());
                 break;
             case ArrowDown:
-                board.moveCurrentTile(board.currentTile.getGridCoordinates().getX(), board.currentTile.getGridCoordinates().getY()+1);
+                board.moveCurrentTile(board.currentTile.getGridCoordinates().getX() + 1,
+                        board.currentTile.getGridCoordinates().getY());
                 break;
             case Character:
                 if (key.getCharacter() == 'q') {
@@ -97,33 +101,38 @@ public class Game {
                 }
                 if (key.getCharacter() == ' ') {
                     KeyStroke swapkey = screen.readInput();
-                    switch (swapkey.getKeyType()) {
-                        case ArrowUp:
-                            board.swapTiles(board.currentTile, board.getTile(
-                                    board.currentTile.getGridCoordinates().getX()+1,
-                                    board.currentTile.getGridCoordinates().getY()));
-                            board.draw(screen.newTextGraphics());
-                            break;
-                        case ArrowDown:
-                            board.swapTiles(board.currentTile, board.getTile(
-                                    board.currentTile.getGridCoordinates().getX()-1,
-                                    board.currentTile.getGridCoordinates().getY()));
-                            board.draw(screen.newTextGraphics());
-                            break;
-                        case ArrowLeft:
-                            board.swapTiles(board.currentTile, board.getTile(
-                                    board.currentTile.getGridCoordinates().getX(),
-                                    board.currentTile.getGridCoordinates().getY()-1));
-                            board.draw(screen.newTextGraphics());
-                            break;
-                        case ArrowRight:
-                            board.swapTiles(board.currentTile, board.getTile(
-                                    board.currentTile.getGridCoordinates().getX(),
-                                    board.currentTile.getGridCoordinates().getY()+1));
-                            board.draw(screen.newTextGraphics());
-                            break;
-                    }
+                    processSwapKey(swapkey);
                 }
         }
     }
+
+    private void processSwapKey(KeyStroke swapkey) throws IOException {
+        switch (swapkey.getKeyType()) {
+            case ArrowRight:
+                board.swapTiles(board.currentTile, board.getTile(
+                        board.currentTile.getGridCoordinates().getX(),
+                        board.currentTile.getGridCoordinates().getY()+1));
+                board.draw(screen.newTextGraphics());
+                break;
+            case ArrowLeft:
+                board.swapTiles(board.currentTile, board.getTile(
+                        board.currentTile.getGridCoordinates().getX(),
+                        board.currentTile.getGridCoordinates().getY()-1));
+                board.draw(screen.newTextGraphics());
+                break;
+            case ArrowUp:
+                board.swapTiles(board.currentTile, board.getTile(
+                        board.currentTile.getGridCoordinates().getX()-1,
+                        board.currentTile.getGridCoordinates().getY()));
+                board.draw(screen.newTextGraphics());
+                break;
+            case ArrowDown:
+                board.swapTiles(board.currentTile, board.getTile(
+                        board.currentTile.getGridCoordinates().getX()+1,
+                        board.currentTile.getGridCoordinates().getY()));
+                board.draw(screen.newTextGraphics());
+                break;
+        }
+    }
+
 }

@@ -88,10 +88,10 @@ public class MatchHandler {
                 if (tile != null && !(tile instanceof EmptyTile)) {
                     matchList.add(tile);
                 } else {
-                    //System.out.println("WARNING: Encountered null tile at [" + row + ", " + col + "] during match detection.");
+                    System.out.println("WARNING: Encountered null tile at [" + row + ", " + col + "] during match detection.");
                 }
             } else {
-                // System.out.println("WARNING: Invalid tile position at [" + row + ", " + col + "] during match detection.");
+                System.out.println("WARNING: Invalid tile position at [" + row + ", " + col + "] during match detection.");
             }
         }
     }

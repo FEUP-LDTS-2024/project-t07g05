@@ -15,6 +15,7 @@ public class Board {
     int height;
     Tile currentTile;
 
+
     public Board(int rows, int columns, int width, int height, int rowSpacing, int columnSpacing) {
         this.rows = rows;
         this.columns = columns;
@@ -56,12 +57,12 @@ public class Board {
         }
     }
 
-    private Position calculateScreenPosition(Position gridcoordinate) {
+    protected Position calculateScreenPosition(Position gridcoordinate) {
         int row = gridcoordinate.getX();
         int column = gridcoordinate.getY();
-        return new Position(startX + row * rowSpacing, startY + column * columnSpacing);
-    };
-
+        return new Position(startX + column * columnSpacing, startY + row * rowSpacing);
+    }
+  
     public Tile getTile(int row, int column) {
         if (isValidPosition(row, column)) {
             return grid[row][column];
