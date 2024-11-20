@@ -56,13 +56,33 @@ public class Menu {
 
                 for (int i = 0; i < menuOptions.length; i++) {
                     if (i == selectedOption) {
-                        graphics.setForegroundColor(TextColor.Factory.fromString("#00FFFF"));
-                        graphics.drawLine(40, 18, 70, 18, '*');
-                        graphics.drawLine(40, 24, 70, 24, '*');
-                        graphics.drawLine(40, 24, 40, 18, '*');
-                        graphics.drawLine(70, 24, 70, 18, '*');
-                        graphics.enableModifiers(SGR.BLINK);//pisca
 
+                        graphics.setForegroundColor(TextColor.Factory.fromString("#FFA500"));
+                        graphics.drawLine(40, 17, 70, 17, '*'); //linha de cima
+                        graphics.drawLine(40, 18, 70, 18, '*');//2linha de
+
+
+                        graphics.drawLine(40, 24, 70, 24, '*'); //2linha de baixo
+                        graphics.drawLine(41, 25, 69, 25, '*');
+                        //linha de baixo
+
+                        graphics.drawLine(40, 24, 40, 18, '*');//linha da esquerda
+                        graphics.drawLine(39, 24, 39, 18, '*');//2linda da esquerda
+                        graphics.drawLine(38, 23, 38, 19, '*');
+                        graphics.drawLine(37, 22, 37, 20, '*');
+                        graphics.drawLine(36, 21, 36, 21, '*');
+
+                        graphics.drawLine(70, 24, 70, 18, '*');//linhas da direita
+                        graphics.drawLine(71, 24, 71, 18, '*');
+                        graphics.drawLine(72, 23, 72, 19, '*');
+                        graphics.drawLine(73, 22, 73, 20, '*');
+                        graphics.drawLine(74, 21, 74, 21, '*');
+
+
+
+
+                        graphics.enableModifiers(SGR.BLINK);//pisca
+                        graphics.setForegroundColor(TextColor.Factory.fromString("#00FFFF"));
                         graphics.putString(50, 20 + i, "> " + menuOptions[i]);
 
                         graphics.disableModifiers(SGR.BLINK);//paradepiscar
