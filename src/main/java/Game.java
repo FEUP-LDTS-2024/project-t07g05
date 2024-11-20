@@ -14,6 +14,7 @@ import java.io.IOException;
 public class Game {
     Screen screen;
     Board board;
+    MatchHandler matchhandler;
     private final int width;
     private final int height;
 
@@ -54,7 +55,9 @@ public class Game {
     public void run() {
         // Starts a new game match
         try {
-            board = new Board(8, 10, (width - 30), height, 4, 4);
+            board = new Board(8, 8, (width - 30), height, 4, 4);
+            matchhandler = new MatchHandler(board);
+
             boolean game_loop = true;
             while (game_loop) {
                 draw();
@@ -63,6 +66,11 @@ public class Game {
                 if (key.getKeyType() == KeyType.EOF) {
                     game_loop = false;
                 }
+                matchhandler.findMatches();
+                System.out.println(matchhandler.matches);
+                matchhandler.popMatches();
+                matchhandler.shiftTilesDown();
+                matchhandler.refillBoard();
             }
         } catch (RuntimeException | IOException e) {
             throw new RuntimeException(e);
@@ -129,4 +137,3 @@ public class Game {
     }
 
 }
-
