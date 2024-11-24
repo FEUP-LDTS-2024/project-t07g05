@@ -17,7 +17,7 @@ import model.Tile;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-public class LanternaGUI implements GUI {
+public class LanternaGUI implements GUI, TextGraphics {
     private final Screen screen;
 
     public LanternaGUI(Screen screen) {

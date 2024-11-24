@@ -1,38 +1,59 @@
 package viewer;
 
+import model.Board;
+import model.Tile;
 
-import com.googlecode.lanterna.screen.Screen;
-import com.googlecode.lanterna.terminal.Terminal;
-import org.junit.jupiter.api.Test;
+import com.googlecode.lanterna.TerminalPosition;
+import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.screen.ScreenWriter;
-import com.googlecode.lanterna.graphics.TextGraphics;
 
-import java.io.IOException;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import gui.LanternaGUI;
 import static org.mockito.Mockito.*;
 
-public class BoardViewerTest {
+class BoardViewerTest {
+    private Board mockBoard;
+    private BoardViewer boardViewer;
+    private LanternaGUI mockGUI;
+
+    @BeforeEach
+    void setUp() {
+        mockBoard = mock(Board.class);
+        mockGUI = mock(LanternaGUI.class);
+        boardViewer = new BoardViewer(mockBoard);
+    }
 
     @Test
-    void draw() throws IOException {
-        Board board = mock(Board.class);
-        BoardViwer boardViwer = new BoardViewer(board);
-        Terminal terminal = mock(Terminal.class);
-        Screen screen = mock(Screen.class);
-        ScreenWriter screenWriter = mock(ScreenWriter.class);
-        TextGraphics textGraphics = mock(TextGraphics.class);
+    void testDraw(){
+        int width = 10;
+        int height = 5;
 
-        when(terminal.newScreen()).thenReturn(screen);
-        when(screen.newTextGraphics()).thenReturn(textGraphics);
-        when(board.getGrid()).thenReturn(new Tile[][]);{{mock(Tile.class);}});
-        when(board.getW()).thenReturn(1);
-        when(board.getH()).thenReturn(1);
+        when(mockBoard.getWidth()).thenReturn(width);
+        when(mockBoard.getHeight()).thenReturn(height);
 
-        boardViwer.draw(terminal);
+        Tile[][] grid = new Tile[2][2];
+        Tile mockTile1 = mock(Tile.class);
+        Tile mockTile2 = mock(Tile.class);
+        grid[0][0] = mockTile1;
+        grid[0][1] = mockTile2;
+        when(mockBoard.getGrid()).thenReturn(grid);
 
-        verify(screen).newTextGraphics();
-        verify(textGraphics).setBackgroundColor(TextColor.Factory.fromString("#2e3440");
-        verify(textGraphics).fillRectangle(any(), any());
-        verify(screenWriter, times(1)).draw(textGraphics);
+        boardViewer.draw(mockGUI);
+
+        verify(mockGUI).setBackgroundColor(TextColor.Factory.fromString("#2e3440"));
+        verify(mockGUI).fillRectangle(new TerminalPosition(0,0), new TerminalSize(width, height), ' ');
+
+        verify(mockTile1, atLeastOnce());
+        verify(mockTile2, atLeastOnce());
+
+        for(Tile[] row: grid){
+            for(Tile cell: row){
+                verify(cell, atLeastOnce());
+            }
+        }
     }
 }
+
