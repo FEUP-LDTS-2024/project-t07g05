@@ -3,74 +3,63 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
-import com.googlecode.lanterna.TerminalPosition;
-import com.googlecode.lanterna.graphics.TextGraphics;
-import com.googlecode.lanterna.TextColor;
+import controller.GameController;
 import model.Board;
 import model.MatchHandler;
-import viewer.BoardViewer;
-import controller.BoardController;
+import viewer.GameViewer;
+
+import java.io.IOException;
 
 
 public class Game {
     Screen screen;
-    private final int width;
-    private final int height;
-    Board boardmodel;
-    BoardViewer boardviewer;
-    BoardController boardcontroller;
-    MatchHandler matchhandler;
+    GameViewer gameViewer;
+    GameController gameController;
+    MatchHandler matchHandler;
 
-    public Game() {
+    public Game(Screen screen, GameViewer gameViewer, GameController gameController, MatchHandler matchHandler) {
         try {
-            this.width = 120;
-            this.height = 40;
+            this.screen = screen;
+            this.gameViewer = gameViewer;
+            this.gameController = gameController;
+            this.matchHandler = matchHandler;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static Screen setScreen(int width, int height) {
+        try {
             TerminalSize terminalSize = new TerminalSize(width, height);
             DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory()
                     .setInitialTerminalSize(terminalSize);
             Terminal terminal = terminalFactory.createTerminal();
-            this.screen = new TerminalScreen(terminal);
+            Screen screen = new TerminalScreen(terminal);
             screen.setCursorPosition(null);
             screen.startScreen();
             screen.doResizeIfNecessary();
+            return screen;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void main(String[] args) {
-        new Game().start();
+    public static void main(String[] args) throws IOException {
+        int width = 120; int height = 40;
+        Screen screen = setScreen(width, height);
+        Board board = new Board(8, 8, (width-30), height, 4, 4);
+        GameViewer gameViewer = new GameViewer(board);
+        gameViewer.setScreen(screen);
+        GameController gameController = new GameController(board);
+        MatchHandler matchHandler = new MatchHandler(board);
+
+        new Game(screen, gameViewer, gameController, matchHandler).start();
     }
 
-    // TODO: Move it to GameViewer
-    public void drawGameBackground() {
-        TextGraphics graphics = screen.newTextGraphics();
-        graphics.setBackgroundColor(TextColor.Factory.fromString("#2e4045"));
-        graphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(this.width, this.height), ' ');
-    }
-
-    public void draw() {
+    private void start() throws IOException {
         try {
-            screen.clear();
-            drawGameBackground();
-            boardviewer.draw(screen.newTextGraphics());
-            screen.refresh();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void initializeLayers() {
-        boardmodel = new Board(8, 8, width-30, height, 4, 4);
-        boardviewer = new BoardViewer(boardmodel);
-        boardcontroller = new BoardController(boardmodel);
-        matchhandler = new MatchHandler(boardmodel);
-    }
-
-    private void start() {
-        try {
-            initializeLayers();
-            draw();
+            gameController.step();
+            // TODO: Create GameController to handle user inputs and key processing
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
