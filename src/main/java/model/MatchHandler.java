@@ -1,3 +1,5 @@
+package model;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -96,10 +98,6 @@ public class MatchHandler {
         }
     }
 
-
-
-
-
     public void popMatches() {
         Set<Tile> toRemove = new HashSet<>();
 
@@ -112,44 +110,6 @@ public class MatchHandler {
             }
 
             matches.clear();
-        }
-    }
-
-
-    public void shiftTilesDown() {
-        for (int col = 0; col < board.getColumns(); col++) {
-            for (int row = board.getRows()-1; row >= 0; row--) {
-                if (board.getTile(row, col) instanceof EmptyTile) {
-                    int currentRow = row;
-                    while ((currentRow > 0) && (board.getTile(currentRow-1, col) instanceof EmptyTile)) {
-                        currentRow--;
-                    }
-
-                    if (currentRow > 0) {
-                        board.swapTiles(
-                                board.getTile(row, col),
-                                board.getTile(currentRow-1, col)
-                        );
-                    }
-                }
-            }
-        }
-    }
-
-    public void refillBoard() {
-        for (int col = 0; col < board.getColumns(); col++) {
-            for (int row = 0; row < board.getRows(); row++) {
-                if (board.getTile(row, col) instanceof EmptyTile) {
-                    Tile prev = board.getTile(row, col);
-                    Position screenpos = prev.getScreenPosition();
-                    Position gridco = prev.getGridCoordinates();
-                    String[] TYPES = {"jewel", "bomb"};
-                    String[] COLORS = {"diamond", "ruby", "emerald", "sapphire", "amethyst"};
-                    String color = COLORS[(int) (Math.random() * COLORS.length)];
-                    Tile tile = new Tile("jewel", color, screenpos, gridco);
-                    board.setTile(row, col, tile);
-                }
-            }
         }
     }
 }

@@ -1,6 +1,4 @@
-import com.googlecode.lanterna.TerminalPosition;
-import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.graphics.TextGraphics;
+package model;
 
 public class Tile {
     private String type;
@@ -20,6 +18,7 @@ public class Tile {
         this.cursorOn = false;
     }
 
+    // TODO: Refactor it on Factory pattern
     private String determineColor(String color) {
         switch (color) {
             case "diamond":
@@ -37,6 +36,7 @@ public class Tile {
         }
     }
 
+    // TODO: Refactor it on Factory pattern
     private String determineSymbol() {
         switch (type) {
             case "empty":
@@ -52,6 +52,10 @@ public class Tile {
         return type;
     }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getColor() {
         return color;
     }
@@ -60,16 +64,16 @@ public class Tile {
         this.color = color;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String getSymbol() {
         return symbol;
     }
 
     public Position getScreenPosition() {
         return screenPosition;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     public void setScreenPosition(Position screenPosition) {
@@ -84,21 +88,11 @@ public class Tile {
         this.gridCoordinates = gridCoordinates;
     }
 
-    public void setCursorOn(boolean cursorOn) {
-        this.cursorOn = cursorOn;
-    }
-
     public boolean isCursorOn() {
         return cursorOn;
     }
 
-    public void draw(TextGraphics graphics) {
-        graphics.setForegroundColor(TextColor.Factory.fromString(color));
-        if (isCursorOn()) {
-            graphics.setBackgroundColor(TextColor.Factory.fromString("#FFFFFF"));
-        } else {
-            graphics.setBackgroundColor(TextColor.Factory.fromString("#2e4045"));
-        }
-        graphics.putString(new TerminalPosition(this.getScreenPosition().getX(), this.getScreenPosition().getY()), getSymbol());
+    public void setCursorOn(boolean cursorOn) {
+        this.cursorOn = cursorOn;
     }
 }

@@ -1,3 +1,4 @@
+import model.Position;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -47,7 +48,7 @@ public class PositionTest {
     public void testEqualsNull() {
 
         Position position = new Position(5, 10);
-        Assertions.assertNotEquals(position, null, "Position should not be equal to null.");
+        Assertions.assertNotEquals(position, null, "model.Position should not be equal to null.");
     }
 
 
@@ -55,8 +56,8 @@ public class PositionTest {
     public void testEqualsDifferentClass() {
 
         Position position = new Position(5, 10);
-        String otherObject = "Not a Position";
-        Assertions.assertNotEquals(position, otherObject, "Position should not be equal to an object of a different class.");
+        String otherObject = "Not a model.Position";
+        Assertions.assertNotEquals(position, otherObject, "model.Position should not be equal to an object of a different class.");
     }
 
 }
