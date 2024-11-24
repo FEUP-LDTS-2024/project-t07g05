@@ -8,6 +8,7 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
+import gui.LanternaGUI;
 import model.Board;
 
 public class GameViewer extends Viewer<Board> {
@@ -25,19 +26,14 @@ public class GameViewer extends Viewer<Board> {
         this.screen = screen;
     }
 
-    private void drawGameBackground() {
-        TextGraphics graphics = screen.newTextGraphics();
-        graphics.setBackgroundColor(TextColor.Factory.fromString("#2e4045"));
-        graphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(this.width, this.height), ' ');
-    }
 
     @Override
-    public void draw(TextGraphics graphics) {
+    public void draw(LanternaGUI gui) {
         try {
-            screen.clear();
-            drawGameBackground();
-            boardViewer.draw(graphics);
-            screen.refresh();
+            gui.clear();
+            gui.drawGameBackground(width, height);
+            boardViewer.draw(gui);
+            gui.refresh();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

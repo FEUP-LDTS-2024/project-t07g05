@@ -4,6 +4,7 @@ import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
+import gui.LanternaGUI;
 import model.Board;
 import model.Tile;
 
@@ -14,17 +15,14 @@ public class BoardViewer extends Viewer<Board> {
     }
 
     @Override
-    public void draw(TextGraphics graphics) {
+    public void draw(LanternaGUI gui) {
         Board model = getModel();
-
-        graphics.setBackgroundColor(TextColor.Factory.fromString("#2e3440"));
-        graphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(model.getWidth(), model.getHeight()), ' ');
+        gui.drawBoard(model);
 
         // Fill the board with tiles
         for (Tile[] row : model.getGrid()) {
             for (Tile cell : row) {
-                TileViewer tileViewer = new TileViewer(cell);
-                tileViewer.draw(graphics);
+                gui.drawTile(cell);
             }
         }
     }

@@ -1,14 +1,21 @@
 package gui;
 
+import model.Board;
 import model.Position;
+import model.Tile;
+
 import java.io.IOException;
 
 public interface GUI {
     ACTION getNextAction() throws IOException;
 
-    void drawText(Position position, String text, String color);
+    void drawTile(Tile tile);
 
-    void drawCharacter(int x, int y, char c, String color);
+    void drawBoard(Board board);
+
+    void drawGameBackground(int width, int height);
+
+    void drawText(Position position, String text, String color);
 
     void clear();
 
@@ -16,5 +23,5 @@ public interface GUI {
 
     void close() throws IOException;
 
-    enum ACTION {UP, RIGHT, DOWN, LEFT, QUIT}
+    enum ACTION {UP, RIGHT, DOWN, LEFT, QUIT, SELECT_TILE, NONE}
 }

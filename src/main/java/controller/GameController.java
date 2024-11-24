@@ -16,13 +16,8 @@ public class GameController extends Controller<Board> {
         this.gameViewer = new GameViewer(board);
     }
 
-    private void processUserInput(KeyStroke key) {
-
-    }
-
     @Override
     public void step() throws IOException {
-        gameViewer.draw(screen.newTextGraphics());
-        KeyStroke key = screen.readInput();
+
     };
 }
