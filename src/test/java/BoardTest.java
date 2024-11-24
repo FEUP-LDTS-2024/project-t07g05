@@ -2,7 +2,7 @@ import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
-import model.Position;
+import com.ldts.crystalclash.model.Position;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 

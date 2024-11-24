@@ -5,7 +5,8 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 
-import model.Position;
+import com.ldts.crystalclash.Game;
+import com.ldts.crystalclash.model.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

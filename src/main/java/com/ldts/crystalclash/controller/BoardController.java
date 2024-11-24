@@ -1,13 +1,14 @@
-package controller;
+package com.ldts.crystalclash.controller;
 
-import model.Board;
-import model.EmptyTile;
-import model.Position;
-import model.Tile;
+import com.ldts.crystalclash.Game;
+import com.ldts.crystalclash.gui.GUI;
+import com.ldts.crystalclash.model.*;
 
 import java.io.IOException;
 
 public class BoardController extends GameController {
+    TileMatcher tileMatcher;
+
     public BoardController(Board board) {
         super(board);
     }
@@ -90,7 +91,25 @@ public class BoardController extends GameController {
     }
 
     @Override
-    public void step() throws IOException {
-
+    public void step(Game game, GUI.ACTION action) throws IOException {
+        Board board = getModel();
+        switch (action) {
+            case GUI.ACTION.UP:
+                moveCurrentTile(board.getCurrentTile().getGridCoordinates().getX() - 1,
+                        board.getCurrentTile().getGridCoordinates().getY());
+                break;
+            case GUI.ACTION.RIGHT:
+                moveCurrentTile(board.getCurrentTile().getGridCoordinates().getX(),
+                        board.getCurrentTile().getGridCoordinates().getY() + 1);
+                break;
+            case GUI.ACTION.DOWN:
+                moveCurrentTile(board.getCurrentTile().getGridCoordinates().getX() + 1,
+                        board.getCurrentTile().getGridCoordinates().getY());
+                break;
+            case GUI.ACTION.LEFT:
+                moveCurrentTile(board.getCurrentTile().getGridCoordinates().getX(),
+                        board.getCurrentTile().getGridCoordinates().getY() - 1);
+                break;
+        }
     }
 }

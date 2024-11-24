@@ -1,10 +1,7 @@
-package viewer;
+package com.ldts.crystalclash.viewer;
 
-import com.googlecode.lanterna.TerminalPosition;
-import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.graphics.TextGraphics;
-import gui.LanternaGUI;
-import model.Tile;
+import com.ldts.crystalclash.gui.LanternaGUI;
+import com.ldts.crystalclash.model.Tile;
 
 public class TileViewer extends Viewer<Tile> {
     public TileViewer(Tile model) {

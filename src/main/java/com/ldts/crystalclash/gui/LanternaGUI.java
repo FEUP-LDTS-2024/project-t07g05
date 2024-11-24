@@ -1,4 +1,4 @@
-package gui;
+package com.ldts.crystalclash.gui;
 
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
@@ -10,9 +10,9 @@ import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
-import model.Board;
-import model.Position;
-import model.Tile;
+import com.ldts.crystalclash.model.Board;
+import com.ldts.crystalclash.model.Position;
+import com.ldts.crystalclash.model.Tile;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -48,7 +48,7 @@ public class LanternaGUI implements GUI {
     }
 
     public ACTION getNextAction() throws IOException {
-        KeyStroke keyStroke = screen.pollInput();
+        KeyStroke keyStroke = screen.readInput();
         if (keyStroke == null) return ACTION.NONE;
 
         if (keyStroke.getKeyType() == KeyType.EOF) return ACTION.QUIT;

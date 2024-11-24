@@ -1,4 +1,4 @@
-package model;
+package com.ldts.crystalclash.model;
 
 public class Tile {
     private String type;
