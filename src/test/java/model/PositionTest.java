@@ -1,4 +1,9 @@
+<<<<<<< HEAD:src/test/java/PositionTest.java
 import model.Position;
+=======
+package model;
+
+>>>>>>> cfabf58 (Made changes to the structure):src/test/java/model/PositionTest.java
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

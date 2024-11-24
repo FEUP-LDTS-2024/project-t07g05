@@ -1,4 +1,9 @@
+<<<<<<< HEAD:src/test/java/TileTest.java
 import model.Position;
+=======
+package model;
+
+>>>>>>> cfabf58 (Made changes to the structure):src/test/java/model/TileTest.java
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

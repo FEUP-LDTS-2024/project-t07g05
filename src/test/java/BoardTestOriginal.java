@@ -13,7 +13,11 @@ import java.util.Set;
 import static org.mockito.Mockito.*;
 
 
+<<<<<<< HEAD:src/test/java/BoardTest.java
 public class BoardTest {
+=======
+public class BoardTestOriginal {
+>>>>>>> cfabf58 (Made changes to the structure):src/test/java/BoardTestOriginal.java
 
     @Test
     public void testBoardInitialization(){
