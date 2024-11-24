@@ -94,9 +94,8 @@ public class Menu {
                 }
 
                 screen.refresh();
-
-
                 KeyStroke key = screen.readInput();
+
                 if (key.getKeyType() == KeyType.ArrowUp){
                     selectedOption = (selectedOption == 0) ? menuOptions.length - 1 : selectedOption - 1;
                 } else if (key.getKeyType() == KeyType.ArrowDown) {

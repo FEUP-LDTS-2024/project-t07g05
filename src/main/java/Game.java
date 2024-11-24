@@ -53,30 +53,33 @@ public class Game {
 
 
     public void run() {
+        Menu menu = new Menu(screen); // Instancia o menu
+        boolean gameLoop = true;
+        while (gameLoop) {
+            int choice = menu.show();
 
-        Menu menu = new Menu(screen);
-        int choice = menu.show();
-
-
-        if (choice == 0) {
-            try {
-                board = new Board(8, 10, (width - 30), height, 4, 4);
-                boolean gameLoop = true;
-                while (gameLoop) {
-                    draw();
-                    KeyStroke key = screen.readInput();
-                    processKey(key);
-                    if (key.getKeyType() == KeyType.EOF) {
-                        gameLoop = false;
+            if (choice == 0) {  // Opção PLAY
+                try {
+                    board = new Board(8, 10, (width - 30), height, 4, 4);
+                    boolean gameInProgress = true;
+                    while (gameInProgress) {
+                        draw();
+                        KeyStroke key = screen.readInput();
+                        processKey(key);
+                        if (key.getKeyType() == KeyType.EOF) {
+                            gameInProgress = false;  // Finaliza o jogo
+                        }
                     }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            } else if (choice == 1) {  // Opção SCORES
+                ScoresScreen scoresScreen = new ScoresScreen(screen);
+                scoresScreen.showScores();  // Exibe os scores
+            } else if (choice == 2) {  // Opção EXIT
+                exitGame();
+                gameLoop = false;  // Finaliza o loop e o jogo
             }
-        } else if (choice == 1) { //implementar mais tarde: mostrar os scores
-            System.out.println(); //score
-        } else if (choice == 2) {  // EXIT
-            exitGame();
         }
     }
 
