@@ -7,11 +7,11 @@ import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 
+import gui.LanternaGUI;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import gui.LanternaGUI;
 import static org.mockito.Mockito.*;
 
 class BoardViewerTest {
@@ -27,7 +27,7 @@ class BoardViewerTest {
     }
 
     @Test
-    void testDraw(){
+    void testDraw() {
         int width = 10;
         int height = 5;
 
@@ -44,16 +44,17 @@ class BoardViewerTest {
         boardViewer.draw(mockGUI);
 
         verify(mockGUI).setBackgroundColor(TextColor.Factory.fromString("#2e3440"));
-        verify(mockGUI).fillRectangle(new TerminalPosition(0,0), new TerminalSize(width, height), ' ');
+        verify(mockGUI).fillRectangle(new TerminalPosition(0, 0), new TerminalSize(width, height), ' ');
 
         verify(mockTile1, atLeastOnce());
         verify(mockTile2, atLeastOnce());
 
-        for(Tile[] row: grid){
-            for(Tile cell: row){
+        for (Tile[] row : grid) {
+            for (Tile cell : row) {
                 verify(cell, atLeastOnce());
             }
         }
     }
 }
+
 
