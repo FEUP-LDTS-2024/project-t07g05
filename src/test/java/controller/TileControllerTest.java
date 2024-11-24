@@ -1,17 +1,15 @@
 package controller;
 
 import model.Board;
-
-
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 import org.mockito.Mockito;
-
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class TileControllerTest {
+
     private TileController tileController;
 
     @BeforeEach
@@ -23,6 +21,6 @@ public class TileControllerTest {
     @Test
     void testStepDoesNotThrowException() {
         assertDoesNotThrow(() -> tileController.step());
-
     }
+
 }
