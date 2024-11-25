@@ -1,4 +1,7 @@
-package controller;
+package com.ldts.crystalclash.controller;
+
+import com.ldts.crystalclash.Game;
+import com.ldts.crystalclash.gui.GUI;
 
 import java.io.IOException;
 
@@ -13,5 +16,5 @@ public abstract class Controller<T> {
         return model;
     }
 
-    public abstract void step() throws IOException;
+    public abstract void step(Game game, GUI.ACTION action) throws IOException;
 }

@@ -1,4 +1,4 @@
-package model;
+package com.ldts.crystalclash.model;
 
 public class EmptyTile extends Tile {
     public EmptyTile(Position screenPosition, Position gridCoordinates) {

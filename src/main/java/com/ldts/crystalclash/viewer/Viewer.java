@@ -1,7 +1,6 @@
-package viewer;
+package com.ldts.crystalclash.viewer;
 
-import com.googlecode.lanterna.graphics.TextGraphics;
-import gui.LanternaGUI;
+import com.ldts.crystalclash.gui.LanternaGUI;
 
 public abstract class Viewer<T> {
     private final T model;

@@ -1,15 +1,15 @@
-package model;
+package com.ldts.crystalclash.model;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class MatchHandler {
+public class TileMatcher {
     private final Board board;
     public List<Tile> matches;
 
-    public MatchHandler(Board board) {
+    public TileMatcher(Board board) {
         this.board = board;
         this.matches = new ArrayList<>();
     }

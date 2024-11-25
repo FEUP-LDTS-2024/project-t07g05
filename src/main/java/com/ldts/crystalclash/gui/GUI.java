@@ -1,8 +1,8 @@
-package gui;
+package com.ldts.crystalclash.gui;
 
-import model.Board;
-import model.Position;
-import model.Tile;
+import com.ldts.crystalclash.model.Board;
+import com.ldts.crystalclash.model.Position;
+import com.ldts.crystalclash.model.Tile;
 
 import java.io.IOException;
 

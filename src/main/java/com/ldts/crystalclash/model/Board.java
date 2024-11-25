@@ -1,4 +1,4 @@
-package model;
+package com.ldts.crystalclash.model;
 
 public class Board {
     private final Tile[][] grid;
@@ -83,6 +83,30 @@ public class Board {
 
     public void setCurrentTile(Tile currentTile) {
         this.currentTile = currentTile;
+    }
+
+    public Tile getTileToTheRight(Tile tile) {
+        Position gridco = tile.getGridCoordinates();
+        int row = gridco.getX(); int col = gridco.getY();
+        return getTile(row, col+1);
+    }
+
+    public Tile getTileToTheLeft(Tile tile) {
+        Position gridco = tile.getGridCoordinates();
+        int row = gridco.getX(); int col = gridco.getY();
+        return getTile(row, col-1);
+    }
+
+    public Tile getTileOnTop(Tile tile) {
+        Position gridco = tile.getGridCoordinates();
+        int row = gridco.getX(); int col = gridco.getY();
+        return getTile(row+1, col);
+    }
+
+    public Tile getTileOnBottom(Tile tile) {
+        Position gridco = tile.getGridCoordinates();
+        int row = gridco.getX(); int col = gridco.getY();
+        return getTile(row-1, col);
     }
 
     public boolean isValidPosition(int row, int column) {
