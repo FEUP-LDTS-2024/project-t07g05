@@ -2,6 +2,7 @@ package controller;
 
 import com.ldts.crystalclash.Game;
 import com.ldts.crystalclash.controller.BoardController;
+import com.ldts.crystalclash.controller.GameController;
 import com.ldts.crystalclash.gui.GUI;
 import com.ldts.crystalclash.model.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -84,14 +85,36 @@ public class BoardControllerTest {
 
     }
 
+
     @Test
     void testStep() throws IOException {
-        Tile t = mock(Tile.class);
-        when(board.getCurrentTile()).thenReturn(t);
-        when(t.getGridCoordinates()).thenReturn(new Position(1,1));
+        Tile currentTile = mock(Tile.class);
+        Tile targetTile = mock(Tile.class);
+        Position currentPosition = mock(Position.class);
+        Position targetPosition = mock(Position.class);
 
-        boardController.step(mock(Game.class), GUI.ACTION.UP);
 
-        verify(board).getTile(0,1);
+        when(currentTile.getGridCoordinates()).thenReturn(currentPosition);
+        when(targetTile.getGridCoordinates()).thenReturn(targetPosition);
+        when(currentPosition.getX()).thenReturn(0);
+        when(currentPosition.getY()).thenReturn(0);
+        when(targetPosition.getX()).thenReturn(0);
+        when(targetPosition.getY()).thenReturn(1);
+
+
+        when(board.getCurrentTile()).thenReturn(currentTile);
+        when(board.getTile(0, 1)).thenReturn(targetTile);
+
+        GameController spyController = spy(controller);
+        doReturn(board).when(spyController).getModel();
+
+        spyController.step(mock(Game.class), GUI.ACTION.UP);
+
+
+        verify(board).getTile(0, 1);
+        verify(board).setCurrentTile(targetTile);
+        verify(currentTile).setCursorOn(false);
+        verify(targetTile).setCursorOn(true);
     }
+
 }

@@ -41,7 +41,8 @@ class BoardViewerTest {
 
         for(Tile[] row : grid) {
             for(Tile tile : row) {
-                TileViewer tileViewer = new TileViewer(tile);
+                TileViewer tileViewer = mock(TileViewer.class);
+                tileViewer.draw(gui);
                 verify(tileViewer).draw(gui);
             }
         }

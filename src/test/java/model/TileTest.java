@@ -30,8 +30,9 @@ class TileTest{
 
     @Test
     void testGetColor(){
-        assertEquals("#ffic20", tile.getColor(), "Tile color wasn't correct");
+        assertEquals("#ff1c20", tile.getColor(), "Tile color wasn't correct");
     }
+
 
     @Test
     void testGetSymbol(){

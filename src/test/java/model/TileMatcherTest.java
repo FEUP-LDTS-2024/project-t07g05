@@ -1,9 +1,15 @@
 package model;
 
 import com.ldts.crystalclash.model.Board;
+import com.ldts.crystalclash.model.Tile;
+import com.ldts.crystalclash.model.Position;
+import com.ldts.crystalclash.model.EmptyTile;
 import com.ldts.crystalclash.model.TileMatcher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -29,10 +35,29 @@ class TileMatcherTest {
 
     @Test
     void testPopMatches() {
-        tileMatcher.popMatches();
+        when(board.getRows()).thenReturn(5);
+        when(board.getColumns()).thenReturn(5);
+
+
+        Tile tile1 = mock(Tile.class);
+        Tile tile2 = mock(Tile.class);
+        when(tile1.getGridCoordinates()).thenReturn(new Position(0, 0));
+        when(tile2.getGridCoordinates()).thenReturn(new Position(1, 1));
+
+        tileMatcher.matches = new ArrayList<>();
+        tileMatcher.matches.add(tile1);
+        tileMatcher.matches.add(tile2);
+
+
         int initialSize = tileMatcher.matches.size();
+        assertTrue(initialSize > 0, "Initial size of matches should be greater than 0");
+
+
         tileMatcher.popMatches();
-        assertTrue(tileMatcher.matches.isEmpty(), "Matches should be empty");
-        assertTrue(initialSize > 0, "Initial size of Matches should be greater than 0");
+        assertTrue(tileMatcher.matches.isEmpty(), "Matches should be empty after popMatches()");
+
+        verify(board).setTile(eq(0), eq(0), any(EmptyTile.class));
+        verify(board).setTile(eq(1), eq(1), any(EmptyTile.class));
+
     }
 }

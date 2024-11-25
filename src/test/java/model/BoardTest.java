@@ -35,10 +35,11 @@ class BoardTest {
     }
 
     @Test
-    void testInvalidPosition(){
-        Tile tile = board.getTile(10,10);
-        assertNotNull(tile, "Tile at position (0,0) should be valid");
+    void testInvalidPosition() {
+        Tile tile = board.getTile(10, 10); // Fora dos limites
+        assertNull(tile, "Tile at position (10,10) should be null for invalid positions");
     }
+
 
     @Test
     void initializeBoard(){

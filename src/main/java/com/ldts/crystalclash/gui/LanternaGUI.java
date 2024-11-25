@@ -17,7 +17,7 @@ import com.ldts.crystalclash.model.Tile;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-public class LanternaGUI implements GUI, TextGraphics {
+public class LanternaGUI implements GUI {
     private final Screen screen;
 
     public LanternaGUI(Screen screen) {
