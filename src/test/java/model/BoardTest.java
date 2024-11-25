@@ -1,7 +1,9 @@
 package model;
 
 import org.junit.jupiter.api.Test;
-
+import com.ldts.crystalclash.model.Board;
+import com.ldts.crystalclash.model.Tile;
+import com.ldts.crystalclash.model.Position;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardTest {

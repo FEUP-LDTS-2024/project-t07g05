@@ -1,13 +1,14 @@
 package viewer;
 
-import model.Board;
-import model.Tile;
+import com.ldts.crystalclash.viewer.BoardViewer;
+import com.ldts.crystalclash.model.Board;
+import com.ldts.crystalclash.model.Tile;
+import com.ldts.crystalclash.gui.LanternaGUI;
 
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 
-import gui.LanternaGUI;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

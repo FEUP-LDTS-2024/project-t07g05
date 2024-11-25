@@ -2,11 +2,14 @@ package viewer;
 
 import gui.LanternaGUI;
 
-import model.Position;
-import model.Tile;
+import com.ldts.crystalclash.viewer.TileViewer;
+import com.ldts.crystalclash.model.Position;
+import com.ldts.crystalclash.model.Tile;
+
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 
 import static org.mockito.Mockito.*;
 

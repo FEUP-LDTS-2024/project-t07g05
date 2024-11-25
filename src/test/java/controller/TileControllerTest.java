@@ -1,26 +1,28 @@
 package controller;
 
-import model.Board;
+import com.ldts.crystalclash.controller.TileController;
+import com.ldts.crystalclash.model.Board;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
-import org.mockito.Mockito;
+import static org.mockito.Mockito.mock;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
-public class TileControllerTest {
-
-    private TileController tileController;
+class TileControllerTest {
+    private TileController controller;
 
     @BeforeEach
     void setUp() {
-        Board mockBoard = Mockito.mock(Board.class);
-        tileController = new TileController(mockBoard);
+        Board board = mock(Board.class);
+        controller = new TileController(board);
     }
 
     @Test
-    void testStepDoesNotThrowException() {
-        assertDoesNotThrow(() -> tileController.step());
+    void testStep() {
+        try{
+            controller.step(null,null);
+        }catch(Exception e){
+            assert false : "Step should not throw an exception";
+        }
     }
 
 }
