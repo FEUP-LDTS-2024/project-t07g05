@@ -1,28 +1,45 @@
 package model;
 
+import com.ldts.crystalclash.model.Position;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PositionTest {
-    @Test
-    void testGettersAndSetters() {
-        Position position = new Position(5,10);
-        assertEquals(5, position.getX());
-        assertEquals(10, position.getY());
-
-        position.setX(20);
-        position.setY(30);
-        assertEquals(20, position.getX());
-        assertEquals(30, position.getY());
+    private Position position;
+    @BeforeEach
+    void setUp() {
+        position = new Position(5, 10);
     }
 
     @Test
-    void testEquals() {
-        Position position1 = new Position(5,10);
-        Position position2 = new Position(5,10);
-        Position position3 = new Position(10,5);
+    void testGetX() {
+        assertEquals(5,position.getX(), "getX() should return the correct x coordinate");
+    }
 
-        assertEquals(position1, position2);
-        assertNotEquals(position1, position3);
+    @Test
+    void testGetY() {
+        assertEquals(10, position.getY(), "getY() should return teh correct y coordinate");
+    }
+
+    @Test
+    void testSetX(){
+        position.setX(15);
+        assertEquals(15, position.getX(), "setX() should update the x coordinate correctly");
+    }
+
+    @Test
+    void testSetY(){
+        position.setY(20);
+        assertEquals(20, position.getY(), "setY() should update the y coordinate correctly");
+    }
+
+    @Test
+    void testEquals(){
+        Position anotherPosition = new Position(5, 10);
+        Position differentPosition = new Position(10, 20);
+
+        assertEquals(position, anotherPosition, "Positions should be equal");
+        assertNotEquals(position, differentPosition, "Positions should not be equal");
     }
 }

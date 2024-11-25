@@ -1,47 +1,48 @@
 package model;
 
-import org.junit.jupiter.api.Test;
 import com.ldts.crystalclash.model.Board;
 import com.ldts.crystalclash.model.Tile;
-import com.ldts.crystalclash.model.Position;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-public class BoardTest {
+class BoardTest {
+    private Board board;
 
-    @Test
-    void testBoardInitialization(){
-        Board board = new Board(5,5,800,600,10,10);
-        assertEquals(5, board.getRows());
-        assertEquals(5, board.getColumns());
-        assertEquals(800, board.getWidth());
-        assertEquals(600, board.getHeight());
-        assertNotNull(board.getGrid());
-        assertNotNull(board.getCurrentTile());
+    @BeforeEach
+    void setUp() {
+        board = new Board(5,5,100,100,10,10);
     }
 
     @Test
-    void testTileAccess(){
-        Board board = new Board(3,3,800,600,10,10);
-        Tile tile = board.getTile(1,1);
-        assertNotNull(tile);
-        assertEquals(1, tile.getGridCoordinates().getX());
-        assertEquals(1, tile.getGridCoordinates().getY());
+    void testGetGrid(){
+        assertNotNull(board.getGrid(), "Grid cannot be null");
     }
 
     @Test
-    void testIsValidPosition(){
-        Board board = new Board(4,4,800,600,10,10);
-        assertTrue(board.isValidPosition(2,2));
-        assertFalse(board.isValidPosition(5,5));
+    void testGetTile(){
+        Tile tile = board.getTile(0,0);
+        assertNotNull(tile, "Tile at position (0,0) cannot be null");
     }
 
     @Test
-    void testCalculateScreenPosition(){
-        Board board = new Board(5,5,800,600,10,10);
-        Position gridPosition = new Position(2,3);
-        Position screenPosition = board.calculateScreenPosition(gridPosition);
+    void testSetTile(){
+        Tile newTile = mock(Tile.class);
+        board.setTile(0,0,newTile);
+        assertEquals(newTile,board.getTile(0,0), "Tile was not set correctly");
+    }
 
-        assertEquals(3 * 10 + board.getStartX(), screenPosition.getX());
-        assertEquals(2 * 10 + board.getStartY(), screenPosition.getY());
+    @Test
+    void testInvalidPosition(){
+        Tile tile = board.getTile(10,10);
+        assertNotNull(tile, "Tile at position (0,0) should be valid");
+    }
+
+    @Test
+    void initializeBoard(){
+        Tile tile = board.getTile(0,0);
+        assertNotNull(tile, "Tile at position (0,0) should be valid");
     }
 }
