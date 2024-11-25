@@ -5,56 +5,47 @@ import com.ldts.crystalclash.model.Board;
 import com.ldts.crystalclash.model.Tile;
 import com.ldts.crystalclash.gui.LanternaGUI;
 
-import com.googlecode.lanterna.TerminalPosition;
-import com.googlecode.lanterna.TerminalSize;
-import com.googlecode.lanterna.TextColor;
-
-
+import com.ldts.crystalclash.viewer.TileViewer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;
 
 class BoardViewerTest {
-    private Board mockBoard;
+    private Board board;
     private BoardViewer boardViewer;
-    private LanternaGUI mockGUI;
+    private LanternaGUI gui;
+    private Tile[][] grid;
 
     @BeforeEach
     void setUp() {
-        mockBoard = mock(Board.class);
-        mockGUI = mock(LanternaGUI.class);
-        boardViewer = new BoardViewer(mockBoard);
+       grid = new Tile[5][5];
+       for(int i = 0; i < 5; i++) {
+           for(int j = 0; j < 5; j++) {
+               grid[i][j] = mock(Tile.class);
+           }
+       }
+
+       board = mock(Board.class);
+       when(board.getGrid()).thenReturn(grid);
+
+       gui = mock(LanternaGUI.class);
+       boardViewer = new BoardViewer(board);
     }
 
     @Test
     void testDraw() {
-        int width = 10;
-        int height = 5;
+        boardViewer.draw(gui);
 
-        when(mockBoard.getWidth()).thenReturn(width);
-        when(mockBoard.getHeight()).thenReturn(height);
+        verify(gui).drawBoard(board);
 
-        Tile[][] grid = new Tile[2][2];
-        Tile mockTile1 = mock(Tile.class);
-        Tile mockTile2 = mock(Tile.class);
-        grid[0][0] = mockTile1;
-        grid[0][1] = mockTile2;
-        when(mockBoard.getGrid()).thenReturn(grid);
-
-        boardViewer.draw(mockGUI);
-
-        verify(mockGUI).setBackgroundColor(TextColor.Factory.fromString("#2e3440"));
-        verify(mockGUI).fillRectangle(new TerminalPosition(0, 0), new TerminalSize(width, height), ' ');
-
-        verify(mockTile1, atLeastOnce());
-        verify(mockTile2, atLeastOnce());
-
-        for (Tile[] row : grid) {
-            for (Tile cell : row) {
-                verify(cell, atLeastOnce());
+        for(Tile[] row : grid) {
+            for(Tile tile : row) {
+                TileViewer tileViewer = new TileViewer(tile);
+                verify(tileViewer).draw(gui);
             }
         }
+
     }
 }
 
