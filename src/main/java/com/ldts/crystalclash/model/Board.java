@@ -97,13 +97,13 @@ public class Board {
         return getTile(row, col-1);
     }
 
-    public Tile getTileOnTop(Tile tile) {
+    public Tile getTileOnBottom(Tile tile) {
         Position gridco = tile.getGridCoordinates();
         int row = gridco.getX(); int col = gridco.getY();
         return getTile(row+1, col);
     }
 
-    public Tile getTileOnBottom(Tile tile) {
+    public Tile getTileOnTop(Tile tile) {
         Position gridco = tile.getGridCoordinates();
         int row = gridco.getX(); int col = gridco.getY();
         return getTile(row-1, col);
