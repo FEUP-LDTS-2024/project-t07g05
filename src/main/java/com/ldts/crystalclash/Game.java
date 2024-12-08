@@ -4,6 +4,7 @@ import com.ldts.crystalclash.controller.GameController;
 import com.ldts.crystalclash.gui.GUI;
 import com.ldts.crystalclash.gui.LanternaGUI;
 import com.ldts.crystalclash.model.Board;
+import com.ldts.crystalclash.model.GameTimer;
 import com.ldts.crystalclash.viewer.GameViewer;
 
 import java.io.IOException;
@@ -14,6 +15,7 @@ public class Game {
     public final LanternaGUI gui;
     GameViewer gameViewer;
     GameController gameController;
+    GameTimer timer;
 
     public Game(LanternaGUI gui, GameViewer gameViewer, GameController gameController) {
         try {
@@ -32,6 +34,7 @@ public class Game {
         GameViewer gameViewer = new GameViewer(board);
         GameController gameController = new GameController(board);
 
+
         new Game(gui, gameViewer, gameController).start();
     }
 
@@ -42,8 +45,17 @@ public class Game {
 
     private void start() throws IOException {
         try {
+            this.timer = new GameTimer(()-> {
+                try {
+                    closeGame();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            timer.start();
             boolean running = true;
             while (running) {
+                System.out.println(timer.getTimeLeft());
                 gameViewer.draw(gui);
                 LanternaGUI.ACTION action = gui.getNextAction();
                 if (action == GUI.ACTION.QUIT) { running = false; }
