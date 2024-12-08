@@ -1,18 +1,17 @@
 package com.ldts.crystalclash.model;
 
-import java.util.Timer;
 import java.util.TimerTask;
 
-public class GameTimer {
+public class Timer {
     private static final long TOTAL_TIME = 90 * 1000; // in milliseconds
     private long startTime;
-    private Timer timer;
+    private java.util.Timer timer;
     private Runnable callback;
 
 
-    public GameTimer(Runnable callback) {
+    public Timer(Runnable callback) {
         this.startTime = 0;
-        this.timer = new Timer();
+        this.timer = new java.util.Timer();
         this.callback = callback;
     }
 
@@ -23,7 +22,7 @@ public class GameTimer {
             public void run() {
                 if (callback != null) {
                     callback.run();
-                    System.out.println("Timer has finished!");
+                    System.out.println("Time has finished!");
                 }
             }
         };

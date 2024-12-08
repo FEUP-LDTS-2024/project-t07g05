@@ -4,7 +4,7 @@ import com.ldts.crystalclash.controller.GameController;
 import com.ldts.crystalclash.gui.GUI;
 import com.ldts.crystalclash.gui.LanternaGUI;
 import com.ldts.crystalclash.model.Board;
-import com.ldts.crystalclash.model.GameTimer;
+import com.ldts.crystalclash.model.Timer;
 import com.ldts.crystalclash.viewer.GameViewer;
 
 import java.io.IOException;
@@ -15,7 +15,7 @@ public class Game {
     public final LanternaGUI gui;
     GameViewer gameViewer;
     GameController gameController;
-    GameTimer timer;
+    Timer timer;
 
     public Game(LanternaGUI gui, GameViewer gameViewer, GameController gameController) {
         try {
@@ -45,7 +45,7 @@ public class Game {
 
     private void start() throws IOException {
         try {
-            this.timer = new GameTimer(()-> {
+            this.timer = new Timer(()-> {
                 try {
                     closeGame();
                 } catch (IOException e) {
