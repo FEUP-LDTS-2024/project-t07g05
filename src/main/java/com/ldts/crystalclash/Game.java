@@ -1,11 +1,13 @@
 package com.ldts.crystalclash;
 
 import com.ldts.crystalclash.controller.GameController;
+import com.ldts.crystalclash.controller.TimerController;
 import com.ldts.crystalclash.gui.GUI;
 import com.ldts.crystalclash.gui.LanternaGUI;
 import com.ldts.crystalclash.model.Board;
 import com.ldts.crystalclash.model.Timer;
 import com.ldts.crystalclash.viewer.GameViewer;
+import com.ldts.crystalclash.viewer.TimerViewer;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -16,6 +18,7 @@ public class Game {
     GameViewer gameViewer;
     GameController gameController;
     Timer timer;
+    TimerController timerController;
 
     public Game(LanternaGUI gui, GameViewer gameViewer, GameController gameController) {
         try {
@@ -34,7 +37,6 @@ public class Game {
         GameViewer gameViewer = new GameViewer(board);
         GameController gameController = new GameController(board);
 
-
         new Game(gui, gameViewer, gameController).start();
     }
 
@@ -45,6 +47,7 @@ public class Game {
 
     private void start() throws IOException {
         try {
+            // Setting up timer object and passing it to controller
             this.timer = new Timer(()-> {
                 try {
                     closeGame();
@@ -52,10 +55,13 @@ public class Game {
                     e.printStackTrace();
                 }
             });
-            timer.start();
+            TimerController timerController = new TimerController(timer, this);
+            this.timerController = timerController;
+            timerController.startTimer();
+
+            // Main game loop
             boolean running = true;
             while (running) {
-                System.out.println(timer.getTimeLeft());
                 gameViewer.draw(gui);
                 LanternaGUI.ACTION action = gui.getNextAction();
                 if (action == GUI.ACTION.QUIT) { running = false; }
@@ -64,6 +70,7 @@ public class Game {
                 }
             }
             closeGame();
+            timerController.stopTimer();
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
