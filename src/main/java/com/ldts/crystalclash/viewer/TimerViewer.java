@@ -12,6 +12,7 @@ public class TimerViewer extends Viewer<Timer> {
         long timeLeft = getModel().getTimeLeft();
         Position TXTPOS = new Position(30, 35);
         String TXT = "Time left:\n" + timeLeft;
+        System.out.println(TXT);
         gui.drawText(TXTPOS, TXT, "#F9F6EE");
     }
 }

@@ -21,7 +21,7 @@ public class TimerController extends Controller<Timer> {
         getModel().start();
 
         Thread updateThread = new Thread(() -> {
-            while (true) {
+            while (!Thread.currentThread().isInterrupted() && game.isRunning()) {
                 try {
                     Thread.sleep(1000); // Update every second
                     step(game, null); // Call step periodically
@@ -46,10 +46,6 @@ public class TimerController extends Controller<Timer> {
 
     @Override
     public void step(Game game, GUI.ACTION action) throws IOException {
-        long timeLeft = getModel().getTimeLeft();
         timerViewer.draw(game.gui);
-        if (timeLeft <= 0) {
-            stopTimer();
-        }
     }
 }

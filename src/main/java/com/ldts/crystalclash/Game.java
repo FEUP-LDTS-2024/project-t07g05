@@ -19,12 +19,14 @@ public class Game {
     GameController gameController;
     Timer timer;
     TimerController timerController;
+    private volatile boolean running;
 
     public Game(LanternaGUI gui, GameViewer gameViewer, GameController gameController) {
         try {
             this.gui = gui;
             this.gameViewer = gameViewer;
             this.gameController = gameController;
+            this.running = false;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -45,22 +47,22 @@ public class Game {
         gui.close();
     }
 
+    public boolean isRunning() {
+        return running;
+    }
+
     private void start() throws IOException {
         try {
             // Setting up timer object and passing it to controller
             this.timer = new Timer(()-> {
-                try {
-                    closeGame();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                running = false;
             });
             TimerController timerController = new TimerController(timer, this);
             this.timerController = timerController;
             timerController.startTimer();
 
             // Main game loop
-            boolean running = true;
+            running = true;
             while (running) {
                 gameViewer.draw(gui);
                 LanternaGUI.ACTION action = gui.getNextAction();
