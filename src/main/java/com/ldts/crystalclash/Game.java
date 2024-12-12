@@ -4,6 +4,9 @@ import com.ldts.crystalclash.controller.GameController;
 import com.ldts.crystalclash.gui.GUI;
 import com.ldts.crystalclash.gui.LanternaGUI;
 import com.ldts.crystalclash.model.Board;
+import com.ldts.crystalclash.model.Menu;
+import com.ldts.crystalclash.states.MenuState;
+import com.ldts.crystalclash.states.State;
 import com.ldts.crystalclash.viewer.GameViewer;
 
 import java.io.IOException;
@@ -14,12 +17,14 @@ public class Game {
     public final LanternaGUI gui;
     GameViewer gameViewer;
     GameController gameController;
+    private State state;
 
-    public Game(LanternaGUI gui, GameViewer gameViewer, GameController gameController) {
+    public Game(LanternaGUI gui, GameViewer gameViewer, GameController gameController, State state) {
         try {
             this.gui = gui;
             this.gameViewer = gameViewer;
             this.gameController = gameController;
+            this.state = new MenuState(new Menu());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -31,13 +36,10 @@ public class Game {
         Board board = new Board(8, 8, (width-30), height, 4, 4);
         GameViewer gameViewer = new GameViewer(board);
         GameController gameController = new GameController(board);
+        State state = new MenuState(new Menu());
+        Game game = new Game(gui, gameViewer, gameController, state);
+        game.start();
 
-        new Game(gui, gameViewer, gameController).start();
-    }
-
-    private void closeGame() throws IOException {
-        gui.clear();
-        gui.close();
     }
 
     private void start() throws IOException {
@@ -55,5 +57,16 @@ public class Game {
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+
+
+    private void closeGame() throws IOException {
+        gui.clear();
+        gui.close();
     }
 }
