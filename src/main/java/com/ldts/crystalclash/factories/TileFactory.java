@@ -8,7 +8,7 @@ public class TileFactory {
     public Tile createTile(String type, Position screenPosition, Position gridCoordinates) {
         return switch (type.toLowerCase()) {
             case "bomb" -> new BombTile(screenPosition, gridCoordinates, Color.DEFAULT);
-            case "color" -> new GemTile(screenPosition, gridCoordinates, getRandomGemColor());
+            case "gem" -> new GemTile(screenPosition, gridCoordinates, getRandomGemColor());
             case "empty" -> new EmptyTile(screenPosition, gridCoordinates, Color.DEFAULT);
             default -> throw new IllegalArgumentException("Invalid tile type: " + type);
         };

@@ -8,7 +8,7 @@ public enum Color {
     EMERALD("#11a62f", 4),
     RUBY("#ff1c20", 3),
     SAPPHIRE("#0e3edd", 2),
-    AMETHYST("a62dc5", 1),
+    AMETHYST("#a62dc5", 1),
     DEFAULT("#F9F6EE", 1);
 
     private final String hexCode;

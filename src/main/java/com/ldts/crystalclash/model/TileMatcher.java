@@ -1,5 +1,7 @@
 package com.ldts.crystalclash.model;
 
+import com.ldts.crystalclash.factories.TileFactory;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -10,10 +12,12 @@ public class TileMatcher {
     // TODO: algorithm must identify if it is a gemtile or a bombtile before verifying matches
     private final Board board;
     public List<Tile> matches;
+    private final TileFactory tileFactory;
 
     public TileMatcher(Board board) {
         this.board = board;
         this.matches = new ArrayList<>();
+        this.tileFactory = new TileFactory();
     }
 
     public void findMatches() {
@@ -109,7 +113,8 @@ public class TileMatcher {
 
             for (Tile tile : toRemove) {
                 Position pos = tile.getGridCoordinates();
-                board.setTile(pos.getX(), pos.getY(), new EmptyTile(tile.getScreenPosition(), pos)); // Set to empty tile
+                Tile emptyTile = tileFactory.createTile("empty", tile.getScreenPosition(), pos);
+                board.setTile(pos.getX(), pos.getY(), emptyTile); // Set to empty tile
             }
 
             matches.clear();
