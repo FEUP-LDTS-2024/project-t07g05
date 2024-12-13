@@ -11,6 +11,7 @@ public class BoardController extends GameController {
 
     public BoardController(Board board) {
         super(board);
+        tileMatcher = new TileMatcher(board);
     }
 
     public void swapTiles(Tile t1, Tile t2) {
@@ -110,6 +111,27 @@ public class BoardController extends GameController {
                 moveCurrentTile(board.getCurrentTile().getGridCoordinates().getX(),
                         board.getCurrentTile().getGridCoordinates().getY() - 1);
                 break;
+            case GUI.ACTION.SELECT_TILE:
+                GUI.ACTION actionSwap = game.gui.getNextAction();
+                switch (actionSwap) {
+                    case GUI.ACTION.UP:
+                        swapTiles(board.getCurrentTile(), board.getTileOnTop(board.getCurrentTile()));
+                        break;
+                    case GUI.ACTION.DOWN:
+                        swapTiles(board.getCurrentTile(), board.getTileOnBottom(board.getCurrentTile()));
+                        break;
+                    case GUI.ACTION.LEFT:
+                        swapTiles(board.getCurrentTile(), board.getTileToTheLeft(board.getCurrentTile()));
+                        break;
+                    case GUI.ACTION.RIGHT:
+                        swapTiles(board.getCurrentTile(), board.getTileToTheRight(board.getCurrentTile()));
+                        break;
+                }
+                break;
         }
+        tileMatcher.findMatches();
+        tileMatcher.popMatches();
+        shiftTilesDown();
+        refillBoard();
     }
 }

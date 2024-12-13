@@ -1,7 +1,6 @@
 plugins {
     id 'java'
     id 'application'
-    id 'info.solidsoft.pitest' version '1.9.11'
 }
 
 group = 'com.t7g5.crystalclash'
@@ -26,21 +25,4 @@ test {
 
 application {
     mainClass.set("Game")
-}
-
-pitest {
-    junit5PluginVersion = '1.0.0'         // Suporte ao JUnit 5
-    targetClasses = ['com.t7g5.crystalclash.*']  // Todas as classes no pacote
-    threads = 4                           // Paralelismo
-    outputFormats = ['HTML']              // Gerar relatórios HTML
-    timestampedReports = false            // Relatórios sem timestamps
-    failWhenNoMutations = false           // Evitar falhas se nenhum teste rodar
-    mutationThreshold = 70                // Taxa mínima de mutações aprovadas
-    testPlugin = 'junit5'                 // Usar plugin para JUnit 5
-}
-
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
 }

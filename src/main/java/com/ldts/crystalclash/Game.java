@@ -11,7 +11,7 @@ import java.net.URISyntaxException;
 
 
 public class Game {
-    private final LanternaGUI gui;
+    public final LanternaGUI gui;
     GameViewer gameViewer;
     GameController gameController;
 
@@ -47,9 +47,6 @@ public class Game {
                 gameViewer.draw(gui);
                 LanternaGUI.ACTION action = gui.getNextAction();
                 if (action == GUI.ACTION.QUIT) { running = false; }
-                if (action == GUI.ACTION.SELECT_TILE) {
-                    LanternaGUI.ACTION nextaction = gui.getNextAction();
-                }
                 else {
                     gameController.step(this, action);
                 }
