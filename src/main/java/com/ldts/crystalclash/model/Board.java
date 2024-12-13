@@ -1,6 +1,7 @@
 package com.ldts.crystalclash.model;
 
 public class Board {
+    // TODO: direct instantiation of tiles must call the factory class
     private final Tile[][] grid;
     private final int rows;
     private final int columns;

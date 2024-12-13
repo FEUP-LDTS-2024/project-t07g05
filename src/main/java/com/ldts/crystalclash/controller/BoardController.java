@@ -130,6 +130,7 @@ public class BoardController extends GameController {
                 break;
         }
         tileMatcher.findMatches();
+        tileMatcher.calculateScore();
         tileMatcher.popMatches();
         shiftTilesDown();
         refillBoard();
