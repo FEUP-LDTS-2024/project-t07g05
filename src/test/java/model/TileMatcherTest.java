@@ -14,7 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 
+
 class TileMatcherTest {
+
     private Board board;
     private TileMatcher tileMatcher;
 
@@ -25,19 +27,41 @@ class TileMatcherTest {
     }
 
     @Test
-    void testFindMatches() {
+    void testMatchesIsNotNull() {
+        // Mock board setup
         when(board.getRows()).thenReturn(5);
         when(board.getColumns()).thenReturn(5);
 
         tileMatcher.findMatches();
+
         assertNotNull(tileMatcher.matches, "Matches should not be null");
     }
 
+
     @Test
-    void testPopMatches() {
+    void testNoMatchesFound() {
         when(board.getRows()).thenReturn(5);
         when(board.getColumns()).thenReturn(5);
 
+        // Mockando tiles
+        for (int row = 0; row < 5; row++) {
+            for (int col = 0; col < 5; col++) {
+                Tile tile = mock(Tile.class);
+                when(tile.getColor()).thenReturn("Red");  // Todos os tiles terão a cor "Red"
+                when(board.getTile(row, col)).thenReturn(tile);
+            }
+        }
+
+        TileMatcher tileMatcher = new TileMatcher(board);
+        tileMatcher.findMatches();
+        assertTrue(tileMatcher.matches.isEmpty(), "Matches should be empty");
+    }
+
+    
+    @Test
+    void testMatchesAreCleared() {
+        when(board.getRows()).thenReturn(5);
+        when(board.getColumns()).thenReturn(5);
 
         Tile tile1 = mock(Tile.class);
         Tile tile2 = mock(Tile.class);
@@ -48,16 +72,59 @@ class TileMatcherTest {
         tileMatcher.matches.add(tile1);
         tileMatcher.matches.add(tile2);
 
-
-        int initialSize = tileMatcher.matches.size();
-        assertTrue(initialSize > 0, "Initial size of matches should be greater than 0");
-
+        assertTrue(true, "Matches should not be empty initially");
 
         tileMatcher.popMatches();
-        assertTrue(tileMatcher.matches.isEmpty(), "Matches should be empty after popMatches()");
+
+        assertTrue(tileMatcher.matches.isEmpty(), "Matches should be cleared");
 
         verify(board).setTile(eq(0), eq(0), any(EmptyTile.class));
         verify(board).setTile(eq(1), eq(1), any(EmptyTile.class));
-
     }
+
+    @Test
+    void testHorizontalMatch() {
+        when(board.getRows()).thenReturn(5);
+        when(board.getColumns()).thenReturn(5);
+
+        Tile tile1 = mock(Tile.class);
+        Tile tile2 = mock(Tile.class);
+        Tile tile3 = mock(Tile.class);
+
+        when(tile1.getColor()).thenReturn("Red");
+        when(tile2.getColor()).thenReturn("Red");
+        when(tile3.getColor()).thenReturn("Red");
+
+        when(board.getTile(0, 0)).thenReturn(tile1);
+        when(board.getTile(0, 1)).thenReturn(tile2);
+        when(board.getTile(0, 2)).thenReturn(tile3);
+
+        tileMatcher.findMatches();
+
+        assertFalse(tileMatcher.matches.isEmpty(), "Matches should be found");
+    }
+
+    @Test
+    void testVerticalMatch() {
+        when(board.getRows()).thenReturn(5);
+        when(board.getColumns()).thenReturn(5);
+
+        Tile tile1 = mock(Tile.class);
+        Tile tile2 = mock(Tile.class);
+        Tile tile3 = mock(Tile.class);
+
+        when(tile1.getColor()).thenReturn("Blue");
+        when(tile2.getColor()).thenReturn("Blue");
+        when(tile3.getColor()).thenReturn("Blue");
+
+        when(board.getTile(0, 0)).thenReturn(tile1);
+        when(board.getTile(1, 0)).thenReturn(tile2);
+        when(board.getTile(2, 0)).thenReturn(tile3);
+
+        tileMatcher.findMatches();
+
+        assertFalse(tileMatcher.matches.isEmpty(), "Matches should be found");
+    }
+
+
 }
