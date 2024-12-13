@@ -1,5 +1,7 @@
 package com.ldts.crystalclash.model;
 
+import java.util.Objects;
+
 public class Position {
     private int x;
     private int y;
@@ -32,5 +34,10 @@ public class Position {
         if (getClass() != o.getClass()) return false;
         Position p = (Position) o;
         return x == p.getX() && y == p.getY();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x,y);
     }
 }
