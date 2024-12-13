@@ -7,6 +7,8 @@ import com.ldts.crystalclash.model.*;
 import java.io.IOException;
 
 public class BoardController extends GameController {
+    // TODO: direct instantiation of tiles must call the factory class
+    // TODO: algorithm must identify if it is a gemtile or a bombtile before verifying matches
     TileMatcher tileMatcher;
 
     public BoardController(Board board) {

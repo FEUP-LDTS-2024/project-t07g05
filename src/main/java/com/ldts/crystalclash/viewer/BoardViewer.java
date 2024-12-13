@@ -2,6 +2,7 @@ package com.ldts.crystalclash.viewer;
 
 import com.ldts.crystalclash.gui.LanternaGUI;
 import com.ldts.crystalclash.model.Board;
+import com.ldts.crystalclash.model.Tile;
 
 public class BoardViewer extends Viewer<Board> {
 
