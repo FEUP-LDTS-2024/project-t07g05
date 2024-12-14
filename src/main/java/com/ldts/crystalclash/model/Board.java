@@ -74,6 +74,9 @@ public class Board {
     public void setTile(int row, int column, Tile newTile) {
         if (isValidPosition(row, column)) {
             grid[row][column] = newTile;
+            if (newTile != null) {
+                newTile.setGridCoordinates(new Position(row, column));
+            }
         }
     }
 

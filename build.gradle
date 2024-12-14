@@ -3,7 +3,7 @@ plugins {
     id 'application'
 }
 
-group = 'com.t7g5.crystalclash'
+group = 'com.ldts.crystalclash'
 version = '1.0-SNAPSHOT'
 
 repositories {
