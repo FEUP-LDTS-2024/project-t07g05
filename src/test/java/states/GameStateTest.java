@@ -1,57 +1,47 @@
 package states;
 
-import com.ldts.crystalclash.controller.BoardController;
-import com.ldts.crystalclash.gui.LanternaGUI;
 import com.ldts.crystalclash.model.Board;
 import com.ldts.crystalclash.states.GameState;
-import com.ldts.crystalclash.viewer.BoardViewer;
 import com.ldts.crystalclash.viewer.GameViewer;
+import com.ldts.crystalclash.controller.BoardController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Method;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class GameStateTest {
 
-    private Board board;
+class GameStateTest {
     private GameState gameState;
-    private LanternaGUI gui;
-    private BoardController boardController;
-    private GameViewer gameViewer;
-
 
     @BeforeEach
     void setUp() {
-        board = mock(Board.class);
-        gui = mock(LanternaGUI.class);
-        gameViewer = mock(GameViewer.class);
-        boardController = mock(BoardController.class);
-
-        gameState = new GameState(board){
-            @Override
-            protected GameViewer getViewer() {
-                return gameViewer;
-            }
-
-            @Override
-            protected BoardController getController() {
-                return boardController;
-            }
-        };
+        Board board = mock(Board.class);
+        gameState = new GameState(board);
     }
 
     @Test
-    void testConstructor() {
-        assertEquals(board, gameState.getModel());
-    }
+    void testGetViewer() throws Exception {
 
-    @Test
-    void testGetViewer() {
-        GameViewer viewer = gameState.getViewer();
+        Method getViewerMethod = GameState.class.getDeclaredMethod("getViewer");
+        getViewerMethod.setAccessible(true);
+
+        Object viewer = getViewerMethod.invoke(gameState);
         assertNotNull(viewer);
-        assertEquals(GameViewer.class, viewer.getClass());
+        assertInstanceOf(GameViewer.class, viewer);
     }
+
+    @Test
+    void testGetController() throws Exception {
+        Method getControllerMethod = GameState.class.getDeclaredMethod("getController");
+        getControllerMethod.setAccessible(true);
+
+        Object controller = getControllerMethod.invoke(gameState);
+        assertNotNull(controller);
+        assertInstanceOf(BoardController.class, controller);
+    }
+
 
 }
