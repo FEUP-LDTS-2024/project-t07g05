@@ -42,6 +42,7 @@ class StateTest {
         };
     }
 
+
     @Test
     void testGetModel() {
         assertEquals(model, state.getModel());
