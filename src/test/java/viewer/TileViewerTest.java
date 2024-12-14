@@ -25,6 +25,7 @@ import static org.mockito.Mockito.*;
          tileViewer.draw(gui);
 
          verify(gui).drawTile(tile);
+         verify(tileViewer).getModel();
      }
 }
 
