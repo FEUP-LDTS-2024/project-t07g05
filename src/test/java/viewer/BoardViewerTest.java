@@ -10,16 +10,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 class BoardViewerTest {
     private Board board;
     private BoardViewer boardViewer;
     private LanternaGUI gui;
-    private Tile[][] grid;
 
     @BeforeEach
     void setUp() {
-       grid = new Tile[5][5];
+        Tile[][] grid = new Tile[5][5];
        for(int i = 0; i < 5; i++) {
            for(int j = 0; j < 5; j++) {
                grid[i][j] = mock(Tile.class);
@@ -35,18 +35,20 @@ class BoardViewerTest {
 
     @Test
     void testDraw() {
-        boardViewer.draw(gui);
 
-        verify(gui).drawBoard(board);
+        try (var mockedTileViewer = mockConstruction(TileViewer.class)) {
 
-        for(Tile[] row : grid) {
-            for(Tile tile : row) {
-                TileViewer tileViewer = mock(TileViewer.class);
-                tileViewer.draw(gui);
+            boardViewer.draw(gui);
+
+            verify(gui).drawBoard(board);
+
+            assertEquals(25, mockedTileViewer.constructed().size());
+
+            for (int i = 0; i < mockedTileViewer.constructed().size(); i++) {
+                TileViewer tileViewer = mockedTileViewer.constructed().get(i);
                 verify(tileViewer).draw(gui);
             }
         }
-
     }
 }
 
