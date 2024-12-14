@@ -8,24 +8,25 @@ import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;
 
- class TileViewerTest {
-     private Tile tile;
-     private TileViewer tileViewer;
-     private LanternaGUI gui;
 
-     @BeforeEach
-     void setUp() {
-         tile = mock(Tile.class);
-         gui = mock(LanternaGUI.class);
-         tileViewer = new TileViewer(tile);
-     }
+class TileViewerTest {
+    private Tile tile;
+    private TileViewer tileViewer;
+    private LanternaGUI gui;
 
-     @Test
-     void testDraw(){
-         tileViewer.draw(gui);
+    @BeforeEach
+    void setUp() {
+        tile = mock(Tile.class);
+        gui = mock(LanternaGUI.class);
 
-         verify(gui).drawTile(tile);
-         verify(tileViewer).getModel();
-     }
+        tileViewer = new TileViewer(tile);
+    }
+
+    @Test
+    void testDraw() {
+        tileViewer.draw(gui);
+
+        verify(gui).drawTile(tile);
+    }
 }
 
