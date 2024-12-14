@@ -6,53 +6,58 @@ import com.ldts.crystalclash.gui.GUI;
 import com.ldts.crystalclash.gui.LanternaGUI;
 import com.ldts.crystalclash.states.State;
 import com.ldts.crystalclash.viewer.Viewer;
+import java.lang.Object;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class StateTest {
-    private static class TestState extends State<String> {
-        public TestState(String model){
-            super(model);
-        }
+class StateTest {
 
-        @Override
-        protected Viewer<String> getViewer() {
-            return mock(Viewer.class);
-        }
-
-        @Override
-        protected Controller<String> getController() {
-            return mock(Controller.class);
-        }
-    }
-
-    private State<String> state;
-    private Game game;
-    private LanternaGUI gui;
-    private Viewer<String> viewer;
-    private Controller<String> controller;
-
+    private State<Object> state;
+    private Controller<Object> controller;
+    private Viewer<Object> viewer;
+    private Object model;
 
     @BeforeEach
     void setUp() {
-        state = new TestState("TestModel");
-        game = mock(Game.class);
-        gui = mock(LanternaGUI.class);
-        viewer = mock(Viewer.class);
+        model = mock(Object.class);
         controller = mock(Controller.class);
+        viewer = mock(Viewer.class);
+
+        state = new State<>(model) {
+            @Override
+            protected Viewer<Object> getViewer() {
+                return viewer;
+            }
+
+            @Override
+            protected Controller<Object> getController() {
+                return controller;
+            }
+        };
     }
 
     @Test
-    void testStep() throws Exception {
-        // Mock behavior for GUI to return a specific action
-        when(gui.getNextAction()).thenReturn(GUI.ACTION.SOME_ACTION); // Replace with a real action
+    void testGetModel() {
+        assertEquals(model, state.getModel());
+    }
+
+    @Test
+    void testStep() throws IOException {
+        Game game = mock(Game.class);
+        LanternaGUI gui = mock(LanternaGUI.class);
+        when(gui.getNextAction()).thenReturn(GUI.ACTION.NONE);
 
         state.step(game, gui);
 
-        verify(controller).step(game, GUI.ACTION.SOME_ACTION);
-
+        verify(gui).getNextAction();
+        verify(controller).step(game, GUI.ACTION.NONE);
         verify(viewer).draw(gui);
     }
+
 }
