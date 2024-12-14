@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class GameStateTest {
@@ -38,9 +39,19 @@ public class GameStateTest {
             protected BoardController getController() {
                 return boardController;
             }
-        }
+        };
     }
+
+    @Test
+    void testConstructor() {
+        assertEquals(board, gameState.getModel());
+    }
+
+    @Test
+    void testGetViewer() {
+        GameViewer viewer = gameState.getViewer();
+        assertNotNull(viewer);
+        assertEquals(GameViewer.class, viewer.getClass());
+    }
+
 }
-
-
-
