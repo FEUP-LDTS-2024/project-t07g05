@@ -49,23 +49,30 @@ class BoardControllerTest {
 
     @Test
     void testShiftTilesDown() {
-        when(board.getRows()).thenReturn(5);
-        when(board.getColumns()).thenReturn(5);
 
-        Tile tile = mock(Tile.class);
-        when(board.getTile(0, 0)).thenReturn(tile);
-        when(board.getTile(anyInt(), anyInt())).thenReturn(new EmptyTile());
+        Board board = mock(Board.class);
+        Position position1 = new Position(0, 0);
+        Position position2 = new Position(1, 1);
+        Tile emptyTile = new EmptyTile(position1, position2);
 
+        when(board.getTile(anyInt(), anyInt())).thenReturn(emptyTile);
+
+        BoardController controller = new BoardController(board);
         controller.shiftTilesDown();
 
-        verify(board, atLeastOnce()).setTile(anyInt(), anyInt(), any(Tile.class));
+        verify(board, atLeastOnce()).getTile(anyInt(), anyInt());
+        verify(board).setTile(anyInt(), anyInt(), any(Tile.class));
     }
 
     @Test
     void testRefillBoard() {
         when(board.getRows()).thenReturn(5);
         when(board.getColumns()).thenReturn(5);
-        when(board.getTile(0, 0)).thenReturn(new EmptyTile());
+
+        Position position1 = new Position(0, 0);
+        Position position2 = new Position(1, 0);
+
+        when(board.getTile(0, 0)).thenReturn(new EmptyTile(position1, position2));
 
         controller.refillBoard();
 
@@ -74,18 +81,23 @@ class BoardControllerTest {
 
     @Test
     void testStep() throws IOException {
+
         Game game = mock(Game.class);
         GUI gui = mock(GUI.class);
-        when(game.gui).thenReturn(gui);
+
+        when(gui.getNextAction()).thenReturn(GUI.ACTION.UP);
+
         when(gui.getNextAction()).thenReturn(GUI.ACTION.UP);
 
         Tile currentTile = mock(Tile.class);
         when(board.getCurrentTile()).thenReturn(currentTile);
-        when(board.getTileOnTop(currentTile)).thenReturn(mock(Tile.class));
+        Tile tileOnTop = mock(Tile.class);
+        when(board.getTileOnTop(currentTile)).thenReturn(tileOnTop);
 
         controller.step(game, GUI.ACTION.SELECT_TILE);
 
         verify(board).getTileOnTop(currentTile);
     }
+
 
 }
