@@ -91,8 +91,10 @@ class BoardTest {
     void testGetTileOnTop() {
         Tile tile = board.getTile(1, 0);
         Tile tileOnTop = board.getTileOnTop(tile);
+
         assertNotNull(tileOnTop, "Tile on top of (1,0) should not be null");
-        assertEquals(new Position(2, 0), tileOnTop.getGridCoordinates(), "Tile on top should have coordinates (2,0)");
+
+        assertEquals(new Position(0, 0), tileOnTop.getGridCoordinates(), "Tile on top should have coordinates (0,0)");
     }
 
 
@@ -100,9 +102,12 @@ class BoardTest {
     void testGetTileOnBottom() {
         Tile tile = board.getTile(1, 0);
         Tile tileOnBottom = board.getTileOnBottom(tile);
+
         assertNotNull(tileOnBottom, "Tile on bottom of (1,0) should not be null");
-        assertEquals(new Position(0, 0), tileOnBottom.getGridCoordinates(), "Tile on bottom should have coordinates (0,0)");
+
+        assertEquals(new Position(2, 0), tileOnBottom.getGridCoordinates(), "Tile on bottom should have coordinates (2,0)");
     }
+
 
     @Test
     void testInitializeBoard() {
