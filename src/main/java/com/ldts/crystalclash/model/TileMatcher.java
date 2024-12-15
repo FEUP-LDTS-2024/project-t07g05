@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Set;
 
 public class TileMatcher {
-    // TODO: direct instantiation of tiles must call the factory class
     // TODO: algorithm must identify if it is a gemtile or a bombtile before verifying matches
     private final Board board;
     public List<Tile> matches;

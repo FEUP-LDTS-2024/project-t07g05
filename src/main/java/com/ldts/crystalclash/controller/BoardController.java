@@ -8,7 +8,6 @@ import com.ldts.crystalclash.model.*;
 import java.io.IOException;
 
 public class BoardController extends GameController {
-    // TODO: direct instantiation of tiles must call the factory class
     // TODO: algorithm must identify if it is a gemtile or a bombtile before verifying matches
     TileMatcher tileMatcher;
     TileFactory tileFactory;
@@ -86,9 +85,6 @@ public class BoardController extends GameController {
                     Tile prev = getModel().getTile(row, col);
                     Position screenpos = prev.getScreenPosition();
                     Position gridco = prev.getGridCoordinates();
-                    String[] TYPES = {"jewel", "bomb"};
-                    String[] COLORS = {"diamond", "ruby", "emerald", "sapphire", "amethyst"};
-                    String color = COLORS[(int) (Math.random() * COLORS.length)];
                     Tile tile = tileFactory.createTile("gem", screenpos, gridco);
                     getModel().setTile(row, col, tile);
                 }
