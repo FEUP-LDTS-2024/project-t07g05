@@ -10,7 +10,14 @@ public class TileViewer extends Viewer<Tile> {
 
     @Override
     public void draw(LanternaGUI gui) {
-        Tile model = getModel();
-        gui.drawTile(model);
+        try {
+            gui.clear();
+            Tile model = getModel();
+            gui.drawTile(model);
+            gui.refresh();
+
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -25,6 +25,7 @@ public class LanternaGUI implements GUI {
     }
 
     public LanternaGUI(int width, int height) throws IOException, URISyntaxException {
+
         Terminal terminal = createTerminal(width, height);
         this.screen = createScreen(terminal);
     }
@@ -61,6 +62,7 @@ public class LanternaGUI implements GUI {
         if (keyStroke.getKeyType() == KeyType.ArrowRight) return ACTION.RIGHT;
         if (keyStroke.getKeyType() == KeyType.ArrowDown) return ACTION.DOWN;
         if (keyStroke.getKeyType() == KeyType.ArrowLeft) return ACTION.LEFT;
+
         if (keyStroke.getKeyType() == KeyType.Enter) return ACTION.SELECT;
 
         return ACTION.NONE;
@@ -98,15 +100,15 @@ public class LanternaGUI implements GUI {
         tg.setForegroundColor(TextColor.Factory.fromString(color));
         if (y1 == y2) {
             for (int x = x1; x <= x2; x++) {
-                tg.putString(x, y1, character);
+                tg.putString(x, y1, "*");
             }
         }
         // Se a linha é vertical
         else if (x1 == x2) {
             for (int y = y1; y <= y2; y++) {
-                tg.putString(x1, y, character);
+                tg.putString(x1, y, "*");
             }
-        };
+        }
     }
     @Override
     public void drawText(Position position, String text, String color) {

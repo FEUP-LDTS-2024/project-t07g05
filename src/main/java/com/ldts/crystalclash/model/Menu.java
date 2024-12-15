@@ -9,13 +9,16 @@ public class Menu {
 
     public Menu() {this.options = Arrays.asList("PLAY", "SCORES", "EXIT");}
 
-
     public void selectNext() {
-        selectedOption = (selectedOption == options.size() - 1) ? 0 : selectedOption + 1;
+        selectedOption++;
+        if (selectedOption > this.options.size() - 1)
+            selectedOption = 0;
     }
 
     public void selectPrevious() {
-        selectedOption = (selectedOption == 0) ? options.size() - 1 : selectedOption - 1;
+        selectedOption--;
+        if (selectedOption < 0)
+            selectedOption = this.options.size() - 1;
     }
 
     public String getSelectedOption(int i) {
@@ -34,8 +37,12 @@ public class Menu {
         return isSelected(1);
     }
 
-    public boolean isSelectedStart() {
+    public boolean isSelectedPlay() {
         return isSelected(0);
+    }
+
+    public int getNumberOptions() {
+        return this.options.size();
     }
 
 

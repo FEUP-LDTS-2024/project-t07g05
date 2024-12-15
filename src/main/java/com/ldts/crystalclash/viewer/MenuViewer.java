@@ -1,45 +1,45 @@
 package com.ldts.crystalclash.viewer;
-import com.googlecode.lanterna.SGR;
-import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.graphics.AbstractTextGraphics;
-import com.ldts.crystalclash.gui.GUI;
 import com.ldts.crystalclash.gui.LanternaGUI;
-import com.ldts.crystalclash.model.Board;
 import com.ldts.crystalclash.model.Menu;
 import com.ldts.crystalclash.model.Position;
-import com.ldts.crystalclash.model.Tile;
-import com.ldts.crystalclash.viewer.Viewer;
 
 
 public class MenuViewer extends Viewer<Menu> {
+
     public MenuViewer(Menu model) {
         super(model);
     }
 
-    @Override
     public void draw(LanternaGUI gui) {
-        gui.clear();
         try {
-
-            gui.drawLine(40, 18, 70, 18, "*", "#000080");//2linha de
-            gui.drawLine(40, 24, 70, 24, "*", "#000080"); //2linha de baixo
-            gui.drawLine(41, 25, 69, 25, "*", "#000080");
-            gui.drawLine(40, 24, 40, 18, "*", "#000080");//linha da esquerda
-            gui.drawLine(39, 24, 39, 18, "*", "#000080");//2linda da esquerda
-            gui.drawLine(38, 23, 38, 19, "*", "#000080");
-            gui.drawLine(37, 22, 37, 20, "*", "#000080");
-            gui.drawLine(36, 21, 36, 21, "*", "#000080");
-            gui.drawLine(70, 24, 70, 18, "*", "#000080");//linhas da direita
-            gui.drawLine(71, 24, 71, 18, "*", "#000080");
-            gui.drawLine(72, 23, 72, 19, "*", "#000080");
-            gui.drawLine(73, 22, 73, 20, "*", "#000080");
-            gui.drawLine(74, 21, 74, 21, "*", "#000080");
+            gui.clear();
+            for (int i = 0; i < getModel().getNumberOptions(); i++)
+                gui.drawText(
+                        new Position(52, 20 + i),
+                        getModel().getSelectedOption(i),
+                        getModel().isSelected(i) ? "#00FFFF" : "#FFFFFF");
 
 
-            gui.drawLogo(5, 2, "#FFD700");
+
+            gui.drawLine(41, 17, 69, 17, "*", "#FFA500");//1linha horizonta de cima
+            gui.drawLine(40, 18, 70, 18, "*", "#FFA500");//2linha horizonta de cima
+            gui.drawLine(40, 24, 70, 24, "*", "#FFA500");//1linha horizontal de baixo
+            gui.drawLine(41, 25, 69, 25, "*", "#FFA500");//2linha horizontal de baixo
+            gui.drawLine(40, 18, 40, 24, "*", "#FFA500");//linha mais a direita da esquerda
+            gui.drawLine(39, 18, 39, 24, "*", "#FFA500");//2linha mais a direita da esquerda
+            gui.drawLine(38, 19, 38, 23, "*", "#FFA500");//3linha mais a direita da esquerda
+            gui.drawLine(37, 20, 37, 22, "*", "#FFA500");//4linha mais a direita da esquerda
+            gui.drawLine(36, 21, 36, 21, "*", "#FFA500");//5linha mais a direita da esquerda
+            gui.drawLine(70, 18, 70, 24, "*", "#FFA500");//1 linhas da direita
+            gui.drawLine(71, 18, 71, 24, "*", "#FFA500");
+            gui.drawLine(72, 19, 72, 23, "*", "#FFA500");
+            gui.drawLine(73, 20, 73, 22, "*", "#FFA500");
+            gui.drawLine(74, 21, 74, 21, "*", "#FFA500");
+
+            gui.drawLogo(17, 5, "#FFD700");
+            gui.refresh();
 
         } catch (Exception e) {
-            e.printStackTrace(); // Mostra o erro no console para depuração
             throw new RuntimeException(e);
         }
     }

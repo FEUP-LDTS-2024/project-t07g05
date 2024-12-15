@@ -1,72 +1,60 @@
 package com.ldts.crystalclash;
 
-import com.ldts.crystalclash.controller.GameController;
-import com.ldts.crystalclash.gui.GUI;
+
 import com.ldts.crystalclash.gui.LanternaGUI;
-import com.ldts.crystalclash.model.Board;
 import com.ldts.crystalclash.model.Menu;
 import com.ldts.crystalclash.states.MenuState;
 import com.ldts.crystalclash.states.State;
-import com.ldts.crystalclash.viewer.GameViewer;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
 
 public class Game {
     public final LanternaGUI gui;
-    GameViewer gameViewer;
-    GameController gameController;
-    private State state;
+    private State<?> state;
+    private int width = 120;
+    private int height = 40;
 
-    public Game(LanternaGUI gui, GameViewer gameViewer, GameController gameController, State state) {
-        try {
-            this.gui = gui;
-            this.gameViewer = gameViewer;
-            this.gameController = gameController;
-            this.state = new MenuState(new Menu());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+
+    public Game() throws FontFormatException, IOException, URISyntaxException {
+        this.gui = new LanternaGUI(width, height);
+        this.state = new MenuState(new Menu());
     }
 
-    public static void main(String[] args) throws IOException, URISyntaxException {
-        int width = 120; int height = 40;
-        LanternaGUI gui = new LanternaGUI(width, height);
-        Board board = new Board(8, 8, (width-30), height, 4, 4);
-        GameViewer gameViewer = new GameViewer(board);
-        GameController gameController = new GameController(board);
-        State state = new MenuState(new Menu());
-        Game game = new Game(gui, gameViewer, gameController, state);
-        game.start();
 
+    public static void main(String[] args) throws IOException, URISyntaxException, FontFormatException {
+        new Game().start();
     }
 
     private void start() throws IOException {
-        try {
-            boolean running = true;
-            while (running) {
-                gameViewer.draw(gui);
-                LanternaGUI.ACTION action = gui.getNextAction();
-                if (action == GUI.ACTION.QUIT) { running = false; }
-                else {
-                    gameController.step(this, action);
-                }
+        int FPS = 10;
+        int frameTime = 1000 / FPS;
+
+        while (state != null) {
+            long startTime = System.currentTimeMillis();
+
+            state.step(this, gui, startTime);
+
+            long elapsedTime = System.currentTimeMillis() - startTime;
+            long sleepTime = frameTime - elapsedTime;
+
+            try {
+                if (sleepTime > 0) Thread.sleep(sleepTime);
+            } catch (InterruptedException e) {
             }
-            closeGame();
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e);
-        }
+       }
+       closeGame();
     }
+
+
 
     public void setState(State state) {
         this.state = state;
     }
 
-
-
     private void closeGame() throws IOException {
-        gui.clear();
         gui.close();
     }
 }

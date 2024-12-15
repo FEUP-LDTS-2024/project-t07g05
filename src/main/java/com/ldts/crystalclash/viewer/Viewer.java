@@ -14,4 +14,5 @@ public abstract class Viewer<T> {
     }
 
     public abstract void draw(LanternaGUI gui);
+
 }

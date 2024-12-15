@@ -1,6 +1,5 @@
 package com.ldts.crystalclash.gui;
 
-import com.googlecode.lanterna.graphics.TextGraphics;
 import com.ldts.crystalclash.model.Board;
 import com.ldts.crystalclash.model.Position;
 import com.ldts.crystalclash.model.Tile;

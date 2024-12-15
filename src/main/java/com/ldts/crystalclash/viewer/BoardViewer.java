@@ -12,15 +12,22 @@ public class BoardViewer extends Viewer<Board> {
 
     @Override
     public void draw(LanternaGUI gui) {
-        Board model = getModel();
-        gui.drawBoard(model);
+        try {
+            gui.clear();
+            Board model = getModel();
+            gui.drawBoard(model);
 
-        // Fill the board with tiles
-        for (Tile[] row : model.getGrid()) {
-            for (Tile cell : row) {
-                TileViewer tileViewer = new TileViewer(cell);
-                tileViewer.draw(gui);
+            // Fill the board with tiles
+            for (Tile[] row : model.getGrid()) {
+                for (Tile cell : row) {
+                    TileViewer tileViewer = new TileViewer(cell);
+                    tileViewer.draw(gui);
+                }
             }
-        }
+            gui.refresh();
+        }catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
     }
 }
