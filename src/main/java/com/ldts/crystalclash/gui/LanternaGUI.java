@@ -10,12 +10,16 @@ import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
+import com.googlecode.lanterna.terminal.swing.AWTTerminalFontConfiguration;
 import com.ldts.crystalclash.model.Board;
 import com.ldts.crystalclash.model.Position;
 import com.ldts.crystalclash.model.Tile;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 public class LanternaGUI implements GUI {
     private final Screen screen;
@@ -24,9 +28,9 @@ public class LanternaGUI implements GUI {
         this.screen = screen;
     }
 
-    public LanternaGUI(int width, int height) throws IOException, URISyntaxException {
-
-        Terminal terminal = createTerminal(width, height);
+    public LanternaGUI(int width, int height) throws IOException, FontFormatException, URISyntaxException {
+        AWTTerminalFontConfiguration fontConfig = loadSquareFont();
+        Terminal terminal = createTerminal(width, height, fontConfig);
         this.screen = createScreen(terminal);
     }
 
@@ -41,11 +45,14 @@ public class LanternaGUI implements GUI {
     }
 
 
-    private Terminal createTerminal(int width, int height) throws IOException {
+    private Terminal createTerminal(int width, int height, AWTTerminalFontConfiguration fontConfig) throws IOException {
         TerminalSize terminalSize = new TerminalSize(width, height);
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory()
                 .setInitialTerminalSize(terminalSize);
+
         Terminal terminal = terminalFactory.createTerminal();
+        terminalFactory.setTerminalEmulatorFontConfiguration(fontConfig);
+
         return terminal;
     }
 
@@ -138,7 +145,22 @@ public class LanternaGUI implements GUI {
         }
     }
 
+    private AWTTerminalFontConfiguration loadSquareFont() throws URISyntaxException, FontFormatException, IOException {
+        URL resource = getClass().getClassLoader().getResource("fonts/square.ttf");
+        if (resource == null) {
+            System.err.println("Fonte não encontrada.");
+            throw new IOException("Fonte não encontrada");
+        }
+        File fontFile = new File(resource.toURI());
+        Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
 
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        ge.registerFont(font);
+
+        Font loadedFont = font.deriveFont(Font.PLAIN, 25);
+        AWTTerminalFontConfiguration fontConfig = AWTTerminalFontConfiguration.newInstance(loadedFont);
+        return fontConfig;
+    }
 
     @Override
     public void clear() {
@@ -154,4 +176,5 @@ public class LanternaGUI implements GUI {
     public void close() throws IOException {
         screen.close();
     }
+
 }
