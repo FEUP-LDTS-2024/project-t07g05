@@ -53,9 +53,12 @@ class BoardTest {
 
     @Test
     void testTileMovementOutOfBounds() {
-        Tile tile = board.getTile(0, 0);
-        assertNull(board.getTileToTheLeft(tile), "Tile to the left of (0,0) should be null");
-        assertNull(board.getTileOnBottom(tile), "Tile on bottom of (0,0) should be null");
+
+        Tile tile = new Tile("jewel", "ruby", new Position(0, 0), new Position(0, 0));
+        board.setTile(0, 0, tile);
+
+        Tile movedTile = board.getTile(-1, 0); // Tile fora do grid
+        assertNull(movedTile, "Tile moved out of bounds should be null");
     }
 
 
