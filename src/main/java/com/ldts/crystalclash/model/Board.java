@@ -11,6 +11,7 @@ public class Board {
     int width;
     int height;
     Tile currentTile;
+    Score score;
 
     public Board(int rows, int columns, int width, int height, int rowSpacing, int columnSpacing) {
         this.rows = rows;
@@ -22,6 +23,7 @@ public class Board {
         this.columnSpacing = columnSpacing;
         this.startX = Math.round(width * 0.1f);
         this.startY = Math.round(height * 0.1f);
+        this.score = new Score();
 
         initializeBoard();
         this.currentTile = getTile(0, 0);
@@ -62,6 +64,10 @@ public class Board {
 
     public int getHeight() {
         return height;
+    }
+
+    public Score getScore() {
+        return score;
     }
 
     public Tile getTile(int row, int column) {
