@@ -18,7 +18,7 @@ public class Game {
     private int height = 40;
 
 
-    public Game() throws IOException, URISyntaxException {
+    public Game() throws IOException, URISyntaxException, FontFormatException{
         this.gui = new LanternaGUI(width, height);
         this.state = new MenuState(new Menu());
     }
@@ -44,8 +44,8 @@ public class Game {
                 if (sleepTime > 0) Thread.sleep(sleepTime);
             } catch (InterruptedException e) {
             }
-       }
-       closeGame();
+        }
+        closeGame();
     }
 
     public void setState(State state) {
