@@ -1,6 +1,7 @@
 package com.ldts.crystalclash.controller;
 
 import com.ldts.crystalclash.Game;
+import com.ldts.crystalclash.factories.TileFactory;
 import com.ldts.crystalclash.gui.GUI;
 import com.ldts.crystalclash.model.*;
 import com.ldts.crystalclash.model.Board;
@@ -8,11 +9,14 @@ import com.ldts.crystalclash.model.Board;
 import java.io.IOException;
 
 public class BoardController extends GameController {
+    // TODO: algorithm must identify if it is a gemtile or a bombtile before verifying matches
     TileMatcher tileMatcher;
+    TileFactory tileFactory;
 
     public BoardController(Board board) {
         super(board);
         tileMatcher = new TileMatcher(board);
+        tileFactory = new TileFactory();
     }
 
     public void swapTiles(Tile t1, Tile t2) {
@@ -82,10 +86,7 @@ public class BoardController extends GameController {
                     Tile prev = getModel().getTile(row, col);
                     Position screenpos = prev.getScreenPosition();
                     Position gridco = prev.getGridCoordinates();
-                    String[] TYPES = {"jewel", "bomb"};
-                    String[] COLORS = {"diamond", "ruby", "emerald", "sapphire", "amethyst"};
-                    String color = COLORS[(int) (Math.random() * COLORS.length)];
-                    Tile tile = new Tile("jewel", color, screenpos, gridco);
+                    Tile tile = tileFactory.createTile("gem", screenpos, gridco);
                     getModel().setTile(row, col, tile);
                 }
             }
@@ -133,6 +134,7 @@ public class BoardController extends GameController {
                 break;
         }
         tileMatcher.findMatches();
+        getModel().getScore().addScore(tileMatcher.calculateScore());
         tileMatcher.popMatches();
         shiftTilesDown();
         refillBoard();
