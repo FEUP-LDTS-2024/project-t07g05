@@ -3,6 +3,7 @@ package com.ldts.crystalclash.controller;
 import com.ldts.crystalclash.Game;
 import com.ldts.crystalclash.gui.GUI;
 import com.ldts.crystalclash.model.*;
+import com.ldts.crystalclash.model.Board;
 
 import java.io.IOException;
 
@@ -92,7 +93,7 @@ public class BoardController extends GameController {
     }
 
     @Override
-    public void step(Game game, GUI.ACTION action) throws IOException {
+    public void step(Game game, GUI.ACTION action, long time) throws IOException {
         Board board = getModel();
         switch (action) {
             case GUI.ACTION.UP:
@@ -112,9 +113,11 @@ public class BoardController extends GameController {
                         board.getCurrentTile().getGridCoordinates().getY() - 1);
                 break;
             case GUI.ACTION.SELECT_TILE:
-                GUI.ACTION actionSwap = game.gui.getNextAction();
+                GUI.ACTION actionSwap = game.gui.waitsNextAction();
+                System.out.println(actionSwap);
                 switch (actionSwap) {
                     case GUI.ACTION.UP:
+                        System.out.println("WARNING: Up pressed");
                         swapTiles(board.getCurrentTile(), board.getTileOnTop(board.getCurrentTile()));
                         break;
                     case GUI.ACTION.DOWN:

@@ -25,6 +25,7 @@ public class LanternaGUI implements GUI {
     }
 
     public LanternaGUI(int width, int height) throws IOException, URISyntaxException {
+
         Terminal terminal = createTerminal(width, height);
         this.screen = createScreen(terminal);
     }
@@ -39,6 +40,7 @@ public class LanternaGUI implements GUI {
         return screen;
     }
 
+
     private Terminal createTerminal(int width, int height) throws IOException {
         TerminalSize terminalSize = new TerminalSize(width, height);
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory()
@@ -47,7 +49,7 @@ public class LanternaGUI implements GUI {
         return terminal;
     }
 
-    public ACTION getNextAction() throws IOException {
+    public ACTION waitsNextAction() throws IOException {
         KeyStroke keyStroke = screen.readInput();
         if (keyStroke == null) return ACTION.NONE;
 
@@ -59,6 +61,26 @@ public class LanternaGUI implements GUI {
         if (keyStroke.getKeyType() == KeyType.ArrowRight) return ACTION.RIGHT;
         if (keyStroke.getKeyType() == KeyType.ArrowDown) return ACTION.DOWN;
         if (keyStroke.getKeyType() == KeyType.ArrowLeft) return ACTION.LEFT;
+
+        if (keyStroke.getKeyType() == KeyType.Enter) return ACTION.SELECT;
+
+        return ACTION.NONE;
+    }
+
+    public ACTION getNextAction() throws IOException {
+        KeyStroke keyStroke = screen.pollInput();
+        if (keyStroke == null) return ACTION.NONE;
+
+        if (keyStroke.getKeyType() == KeyType.EOF) return ACTION.QUIT;
+        if (keyStroke.getKeyType() == KeyType.Character && keyStroke.getCharacter() == 'q') return ACTION.QUIT;
+        if (keyStroke.getKeyType() == KeyType.Character && keyStroke.getCharacter() == ' ') return ACTION.SELECT_TILE;
+
+        if (keyStroke.getKeyType() == KeyType.ArrowUp) return ACTION.UP;
+        if (keyStroke.getKeyType() == KeyType.ArrowRight) return ACTION.RIGHT;
+        if (keyStroke.getKeyType() == KeyType.ArrowDown) return ACTION.DOWN;
+        if (keyStroke.getKeyType() == KeyType.ArrowLeft) return ACTION.LEFT;
+
+        if (keyStroke.getKeyType() == KeyType.Enter) return ACTION.SELECT;
 
         return ACTION.NONE;
     }
@@ -90,11 +112,50 @@ public class LanternaGUI implements GUI {
     }
 
     @Override
+    public void drawLine(int x1, int y1, int x2, int y2, String character, String color) {
+        TextGraphics tg = screen.newTextGraphics();
+        tg.setForegroundColor(TextColor.Factory.fromString(color));
+        if (y1 == y2) {
+            for (int x = x1; x <= x2; x++) {
+                tg.putString(x, y1, "*");
+            }
+        }
+        // Se a linha é vertical
+        else if (x1 == x2) {
+            for (int y = y1; y <= y2; y++) {
+                tg.putString(x1, y, "*");
+            }
+        }
+    }
+    @Override
     public void drawText(Position position, String text, String color) {
         TextGraphics tg = screen.newTextGraphics();
         tg.setForegroundColor(TextColor.Factory.fromString(color));
         tg.putString(position.getX(), position.getY(), text);
     }
+
+    @Override
+    public void drawLogo(int startX, int startY, String color){
+        TextGraphics tg = screen.newTextGraphics();
+        tg.setForegroundColor(TextColor.Factory.fromString(color));
+
+        String[] crystalClash = new String[]{
+                "                              _             _            _                 _       ",
+                "                             | |           | |          | |               | |      ",
+                "   ___   _ __   _   _   ___  | |_    __ _  | |     ___  | |   __ _   ___  | |__    ",
+                "  / __| | '__| | | | | / __| | __|  / _` | | |    / __| | |  / _` | / __| | '_ \\   ",
+                " | (__  | |    | |_| | \\__ \\ | |_  | (_| | | |   | (__  | | | (_| | \\__ \\ | | | |  ",
+                "  \\___| |_|     \\__, | |___/  \\__|  \\__,_| |_|    \\___| |_|  \\__,_| |___/ |_| |_|  ",
+                "                 __/ |                                                             ",
+                "                |___/                                                              "
+        };
+
+        for (int i = 0; i < crystalClash.length; i++) {
+            tg.putString(startX, startY + i, crystalClash[i]);
+        }
+    }
+
+
 
     @Override
     public void clear() {
