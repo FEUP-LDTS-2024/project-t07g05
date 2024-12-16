@@ -117,7 +117,7 @@ public class TileMatcher {
     public int calculateScore() {
         int points = 0;
         for (Tile tile : matches) {
-            // Code to analyse tile colors
+            points+= tile.getColorRarity();
         }
         return points;
     }
