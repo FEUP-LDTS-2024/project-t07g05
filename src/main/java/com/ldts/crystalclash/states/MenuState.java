@@ -1,4 +1,5 @@
 package com.ldts.crystalclash.states;
+
 import com.ldts.crystalclash.Game;
 import com.ldts.crystalclash.gui.GUI;
 import com.ldts.crystalclash.viewer.MenuViewer;

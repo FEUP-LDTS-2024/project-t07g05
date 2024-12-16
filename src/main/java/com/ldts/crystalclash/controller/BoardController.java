@@ -113,9 +113,11 @@ public class BoardController extends GameController {
                         board.getCurrentTile().getGridCoordinates().getY() - 1);
                 break;
             case GUI.ACTION.SELECT_TILE:
-                GUI.ACTION actionSwap = game.gui.getNextAction();
+                GUI.ACTION actionSwap = game.gui.waitsNextAction();
+                System.out.println(actionSwap);
                 switch (actionSwap) {
                     case GUI.ACTION.UP:
+                        System.out.println("WARNING: Up pressed");
                         swapTiles(board.getCurrentTile(), board.getTileOnTop(board.getCurrentTile()));
                         break;
                     case GUI.ACTION.DOWN:
