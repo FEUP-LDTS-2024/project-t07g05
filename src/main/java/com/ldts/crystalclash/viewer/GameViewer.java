@@ -17,13 +17,9 @@ public class GameViewer extends Viewer<Board> {
     public void drawElements(GUI gui) {
         try {
             gui.drawGameBackground(width, height);
-
             gui.drawBoard(getModel()); // draws board background
             BoardViewer boardViewer = new BoardViewer(getModel());
             boardViewer.drawElements(gui);
-
-            ScoreViewer scoreViewer = new ScoreViewer(getModel().getScore());
-            scoreViewer.drawElements(gui);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

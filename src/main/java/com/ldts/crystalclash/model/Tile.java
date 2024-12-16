@@ -1,4 +1,7 @@
 package com.ldts.crystalclash.model;
+import com.googlecode.lanterna.TerminalPosition;
+import com.googlecode.lanterna.TextColor;
+import com.googlecode.lanterna.graphics.TextGraphics;
 
 public class Tile {
     private String type;
@@ -18,7 +21,6 @@ public class Tile {
         this.cursorOn = false;
     }
 
-    // TODO: Refactor it on Factory pattern
     private String determineColor(String color) {
         switch (color) {
             case "diamond":
@@ -36,11 +38,8 @@ public class Tile {
         }
     }
 
-    // TODO: Refactor it on Factory pattern
     private String determineSymbol() {
         switch (type) {
-            case "empty":
-                return " ";
             case "bomb":
                 return "⊖";
             default:
@@ -48,13 +47,7 @@ public class Tile {
         }
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
+    public String getType() {return type;}
 
     public String getColor() {
         return color;
@@ -72,10 +65,6 @@ public class Tile {
         return screenPosition;
     }
 
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
-
     public void setScreenPosition(Position screenPosition) {
         this.screenPosition = screenPosition;
     }
@@ -88,11 +77,21 @@ public class Tile {
         this.gridCoordinates = gridCoordinates;
     }
 
+    public void setCursorOn(boolean cursorOn) {
+        this.cursorOn = cursorOn;
+    }
+
     public boolean isCursorOn() {
         return cursorOn;
     }
 
-    public void setCursorOn(boolean cursorOn) {
-        this.cursorOn = cursorOn;
+    public void draw(TextGraphics graphics) {
+        graphics.setForegroundColor(TextColor.Factory.fromString(color));
+        if (isCursorOn()) {
+            graphics.setBackgroundColor(TextColor.Factory.fromString("#FFFFFF"));
+        } else {
+            graphics.setBackgroundColor(TextColor.Factory.fromString("#2e4045"));
+        }
+        graphics.putString(new TerminalPosition(this.getScreenPosition().getX(), this.getScreenPosition().getY()), getSymbol());
     }
 }
