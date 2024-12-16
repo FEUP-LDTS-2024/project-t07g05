@@ -21,4 +21,3 @@ public class GameState extends State<Board>{
         return new GameController(getModel());
     }
 }
-
