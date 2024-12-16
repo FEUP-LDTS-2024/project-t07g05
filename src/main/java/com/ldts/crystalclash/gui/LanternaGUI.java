@@ -50,15 +50,16 @@ public class LanternaGUI implements GUI {
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory()
                 .setInitialTerminalSize(terminalSize);
 
-        Terminal terminal = terminalFactory.createTerminal();
+        terminalFactory.setForceAWTOverSwing(true);
         terminalFactory.setTerminalEmulatorFontConfiguration(fontConfig);
+        Terminal terminal = terminalFactory.createTerminal();
 
         return terminal;
     }
 
 
     public ACTION getNextAction() throws IOException {
-        KeyStroke keyStroke = screen.readInput();
+        KeyStroke keyStroke = screen.pollInput();
         if (keyStroke == null) return ACTION.NONE;
 
         if (keyStroke.getKeyType() == KeyType.EOF) return ACTION.QUIT;
@@ -97,7 +98,7 @@ public class LanternaGUI implements GUI {
     @Override
     public void drawGameBackground(int width, int height) {
         TextGraphics tg = screen.newTextGraphics();
-        tg.setBackgroundColor(TextColor.Factory.fromString("#2e4045"));
+        tg.setBackgroundColor(TextColor.Factory.fromString("#143b5e"));
         tg.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(width, height), ' ');
     }
 
@@ -105,6 +106,7 @@ public class LanternaGUI implements GUI {
     public void drawLine(int x1, int y1, int x2, int y2, String character, String color) {
         TextGraphics tg = screen.newTextGraphics();
         tg.setForegroundColor(TextColor.Factory.fromString(color));
+        tg.setBackgroundColor(TextColor.Factory.fromString("#143b5e"));
         if (y1 == y2) {
             for (int x = x1; x <= x2; x++) {
                 tg.putString(x, y1, "*");
@@ -117,9 +119,11 @@ public class LanternaGUI implements GUI {
             }
         }
     }
+
     @Override
     public void drawText(Position position, String text, String color) {
         TextGraphics tg = screen.newTextGraphics();
+        tg.setBackgroundColor(TextColor.Factory.fromString("#143b5e"));
         tg.setForegroundColor(TextColor.Factory.fromString(color));
         tg.putString(position.getX(), position.getY(), text);
     }
@@ -128,6 +132,7 @@ public class LanternaGUI implements GUI {
     public void drawLogo(int startX, int startY, String color){
         TextGraphics tg = screen.newTextGraphics();
         tg.setForegroundColor(TextColor.Factory.fromString(color));
+        tg.setBackgroundColor(TextColor.Factory.fromString("#143b5e"));
 
         String[] crystalClash = new String[]{
                 "                              _             _            _                 _       ",
@@ -146,21 +151,19 @@ public class LanternaGUI implements GUI {
     }
 
     private AWTTerminalFontConfiguration loadSquareFont() throws URISyntaxException, FontFormatException, IOException {
-        URL resource = getClass().getClassLoader().getResource("fonts/square.ttf");
-        if (resource == null) {
-            System.err.println("Fonte não encontrada.");
-            throw new IOException("Fonte não encontrada");
-        }
+        URL resource = getClass().getClassLoader().getResource("fonts/KodeMono-VariableFont_wght.ttf");
         File fontFile = new File(resource.toURI());
         Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
 
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         ge.registerFont(font);
 
-        Font loadedFont = font.deriveFont(Font.PLAIN, 25);
+
+        Font loadedFont = font.deriveFont(Font.BOLD, 20);
         AWTTerminalFontConfiguration fontConfig = AWTTerminalFontConfiguration.newInstance(loadedFont);
         return fontConfig;
     }
+
 
     @Override
     public void clear() {
