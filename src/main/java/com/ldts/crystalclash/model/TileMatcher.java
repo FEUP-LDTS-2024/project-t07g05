@@ -113,4 +113,12 @@ public class TileMatcher {
             matches.clear();
         }
     }
+
+    public int calculateMatchesPoints() {
+        int points = 0;
+        for (Tile tile : matches) {
+            // Code to analyse tile colors
+        }
+        return points;
+    }
 }
