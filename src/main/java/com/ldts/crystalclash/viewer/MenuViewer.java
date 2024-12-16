@@ -1,4 +1,5 @@
 package com.ldts.crystalclash.viewer;
+import com.ldts.crystalclash.gui.GUI;
 import com.ldts.crystalclash.gui.LanternaGUI;
 import com.ldts.crystalclash.model.Menu;
 import com.ldts.crystalclash.model.Position;
@@ -10,7 +11,7 @@ public class MenuViewer extends Viewer<Menu> {
         super(model);
     }
 
-    public void draw(LanternaGUI gui) {
+    public void drawElements(GUI gui) {
         try {
             gui.clear();
             for (int i = 0; i < getModel().getNumberOptions(); i++)
