@@ -107,14 +107,14 @@ public class TileMatcher {
 
             for (Tile tile : toRemove) {
                 Position pos = tile.getGridCoordinates();
-                board.setTile(pos.getX(), pos.getY(), new EmptyTile(tile.getScreenPosition(), pos)); // Set to empty tile
+                board.setTile(pos.getX(), pos.getY(), new EmptyTile(tile.getScreenPosition(), pos, Color.DEFAULT)); // Set to empty tile
             }
 
             matches.clear();
         }
     }
 
-    public int calculateMatchesPoints() {
+    public int calculateScore() {
         int points = 0;
         for (Tile tile : matches) {
             // Code to analyse tile colors

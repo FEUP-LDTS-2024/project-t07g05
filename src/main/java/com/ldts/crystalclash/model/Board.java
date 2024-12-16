@@ -1,5 +1,7 @@
 package com.ldts.crystalclash.model;
 
+import com.ldts.crystalclash.factories.TileFactory;
+
 public class Board {
     private final Tile[][] grid;
     private final int rows;
@@ -12,6 +14,7 @@ public class Board {
     int height;
     Tile currentTile;
     Score score;
+    TileFactory tileFactory;
 
     public Board(int rows, int columns, int width, int height, int rowSpacing, int columnSpacing) {
         this.rows = rows;
@@ -23,6 +26,7 @@ public class Board {
         this.columnSpacing = columnSpacing;
         this.startX = Math.round(width * 0.1f);
         this.startY = Math.round(height * 0.1f);
+        this.tileFactory = new TileFactory();
         this.score = new Score();
 
         initializeBoard();
@@ -121,14 +125,11 @@ public class Board {
 
     //TODO: Refactor it when FactoryTile is created
     private void initializeBoard() {
-        String[] TYPES = {"jewel", "bomb"};
-        String[] COLORS = {"diamond", "ruby", "emerald", "sapphire", "amethyst"};
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < columns; col++) {
                 Position gridco = new Position(row, col);
                 Position screenpos = calculateScreenPosition(gridco);
-                String color = COLORS[(int) (Math.random() * COLORS.length)];
-                Tile tile = new Tile("jewel", color, screenpos, gridco);
+                Tile tile = tileFactory.createTile("gem", screenpos, gridco);
                 if (tile == null) {
                     System.out.println("Tile initialization failed at (" + row + "," + col + ")");
                 }
