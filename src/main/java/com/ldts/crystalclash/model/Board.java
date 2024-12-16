@@ -3,7 +3,6 @@ package com.ldts.crystalclash.model;
 import com.ldts.crystalclash.factories.TileFactory;
 
 public class Board {
-    // TODO: direct instantiation of tiles must call the factory class
     private final Tile[][] grid;
     private final int rows;
     private final int columns;
@@ -14,6 +13,7 @@ public class Board {
     int width;
     int height;
     Tile currentTile;
+    Score score;
     TileFactory tileFactory;
 
     public Board(int rows, int columns, int width, int height, int rowSpacing, int columnSpacing) {
@@ -27,6 +27,7 @@ public class Board {
         this.startX = Math.round(width * 0.1f);
         this.startY = Math.round(height * 0.1f);
         this.tileFactory = new TileFactory();
+        this.score = new Score();
 
         initializeBoard();
         this.currentTile = getTile(0, 0);
@@ -67,6 +68,10 @@ public class Board {
 
     public int getHeight() {
         return height;
+    }
+
+    public Score getScore() {
+        return score;
     }
 
     public Tile getTile(int row, int column) {

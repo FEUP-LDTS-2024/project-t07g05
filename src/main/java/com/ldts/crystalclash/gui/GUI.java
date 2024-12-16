@@ -19,6 +19,8 @@ public interface GUI {
 
     void drawText(Position position, String text, String color);
 
+    void drawTextInGame(Position position, String text, String color);
+
     void drawLogo(int startX, int startY, String color);
 
     void clear();
