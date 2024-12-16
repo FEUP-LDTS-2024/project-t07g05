@@ -1,5 +1,5 @@
 package com.ldts.crystalclash.viewer;
-import com.ldts.crystalclash.gui.LanternaGUI;
+import com.ldts.crystalclash.gui.GUI;
 import com.ldts.crystalclash.model.Menu;
 import com.ldts.crystalclash.model.Position;
 
@@ -10,16 +10,13 @@ public class MenuViewer extends Viewer<Menu> {
         super(model);
     }
 
-    public void draw(LanternaGUI gui) {
+    public void drawElements(GUI gui) {
         try {
-            gui.clear();
             for (int i = 0; i < getModel().getNumberOptions(); i++)
                 gui.drawText(
                         new Position(52, 20 + i),
                         getModel().getSelectedOption(i),
                         getModel().isSelected(i) ? "#00FFFF" : "#FFFFFF");
-
-
 
             gui.drawLine(41, 17, 69, 17, "*", "#FFA500");//1linha horizonta de cima
             gui.drawLine(40, 18, 70, 18, "*", "#FFA500");//2linha horizonta de cima
@@ -37,8 +34,6 @@ public class MenuViewer extends Viewer<Menu> {
             gui.drawLine(74, 21, 74, 21, "*", "#FFA500");
 
             gui.drawLogo(17, 5, "#FFD700");
-            gui.refresh();
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

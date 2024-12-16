@@ -1,6 +1,8 @@
 package com.ldts.crystalclash.viewer;
 
-import com.ldts.crystalclash.gui.LanternaGUI;
+import com.ldts.crystalclash.gui.GUI;
+
+import java.io.IOException;
 
 public abstract class Viewer<T> {
     private final T model;
@@ -13,6 +15,11 @@ public abstract class Viewer<T> {
         return model;
     }
 
-    public abstract void draw(LanternaGUI gui);
+    public void draw(GUI gui) throws IOException {
+        gui.clear();
+        drawElements(gui);
+        gui.refresh();
+    }
 
+    protected abstract void drawElements(GUI gui);
 }

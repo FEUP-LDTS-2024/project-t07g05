@@ -1,25 +1,25 @@
 package com.ldts.crystalclash.viewer;
 
+import com.ldts.crystalclash.gui.GUI;
 import com.ldts.crystalclash.gui.LanternaGUI;
 import com.ldts.crystalclash.model.Board;
+import com.ldts.crystalclash.model.Position;
 
 public class GameViewer extends Viewer<Board> {
     private final int width = 120;
     private final int height = 40;
-    BoardViewer boardViewer;
 
     public GameViewer(Board model) {
         super(model);
-        this.boardViewer = new BoardViewer(model);
     }
 
     @Override
-    public void draw(LanternaGUI gui) {
+    public void drawElements(GUI gui) {
         try {
-            gui.clear();
             gui.drawGameBackground(width, height);
-            boardViewer.draw(gui);
-            gui.refresh();
+            gui.drawBoard(getModel()); // draws board background
+            BoardViewer boardViewer = new BoardViewer(getModel());
+            boardViewer.drawElements(gui);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -13,12 +13,12 @@ import java.net.URISyntaxException;
 
 public class Game {
     public final LanternaGUI gui;
-    private State<?> state;
+    private State state;
     private int width = 120;
     private int height = 40;
 
 
-    public Game() throws FontFormatException, IOException, URISyntaxException {
+    public Game() throws IOException, URISyntaxException {
         this.gui = new LanternaGUI(width, height);
         this.state = new MenuState(new Menu());
     }
@@ -47,8 +47,6 @@ public class Game {
        }
        closeGame();
     }
-
-
 
     public void setState(State state) {
         this.state = state;
