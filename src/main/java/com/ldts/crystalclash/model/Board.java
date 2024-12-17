@@ -14,6 +14,7 @@ public class Board {
     int height;
     Tile currentTile;
     Score score;
+    Timer timer;
     TileFactory tileFactory;
 
     public Board(int rows, int columns, int width, int height, int rowSpacing, int columnSpacing) {
@@ -28,6 +29,8 @@ public class Board {
         this.startY = Math.round(height * 0.1f);
         this.tileFactory = new TileFactory();
         this.score = new Score();
+        this.timer = new Timer();
+        timer.start();
 
         initializeBoard();
         this.currentTile = getTile(0, 0);
@@ -72,6 +75,10 @@ public class Board {
 
     public Score getScore() {
         return score;
+    }
+
+    public Timer getTimer() {
+        return timer;
     }
 
     public Tile getTile(int row, int column) {
