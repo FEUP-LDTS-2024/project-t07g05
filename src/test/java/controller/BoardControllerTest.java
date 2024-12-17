@@ -50,22 +50,19 @@ class BoardControllerTest {
     @Test
     void testShiftTilesDown() {
         Board board = mock(Board.class);
-
         Position position1 = new Position(0, 0);
         Position position2 = new Position(1, 1);
-
         Color color = Color.EMERALD;
-
         Tile emptyTile = new EmptyTile(position1, position2, color);
 
         when(board.getTile(anyInt(), anyInt())).thenReturn(emptyTile);
 
         BoardController controller = new BoardController(board);
-
         controller.shiftTilesDown();
 
         verify(board, atLeastOnce()).setTile(anyInt(), anyInt(), any(Tile.class));
     }
+
 
     @Test
     void testRefillBoard() {
@@ -74,9 +71,9 @@ class BoardControllerTest {
 
         Position position1 = new Position(0, 0);
         Position position2 = new Position(1, 0);
-
         Color color = Color.EMERALD;
         Tile emptyTile = new EmptyTile(position1, position2, color);
+
         when(board.getTile(0, 0)).thenReturn(emptyTile);
 
         controller.refillBoard();
@@ -100,7 +97,7 @@ class BoardControllerTest {
         Tile tileOnTop = mock(Tile.class);
         when(board.getTileOnTop(currentTile)).thenReturn(tileOnTop);
 
-        controller.step(game, GUI.ACTION.SELECT_TILE);
+        controller.step(game, GUI.ACTION.SELECT_TILE, 0);
 
         verify(board).getTileOnTop(currentTile);
     }
