@@ -1,10 +1,6 @@
 package model;
 
-import com.ldts.crystalclash.model.Board;
-import com.ldts.crystalclash.model.Tile;
-import com.ldts.crystalclash.model.Position;
-import com.ldts.crystalclash.model.EmptyTile;
-import com.ldts.crystalclash.model.TileMatcher;
+import com.ldts.crystalclash.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
