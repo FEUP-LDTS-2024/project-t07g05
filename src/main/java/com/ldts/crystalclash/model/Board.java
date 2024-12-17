@@ -130,16 +130,12 @@ public class Board {
         return (row >= 0 && row < rows) && (column >= 0 && column < columns);
     }
 
-    //TODO: Refactor it when FactoryTile is created
     private void initializeBoard() {
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < columns; col++) {
                 Position gridco = new Position(row, col);
                 Position screenpos = calculateScreenPosition(gridco);
-                Tile tile = tileFactory.createTile("gem", screenpos, gridco);
-                if (tile == null) {
-                    System.out.println("Tile initialization failed at (" + row + "," + col + ")");
-                }
+                Tile tile = tileFactory.createRandomTile(screenpos, gridco);
                 grid[row][col] = tile;
             }
         }

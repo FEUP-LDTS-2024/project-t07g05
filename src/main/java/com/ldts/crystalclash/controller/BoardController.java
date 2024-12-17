@@ -86,7 +86,7 @@ public class BoardController extends GameController {
                     Tile prev = getModel().getTile(row, col);
                     Position screenpos = prev.getScreenPosition();
                     Position gridco = prev.getGridCoordinates();
-                    Tile tile = tileFactory.createTile("gem", screenpos, gridco);
+                    Tile tile = tileFactory.createRandomTile(screenpos, gridco);
                     getModel().setTile(row, col, tile);
                 }
             }
