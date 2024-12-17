@@ -4,10 +4,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GameOver {
+    final int score;
     private final List<String> options;
     private int selectedOption = 0;
 
-    public GameOver() {this.options = Arrays.asList("PLAY AGAIN", "SCORES", "EXIT");}
+    public GameOver(int score) {
+        this.options = Arrays.asList("PLAY AGAIN", "SCORES", "EXIT");
+        this.score = score;
+    }
 
     public void selectNext() {
         selectedOption++;
@@ -43,6 +47,7 @@ public class GameOver {
         return this.options.size();
     }
 
-
-
+    public int getScore() {
+        return score;
+    }
 }

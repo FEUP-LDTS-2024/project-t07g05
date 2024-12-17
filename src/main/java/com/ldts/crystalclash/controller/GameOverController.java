@@ -14,18 +14,17 @@ import java.io.IOException;
 import java.util.List;
 
 public class GameOverController extends Controller<GameOver> {
-
-    //private GameOverScreen screenView;
-
     private String nickNameSpaces;
     private String nickName;
     private static final int LIMITCHAR = 11;
     private Integer newScore;
-    List<Integer> score;
-    List<String> name;
+    List<Integer> scores;
+    List<String> names;
 
 
-    public GameOverController(GameOver model) {super(model);}
+    public GameOverController(GameOver model) {
+        super(model);
+    }
 
 
     public void keyPressed(KeyEvent e) {
@@ -35,10 +34,10 @@ public class GameOverController extends Controller<GameOver> {
         boolean isCapitalLetter = e.getKeyCode() >= KeyEvent.VK_A && e.getKeyCode() <= KeyEvent.VK_Z;
 
         if (isLetterMin || isCapitalLetter || isNumber)
-            if(KeyEvent.getKeyText(e.getKeyCode()).length() == 1)
+            if (KeyEvent.getKeyText(e.getKeyCode()).length() == 1)
                 writeName(e.getKeyChar());
 
-        if(e.getKeyCode() == KeyEvent.VK_ENTER){
+         if (e.getKeyCode() == KeyEvent.VK_ENTER){
             //updateLeaderboard(Constants.LEADERBOARD_FILE);
         }
     }
@@ -72,6 +71,9 @@ public class GameOverController extends Controller<GameOver> {
                 if (getModel().isSelectedScores()) {
 
                 }
+                break;
+            default:
+
         }
 
     }
