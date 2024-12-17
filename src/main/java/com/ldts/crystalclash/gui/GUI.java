@@ -13,9 +13,15 @@ public interface GUI {
 
     void drawBoard(Board board);
 
+    void drawLine(int x1, int y1, int x2, int y2, String text, String color);
+
     void drawGameBackground(int width, int height);
 
     void drawText(Position position, String text, String color);
+
+    void drawTextInGame(Position position, String text, String color);
+
+    void drawLogo(int startX, int startY, String color);
 
     void clear();
 
@@ -23,5 +29,5 @@ public interface GUI {
 
     void close() throws IOException;
 
-    enum ACTION {UP, RIGHT, DOWN, LEFT, QUIT, SELECT_TILE, NONE}
+    enum ACTION {UP, RIGHT, DOWN, LEFT, QUIT, SELECT, SELECT_TILE, NONE}
 }

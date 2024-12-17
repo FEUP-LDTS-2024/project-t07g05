@@ -19,7 +19,7 @@ class TileControllerTest {
     @Test
     void testStep() {
         try{
-            controller.step(null,null);
+            controller.step(null,null, 0);
         }catch(Exception e){
             assert false : "Step should not throw an exception";
         }
