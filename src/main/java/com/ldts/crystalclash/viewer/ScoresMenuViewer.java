@@ -13,12 +13,15 @@ public class ScoresMenuViewer extends Viewer<ScoresMenu> {
     @Override
     protected void drawElements(GUI gui) {
         gui.drawGameBackground(120, 40);
+        gui.drawText(new Position(42,38), "click 'q' to return to the menu", "#ff3300");
+
         if (getModel().getEntries().size() > 0) {
             int i = 0;
             for (ScoreEntry entry : getModel().getEntries()) {
                 gui.drawText(new Position(10, 4 + i),
                         entry.getPoints(),
                         "#FFFFFF");
+
                 gui.drawText(new Position(20, 4 + 1),
                         entry.getDate(),
                         "#FFFFFF");

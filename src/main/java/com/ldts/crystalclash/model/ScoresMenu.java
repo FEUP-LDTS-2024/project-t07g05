@@ -43,6 +43,7 @@ public class ScoresMenu {
         return entries;
     }
 
+
     public List<ScoreEntry> getEntries() {
         return entries;
     }

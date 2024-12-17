@@ -12,7 +12,7 @@ import java.net.URISyntaxException;
 
 
 public class Game {
-    public final LanternaGUI gui;
+    public LanternaGUI gui;
     private State state;
     private int width = 120;
     private int height = 40;
@@ -25,12 +25,14 @@ public class Game {
 
 
     public static void main(String[] args) throws IOException, URISyntaxException, FontFormatException {
+
         new Game().start();
     }
 
-    private void start() throws IOException {
+    private void start() throws IOException{
         int FPS = 10;
         int frameTime = 1000 / FPS;
+
 
         while (state != null) {
             long startTime = System.currentTimeMillis();

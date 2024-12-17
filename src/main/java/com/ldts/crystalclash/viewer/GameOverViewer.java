@@ -15,6 +15,8 @@ public class GameOverViewer extends Viewer<GameOver> {
     public void drawElements(GUI gui) {
         try {
             gui.clear();
+
+
             gui.drawGameBackground(120, 40);
             for (int i = 0; i < getModel().getNumberOptions(); i++)
                 gui.drawText(
@@ -25,6 +27,10 @@ public class GameOverViewer extends Viewer<GameOver> {
 
             gui.drawText(new Position(37, 5), "G A M E  O V E R:" , "#eaff00");
             gui.drawText(new Position(40, 10), "YOUR SCORE:" + getModel().getScore(), "#FFFFFF");
+
+
+
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
