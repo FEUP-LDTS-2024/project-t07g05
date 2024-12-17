@@ -5,4 +5,8 @@ public class EmptyTile extends Tile {
         super(screenPosition, gridCoordinates, color);
         this.symbol = " ";
     }
+
+    public EmptyTile(Position position, Position position1) {
+        super();
+    }
 }
