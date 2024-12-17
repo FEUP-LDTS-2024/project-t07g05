@@ -14,12 +14,13 @@ import java.net.URISyntaxException;
 
 public class Game {
     public final LanternaGUI gui;
-    private State state;
+    private State<?> state;
     private int width = 120;
     private int height = 40;
     Music music = new Music();
 
-    public Game() throws IOException, URISyntaxException, FontFormatException{
+
+    public Game() throws IOException, URISyntaxException,FontFormatException{
         this.gui = new LanternaGUI(width, height);
         this.state = new MenuState(new Menu());
     }
@@ -33,7 +34,6 @@ public class Game {
         int FPS = 10;
         int frameTime = 1000 / FPS;
         music.startMusic();
-
         while (state != null) {
             long startTime = System.currentTimeMillis();
 
@@ -45,7 +45,6 @@ public class Game {
             try {
                 if (sleepTime > 0) Thread.sleep(sleepTime);
             } catch (InterruptedException e) {
-
             }
        }
        closeGame();
@@ -53,11 +52,9 @@ public class Game {
 
     public void setState(State state) {
         this.state = state;
-
     }
 
     private void closeGame() throws IOException {
         gui.close();
-        music.stopMusic();
     }
 }
