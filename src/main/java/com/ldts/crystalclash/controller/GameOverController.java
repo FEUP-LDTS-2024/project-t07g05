@@ -5,7 +5,9 @@ import com.ldts.crystalclash.gui.GUI;
 import com.ldts.crystalclash.model.Board;
 import com.ldts.crystalclash.model.GameOver;
 import com.ldts.crystalclash.model.Menu;
+import com.ldts.crystalclash.model.ScoresMenu;
 import com.ldts.crystalclash.states.GameState;
+import com.ldts.crystalclash.states.ScoresMenuState;
 import com.ldts.crystalclash.viewer.GameOverViewer;
 
 import java.awt.event.KeyEvent;
@@ -26,34 +28,6 @@ public class GameOverController extends Controller<GameOver> {
         super(model);
     }
 
-
-    public void keyPressed(KeyEvent e) {
-
-        boolean isNumber = e.getKeyCode() >= KeyEvent.VK_0 && e.getKeyCode() <= KeyEvent.VK_9;
-        boolean isLetterMin = e.getKeyCode() > 96 && e.getKeyCode() < 123;
-        boolean isCapitalLetter = e.getKeyCode() >= KeyEvent.VK_A && e.getKeyCode() <= KeyEvent.VK_Z;
-
-        if (isLetterMin || isCapitalLetter || isNumber)
-            if (KeyEvent.getKeyText(e.getKeyCode()).length() == 1)
-                writeName(e.getKeyChar());
-
-         if (e.getKeyCode() == KeyEvent.VK_ENTER){
-            //updateLeaderboard(Constants.LEADERBOARD_FILE);
-        }
-    }
-
-    public void writeName(char c) {
-        if(nickName.length() + 1 <= LIMITCHAR) nickName += c;
-        nickNameSpaces = "";
-        for (char ch : nickName.toCharArray()) {
-            nickNameSpaces += ch + " ";
-        }
-        for (int i = 0; i < (LIMITCHAR - nickName.length()); i++)
-            nickNameSpaces += "_ ";
-
-    }
-
-
     @Override
     public void step(Game game, GUI.ACTION action, long time) throws IOException {
         switch (action) {
@@ -69,11 +43,9 @@ public class GameOverController extends Controller<GameOver> {
                     game.setState(new GameState(new Board(8, 8, 90, 40, 4, 4)));
                 //completar para o menuscores
                 if (getModel().isSelectedScores()) {
-
+                    game.setState(new ScoresMenuState(new ScoresMenu(getModel().getScore())));
                 }
                 break;
-            default:
-
         }
 
     }

@@ -4,7 +4,9 @@ import com.ldts.crystalclash.Game;
 import com.ldts.crystalclash.gui.GUI;
 import com.ldts.crystalclash.model.Board;
 import com.ldts.crystalclash.model.Menu;
+import com.ldts.crystalclash.model.ScoresMenu;
 import com.ldts.crystalclash.states.GameState;
+import com.ldts.crystalclash.states.ScoresMenuState;
 
 
 import java.io.IOException;
@@ -29,7 +31,9 @@ public class MenuController extends Controller<Menu> {
                 if (getModel().isSelectedPlay())
                     game.setState(new GameState(new Board(8, 8, 90, 40, 4, 4)));
                 //completar para o menuscores
-                if (getModel().isSelectedScores()) {}
+                if (getModel().isSelectedScores()) {
+                    game.setState(new ScoresMenuState(new ScoresMenu()));
+                }
         }
 
     }
