@@ -47,12 +47,14 @@ class BoardControllerTest {
         verify(tile).setCursorOn(true);
     }
 
+
     @Test
     void testShiftTilesDown() {
         Board board = mock(Board.class);
         Position position1 = new Position(0, 0);
         Position position2 = new Position(1, 1);
         Color color = Color.EMERALD;
+
         Tile emptyTile = new EmptyTile(position1, position2, color);
 
         when(board.getTile(anyInt(), anyInt())).thenReturn(emptyTile);
@@ -63,7 +65,6 @@ class BoardControllerTest {
         verify(board, atLeastOnce()).setTile(anyInt(), anyInt(), any(Tile.class));
     }
 
-
     @Test
     void testRefillBoard() {
         when(board.getRows()).thenReturn(5);
@@ -72,6 +73,7 @@ class BoardControllerTest {
         Position position1 = new Position(0, 0);
         Position position2 = new Position(1, 0);
         Color color = Color.EMERALD;
+
         Tile emptyTile = new EmptyTile(position1, position2, color);
 
         when(board.getTile(0, 0)).thenReturn(emptyTile);
@@ -84,11 +86,8 @@ class BoardControllerTest {
 
     @Test
     void testStep() throws IOException {
-
         Game game = mock(Game.class);
         GUI gui = mock(GUI.class);
-
-        when(gui.getNextAction()).thenReturn(GUI.ACTION.UP);
 
         when(gui.getNextAction()).thenReturn(GUI.ACTION.UP);
 

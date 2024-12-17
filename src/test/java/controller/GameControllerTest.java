@@ -12,10 +12,13 @@ import static org.mockito.Mockito.*;
 
 public class GameControllerTest {
     private GameController controller;
+    private BoardController boardController;
+    private Board board;
 
     @BeforeEach
     void setUp() {
-        Board board = mock(Board.class);
+        board = mock(Board.class);
+        boardController = mock(BoardController.class);
         controller = new GameController(board);
     }
 
