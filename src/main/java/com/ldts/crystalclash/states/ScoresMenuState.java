@@ -1,4 +1,4 @@
 package com.ldts.crystalclash.states;
 
-public class ScoresState {
+public class ScoresMenuState {
 }
