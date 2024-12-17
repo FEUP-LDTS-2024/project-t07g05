@@ -8,6 +8,16 @@ import com.ldts.crystalclash.viewer.Viewer;
 
 import java.io.IOException;
 
+
+
+import com.ldts.crystalclash.Game;
+import com.ldts.crystalclash.controller.Controller;
+import com.ldts.crystalclash.gui.GUI;
+import com.ldts.crystalclash.gui.LanternaGUI;
+import com.ldts.crystalclash.viewer.Viewer;
+
+import java.io.IOException;
+
 public abstract class State<T> {
     private final T model;
     private final Controller<T> controller;
