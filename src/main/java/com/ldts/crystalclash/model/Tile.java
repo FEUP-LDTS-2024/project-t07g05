@@ -8,6 +8,9 @@ public abstract class Tile {
     Color color;
 
     public Tile(Position screenPosition, Position gridCoordinates, Color color) {
+        if (screenPosition == null || gridCoordinates == null) {
+            throw new IllegalArgumentException("Positions cannot be null");
+        }
         this.screenPosition = screenPosition;
         this.gridCoordinates = gridCoordinates;
         this.cursorOn = false;
