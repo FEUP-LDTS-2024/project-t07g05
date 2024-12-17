@@ -28,7 +28,6 @@ class TileMatcherTest {
 
     @Test
     void testMatchesIsNotNull() {
-        // Mock board setup
         when(board.getRows()).thenReturn(5);
         when(board.getColumns()).thenReturn(5);
 
@@ -37,27 +36,40 @@ class TileMatcherTest {
         assertNotNull(tileMatcher.matches, "Matches should not be null");
     }
 
-
     @Test
     void testNoMatchesFound() {
         when(board.getRows()).thenReturn(5);
         when(board.getColumns()).thenReturn(5);
 
-        // Mockando tiles
-        for (int row = 0; row < 5; row++) {
+        Tile tile1 = mock(Tile.class);
+        when(tile1.getColor()).thenReturn("Red");
+
+        Tile tile2 = mock(Tile.class);
+        when(tile2.getColor()).thenReturn("Blue");
+
+        Tile tile3 = mock(Tile.class);
+        when(tile3.getColor()).thenReturn("Green");
+
+        when(board.getTile(0, 0)).thenReturn(tile1);
+        when(board.getTile(0, 1)).thenReturn(tile2);
+        when(board.getTile(0, 2)).thenReturn(tile3);
+
+        for (int row = 1; row < 5; row++) {
             for (int col = 0; col < 5; col++) {
-                Tile tile = mock(Tile.class);
-                when(tile.getColor()).thenReturn("Red");  // Todos os tiles terão a cor "Red"
-                when(board.getTile(row, col)).thenReturn(tile);
+                Tile emptyTile = mock(Tile.class);
+                when(emptyTile.getColor()).thenReturn("Empty");
+                when(board.getTile(row, col)).thenReturn(emptyTile);
             }
         }
 
-        TileMatcher tileMatcher = new TileMatcher(board);
         tileMatcher.findMatches();
+
         assertTrue(tileMatcher.matches.isEmpty(), "Matches should be empty");
     }
 
-    
+
+
+
     @Test
     void testMatchesAreCleared() {
         when(board.getRows()).thenReturn(5);
@@ -84,25 +96,42 @@ class TileMatcherTest {
 
     @Test
     void testHorizontalMatch() {
+        // Set up the board with rows and columns
         when(board.getRows()).thenReturn(5);
         when(board.getColumns()).thenReturn(5);
 
+        // Mock the tiles involved in the match
         Tile tile1 = mock(Tile.class);
-        Tile tile2 = mock(Tile.class);
-        Tile tile3 = mock(Tile.class);
-
         when(tile1.getColor()).thenReturn("Red");
+
+        Tile tile2 = mock(Tile.class);
         when(tile2.getColor()).thenReturn("Red");
+
+        Tile tile3 = mock(Tile.class);
         when(tile3.getColor()).thenReturn("Red");
 
+        // Mock the board's specific tiles to return the expected tiles at the matching positions
         when(board.getTile(0, 0)).thenReturn(tile1);
         when(board.getTile(0, 1)).thenReturn(tile2);
         when(board.getTile(0, 2)).thenReturn(tile3);
 
+        // Mock the other tiles on the board to return some neutral or non-matching color
+        for (int row = 1; row < 5; row++) {
+            for (int col = 0; col < 5; col++) {
+                Tile emptyTile = mock(Tile.class);
+                when(emptyTile.getColor()).thenReturn("Empty");  // Return a non-matching color
+                when(board.getTile(row, col)).thenReturn(emptyTile);
+            }
+        }
+
+        // Now run the match finder
         tileMatcher.findMatches();
 
+        // Assert that matches were found (horizontal match at row 0, columns 0, 1, and 2)
         assertFalse(tileMatcher.matches.isEmpty(), "Matches should be found");
     }
+
+
 
     @Test
     void testVerticalMatch() {
@@ -125,6 +154,4 @@ class TileMatcherTest {
 
         assertFalse(tileMatcher.matches.isEmpty(), "Matches should be found");
     }
-
-
 }
