@@ -25,8 +25,7 @@ public class GameOverController extends Controller<GameOver> {
     List<String> name;
 
 
-    public GameOverController(GameOver model) {super(model);
-    }
+    public GameOverController(GameOver model) {super(model);}
 
 
     public void keyPressed(KeyEvent e) {
