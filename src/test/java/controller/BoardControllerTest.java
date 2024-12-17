@@ -34,13 +34,13 @@ class BoardControllerTest {
 
         controller.swapTiles(tile1, tile2);
 
-        verify(board).setTile(0, 0, tile2);
+        verify(board).setTile(0, 0, tile2);  
         verify(board).setTile(1, 1, tile1);
 
         verify(tile1).setGridCoordinates(pos2);
         verify(tile2).setGridCoordinates(pos1);
-
     }
+
 
     @Test
     void testMoveCurrentTile() {
@@ -56,7 +56,6 @@ class BoardControllerTest {
 
     @Test
     void testShiftTilesDown() {
-
         Tile emptyTile = mock(Tile.class);
         Position pos = new Position(0, 0);
 
@@ -65,8 +64,9 @@ class BoardControllerTest {
 
         controller.shiftTilesDown();
 
-        verify(board, atLeastOnce()).getTile(anyInt(), anyInt());
+        verify(board, atLeastOnce()).setTile(anyInt(), anyInt(), any(Tile.class));
     }
+
 
     @Test
     void testRefillBoard() {
