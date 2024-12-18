@@ -20,7 +20,7 @@ public class Game {
     Music music = new Music();
 
 
-    public Game() throws IOException, URISyntaxException,FontFormatException{
+    public Game() throws IOException, URISyntaxException, FontFormatException{
         this.gui = new LanternaGUI(width, height);
         this.state = new MenuState(new Menu());
     }
@@ -34,7 +34,6 @@ public class Game {
         int FPS = 10;
         int frameTime = 1000 / FPS;
         music.startMusic();
-
 
         while (state != null) {
             long startTime = System.currentTimeMillis();
@@ -51,8 +50,6 @@ public class Game {
         }
         closeGame();
     }
-
-
 
     public void setState(State state) {
         this.state = state;
