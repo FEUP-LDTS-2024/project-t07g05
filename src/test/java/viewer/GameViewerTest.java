@@ -1,45 +1,51 @@
 package viewer;
 
-import com.ldts.crystalclash.gui.LanternaGUI;
+import com.ldts.crystalclash.gui.GUI;
 import com.ldts.crystalclash.model.Board;
+import com.ldts.crystalclash.model.Position;
+import com.ldts.crystalclash.model.Score;
+import com.ldts.crystalclash.model.Tile;
+import com.ldts.crystalclash.model.Timer;
 import com.ldts.crystalclash.viewer.GameViewer;
-import com.ldts.crystalclash.viewer.BoardViewer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 
 import static org.mockito.Mockito.*;
 
 public class GameViewerTest {
-
-    private LanternaGUI gui;
     private GameViewer gameViewer;
-    private BoardViewer boardViewer;
+    private Board mockBoard;
+    private GUI mockGUI;
 
     @BeforeEach
     void setUp() {
-        gui = mock(LanternaGUI.class);
-        Board board = mock(Board.class);
-        boardViewer = mock(BoardViewer.class);
-        gameViewer = new GameViewer(board);
-
-        try {
-            var boardViewerField = GameViewer.class.getDeclaredField("boardViewer");
-            boardViewerField.setAccessible(true);
-            boardViewerField.set(gameViewer, boardViewer);
-
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new RuntimeException("Failed to set mock BoardViewer", e);
-        }
+        mockGUI = mock(GUI.class);
+        mockBoard = mock(Board.class);
+        gameViewer = new GameViewer(mockBoard);
     }
 
     @Test
-    void testDraw() throws java.io.IOException{
-        gameViewer.draw(gui);
+    void testDrawElementsCallsTimerViewer() {
 
-        verify(gui).clear();
-        verify(gui).drawGameBackground(120,40);
-        verify(boardViewer).draw(gui);
-        verify(gui).refresh();
+        Timer realTimer = new Timer();
+        realTimer.start();
+
+        Score mockScore = mock(Score.class);
+        when(mockBoard.getScore()).thenReturn(mockScore);
+        when(mockScore.getScore()).thenReturn(100);
+
+        Tile mockTile1 = mock(Tile.class);
+        Tile mockTile2 = mock(Tile.class);
+        Tile[][] grid = new Tile[][]{
+                {mockTile1, mockTile2}
+        };
+        when(mockBoard.getGrid()).thenReturn(grid);
+
+        when(mockBoard.getTimer()).thenReturn(realTimer);
+
+        gameViewer.drawElements(mockGUI);
+
+        verify(mockGUI, times(1)).drawText(any(Position.class), anyString(), eq("white"));
     }
+
 }

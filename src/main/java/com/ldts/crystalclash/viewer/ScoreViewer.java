@@ -10,7 +10,7 @@ public class ScoreViewer extends Viewer<Score> {
     }
 
     @Override
-    protected void drawElements(GUI gui) {
+    public void drawElements(GUI gui) {
         gui.drawTextInGame(new Position(100, 5),
                 "SCORE:",
                 "#FFFFFF");
