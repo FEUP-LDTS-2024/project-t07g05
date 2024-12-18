@@ -160,7 +160,7 @@ public class LanternaGUI implements GUI {
         ge.registerFont(font);
 
 
-        Font loadedFont = font.deriveFont(Font.BOLD, 20);
+        Font loadedFont = font.deriveFont(Font.BOLD, 11);
         AWTTerminalFontConfiguration fontConfig = AWTTerminalFontConfiguration.newInstance(loadedFont);
         return fontConfig;
     }

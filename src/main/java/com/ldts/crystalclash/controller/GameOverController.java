@@ -16,16 +16,15 @@ import java.io.IOException;
 import java.util.List;
 
 public class GameOverController extends Controller<GameOver> {
-    private String nickNameSpaces;
-    private String nickName;
-    private static final int LIMITCHAR = 11;
-    private Integer newScore;
-    List<Integer> scores;
-    List<String> names;
-
+    ScoresMenu currentScore;
 
     public GameOverController(GameOver model) {
         super(model);
+        try {
+            this.currentScore = new ScoresMenu(getModel().getScore());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -41,9 +40,8 @@ public class GameOverController extends Controller<GameOver> {
                 if (getModel().isSelectedExit()) game.setState(null);
                 if (getModel().isSelectedPlayAgain())
                     game.setState(new GameState(new Board(8, 8, 90, 40, 4, 4)));
-                //completar para o menuscores
                 if (getModel().isSelectedScores()) {
-                    game.setState(new ScoresMenuState(new ScoresMenu(getModel().getScore())));
+                    game.setState(new ScoresMenuState(currentScore));
                 }
                 break;
         }

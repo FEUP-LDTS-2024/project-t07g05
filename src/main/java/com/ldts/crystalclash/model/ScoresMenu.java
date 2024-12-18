@@ -1,50 +1,75 @@
 package com.ldts.crystalclash.model;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class ScoresMenu {
     private List<ScoreEntry> entries;
-    private int newScore;
+    int newScore;
+    String filePath = System.getProperty("user.dir") + "/src/main/scores/scores.txt";
 
     public ScoresMenu() throws IOException {
-        URL resource = ScoresMenu.class.getResource("/scores/scores.txt");
-        assert resource != null;
-        BufferedReader br = new BufferedReader(new FileReader(resource.getFile()));
-
-        entries = readEntries(br);
+        entries = new ArrayList<>();
+        BufferedReader br = new BufferedReader(new FileReader(filePath));
+        readEntries(br);
     }
 
     public ScoresMenu(int newScore) throws IOException {
-        URL resource = ScoresMenu.class.getResource("/scores/scores.txt");
-        assert resource != null;
-        BufferedReader br = new BufferedReader(new FileReader(resource.getFile()));
+        this(); // Calls the default constructor
 
-        entries = readEntries(br);
         this.newScore = newScore;
-
-        // Create function to compare new score with points in the list,
-        // if it is higher than any of the list entries, place it in order
-    }
-
-    private List<ScoreEntry> readEntries(BufferedReader br) throws IOException {
-        List<ScoreEntry> entries = new ArrayList<>();
-        for (String line; (line = br.readLine()) != null; ) {
-            String[] parts = line.split(",", 2);
-            if (parts.length == 2) {
-                entries.add(new ScoreEntry(parts[0].trim(), parts[1].trim()));
-            }
+        String currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date());
+        // Calls addScore if newScore is higher than the last element
+        // Limits the number of entries to 10
+        if (entries.isEmpty() || newScore > entries.getLast().getPoints() || entries.size() < 10) {
+            addScore(newScore, currentDate);
         }
-        br.close();
-        return entries;
     }
 
+    private void readEntries(BufferedReader br) throws IOException {
+        for (String line; (line = br.readLine()) != null; ) {
+        String[] parts = line.split(",");
+        if (parts.length == 2) {
+            String points = parts[0].trim();
+            String date = parts[1].trim();
+            entries.add(new ScoreEntry(Integer.parseInt(points), date));
+        }
+    }
+        br.close();
+    }
 
     public List<ScoreEntry> getEntries() {
         return entries;
+    }
+
+    private void writeScoresToFile() {
+        // Limits the number of entries to 10
+        if (entries.size() > 10) {
+            entries = entries.subList(0, 10);
+        }
+
+        try {
+            File file = new File(filePath);
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            for (ScoreEntry entry : entries) {
+                bw.write(entry.getPoints() + "," + entry.getDate());
+                bw.newLine();
+            }
+            bw.close();
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to write scores to file", e);
+        }
+    }
+
+    public void addScore(int points, String date) {
+        entries.add(new ScoreEntry(points, date));
+        System.out.println(entries);
+        entries.sort(Comparator.comparingInt(ScoreEntry::getPoints).reversed());
+        writeScoresToFile();
     }
 }

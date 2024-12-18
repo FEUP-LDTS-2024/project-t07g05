@@ -1,15 +1,15 @@
 package com.ldts.crystalclash.model;
 
 public class ScoreEntry {
-    private final String points;
+    private final int points;
     private final String date;
 
-    public ScoreEntry(String points, String date) {
+    public ScoreEntry(int points, String date) {
         this.points = points;
         this.date = date;
     }
 
-    public String getPoints() {
+    public int getPoints() {
         return points;
     }
 
