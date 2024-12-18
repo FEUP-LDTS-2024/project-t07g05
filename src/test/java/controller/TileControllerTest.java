@@ -110,7 +110,7 @@ class TileControllerTest {
         Tile tile = mock(Tile.class);
         when(board.getCurrentTile()).thenReturn(tile);
 
-        when(gui.getNextAction()).thenReturn(GUI.ACTION.SELECT);  
+        when(gui.getNextAction()).thenReturn(GUI.ACTION.SELECT);
 
         assertDoesNotThrow(() -> controller.step(game, GUI.ACTION.SELECT, 0));
 

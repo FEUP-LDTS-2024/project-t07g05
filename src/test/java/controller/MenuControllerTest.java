@@ -53,6 +53,6 @@ public class MenuControllerTest {
 
         controller.step(game, GUI.ACTION.SELECT, 0);
 
-        verify(game).setState(null);  
+        verify(game).setState(null);
     }
 }

@@ -38,7 +38,7 @@ class TimerControllerTest {
         GUI.ACTION action = GUI.ACTION.NONE;
 
         controller.step(game, action, 0);
-        
+
         verifyNoInteractions(timer);
     }
 }

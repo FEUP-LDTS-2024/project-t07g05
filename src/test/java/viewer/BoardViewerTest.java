@@ -42,4 +42,3 @@ public class BoardViewerTest {
         verify(mockTileViewer2, times(1)).drawElements(mockGUI);
     }
 }
-
