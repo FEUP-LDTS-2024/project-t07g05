@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-
 public class LanternaGUI implements GUI {
     private final Screen screen;
 
@@ -29,7 +28,7 @@ public class LanternaGUI implements GUI {
         this.screen = screen;
     }
 
-    public LanternaGUI(int width, int height) throws IOException, URISyntaxException, FontFormatException {
+    public LanternaGUI(int width, int height) throws IOException, FontFormatException, URISyntaxException {
         AWTTerminalFontConfiguration fontConfig = loadSquareFont();
         Terminal terminal = createTerminal(width, height, fontConfig);
         this.screen = createScreen(terminal);
@@ -116,7 +115,7 @@ public class LanternaGUI implements GUI {
     @Override
     public void drawGameBackground(int width, int height) {
         TextGraphics tg = screen.newTextGraphics();
-        tg.setBackgroundColor(TextColor.Factory.fromString("#2e4045"));
+        tg.setBackgroundColor(TextColor.Factory.fromString("#143b5e"));
         tg.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(width, height), ' ');
     }
 
@@ -124,6 +123,7 @@ public class LanternaGUI implements GUI {
     public void drawLine(int x1, int y1, int x2, int y2, String character, String color) {
         TextGraphics tg = screen.newTextGraphics();
         tg.setForegroundColor(TextColor.Factory.fromString(color));
+        tg.setBackgroundColor(TextColor.Factory.fromString("#143b5e"));
         if (y1 == y2) {
             for (int x = x1; x <= x2; x++) {
                 tg.putString(x, y1, "*");
@@ -136,9 +136,11 @@ public class LanternaGUI implements GUI {
             }
         }
     }
+
     @Override
     public void drawText(Position position, String text, String color) {
         TextGraphics tg = screen.newTextGraphics();
+        tg.setBackgroundColor(TextColor.Factory.fromString("#143b5e"));
         tg.setForegroundColor(TextColor.Factory.fromString(color));
         tg.putString(position.getX(), position.getY(), text);
     }
@@ -151,24 +153,12 @@ public class LanternaGUI implements GUI {
         tg.putString(position.getX(), position.getY(), text);
     }
 
-    private AWTTerminalFontConfiguration loadSquareFont() throws URISyntaxException, FontFormatException, IOException {
-        URL resource = getClass().getClassLoader().getResource("fonts/KodeMono-VariableFont_wght.ttf");
-        File fontFile = new File(resource.toURI());
-        Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
-
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        ge.registerFont(font);
-
-
-        Font loadedFont = font.deriveFont(Font.BOLD, 11);
-        AWTTerminalFontConfiguration fontConfig = AWTTerminalFontConfiguration.newInstance(loadedFont);
-        return fontConfig;
-    }
 
     @Override
     public void drawLogo(int startX, int startY, String color){
         TextGraphics tg = screen.newTextGraphics();
         tg.setForegroundColor(TextColor.Factory.fromString(color));
+        tg.setBackgroundColor(TextColor.Factory.fromString("#143b5e"));
 
         String[] crystalClash = new String[]{
                 "                              _             _            _                 _       ",
@@ -186,6 +176,19 @@ public class LanternaGUI implements GUI {
         }
     }
 
+    private AWTTerminalFontConfiguration loadSquareFont() throws URISyntaxException, FontFormatException, IOException {
+        URL resource = getClass().getClassLoader().getResource("fonts/KodeMono-VariableFont_wght.ttf");
+        File fontFile = new File(resource.toURI());
+        Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        ge.registerFont(font);
+
+
+        Font loadedFont = font.deriveFont(Font.BOLD, 11);
+        AWTTerminalFontConfiguration fontConfig = AWTTerminalFontConfiguration.newInstance(loadedFont);
+        return fontConfig;
+    }
 
 
     @Override

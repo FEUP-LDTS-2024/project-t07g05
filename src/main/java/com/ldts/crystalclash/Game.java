@@ -3,6 +3,7 @@ package com.ldts.crystalclash;
 
 import com.ldts.crystalclash.gui.LanternaGUI;
 import com.ldts.crystalclash.model.Menu;
+import com.ldts.crystalclash.model.Music;
 import com.ldts.crystalclash.states.MenuState;
 import com.ldts.crystalclash.states.State;
 
@@ -16,22 +17,23 @@ public class Game {
     private State state;
     private int width = 120;
     private int height = 40;
+    Music music = new Music();
 
 
-    public Game() throws IOException, URISyntaxException, FontFormatException{
+    public Game() throws IOException, URISyntaxException,FontFormatException{
         this.gui = new LanternaGUI(width, height);
         this.state = new MenuState(new Menu());
     }
 
 
     public static void main(String[] args) throws IOException, URISyntaxException, FontFormatException {
-
         new Game().start();
     }
 
-    private void start() throws IOException{
+    private void start() throws IOException {
         int FPS = 10;
         int frameTime = 1000 / FPS;
+        music.startMusic();
 
 
         while (state != null) {
@@ -49,6 +51,8 @@ public class Game {
         }
         closeGame();
     }
+
+
 
     public void setState(State state) {
         this.state = state;

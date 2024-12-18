@@ -3,7 +3,7 @@ package com.ldts.crystalclash.model;
 import java.util.TimerTask;
 
 public class Timer {
-    private static final long TOTAL_TIME = 5 * 1000; // in milliseconds
+    private static final long TOTAL_TIME = 90 * 1000; // in milliseconds
     private long startTime;
 
 
