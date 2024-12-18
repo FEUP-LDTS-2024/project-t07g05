@@ -3,10 +3,9 @@ package viewer;
 import com.ldts.crystalclash.gui.GUI;
 import com.ldts.crystalclash.model.Board;
 import com.ldts.crystalclash.model.Position;
-import com.ldts.crystalclash.model.Score;
-import com.ldts.crystalclash.model.Tile;
 import com.ldts.crystalclash.model.Timer;
 import com.ldts.crystalclash.viewer.GameViewer;
+import com.ldts.crystalclash.viewer.TimerViewer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,25 +26,25 @@ public class GameViewerTest {
     @Test
     void testDrawElementsCallsTimerViewer() {
 
-        Timer realTimer = new Timer();
-        realTimer.start();
+        Timer mockTimer = mock(Timer.class);
+        when(mockTimer.getTimeLeft()).thenReturn(89L);
 
-        Score mockScore = mock(Score.class);
-        when(mockBoard.getScore()).thenReturn(mockScore);
-        when(mockScore.getScore()).thenReturn(100);
-
-        Tile mockTile1 = mock(Tile.class);
-        Tile mockTile2 = mock(Tile.class);
-        Tile[][] grid = new Tile[][]{
-                {mockTile1, mockTile2}
-        };
-        when(mockBoard.getGrid()).thenReturn(grid);
-
-        when(mockBoard.getTimer()).thenReturn(realTimer);
+        TimerViewer mockTimerViewer = mock(TimerViewer.class);
+        when(mockBoard.getTimer()).thenReturn(mockTimer);
 
         gameViewer.drawElements(mockGUI);
 
-        verify(mockGUI, times(1)).drawText(any(Position.class), anyString(), eq("white"));
+        verify(mockGUI, times(1)).drawTextInGame(
+                any(Position.class),
+                eq("TIME LEFT:"),
+                eq("#FFFFFF")
+        );
+        verify(mockGUI, times(1)).drawTextInGame(
+                any(Position.class),
+                eq("89"),
+                eq("#FFFFFF")
+        );
     }
+
 
 }
