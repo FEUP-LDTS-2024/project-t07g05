@@ -1,6 +1,7 @@
 package model;
 
 import com.ldts.crystalclash.model.Board;
+import com.ldts.crystalclash.model.Tile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
