@@ -34,6 +34,11 @@ public class MenuController extends Controller<Menu> {
                 if (getModel().isSelectedScores()) {
                     game.setState(new ScoresMenuState(new ScoresMenu()));
                 }
+                if (getModel().isSelectedInstructions()) {
+                    game.setState();
+
+                }
+
         }
 
     }
