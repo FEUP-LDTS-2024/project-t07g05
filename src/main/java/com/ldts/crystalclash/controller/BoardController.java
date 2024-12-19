@@ -10,8 +10,8 @@ import java.io.IOException;
 
 public class BoardController extends GameController {
     // TODO: algorithm must identify if it is a gemtile or a bombtile before verifying matches
-    TileMatcher tileMatcher;
-    TileFactory tileFactory;
+    public TileMatcher tileMatcher;
+    public TileFactory tileFactory;
 
     public BoardController(Board board) {
         super(board);

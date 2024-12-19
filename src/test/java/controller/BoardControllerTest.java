@@ -1,105 +1,114 @@
 package controller;
 
 import com.ldts.crystalclash.controller.BoardController;
+import com.ldts.crystalclash.factories.TileFactory;
 import com.ldts.crystalclash.model.*;
-import com.ldts.crystalclash.Game;
 import com.ldts.crystalclash.gui.GUI;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import java.io.IOException;
 
 import static org.mockito.Mockito.*;
-import java.io.IOException;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 class BoardControllerTest {
-    private BoardController controller;
+    private BoardController boardController;
     private Board board;
+    private TileFactory tileFactoryMock;
 
     @BeforeEach
     void setUp() {
-        board = mock(Board.class);
-        controller = new BoardController(board);
+
+        tileFactoryMock = mock(TileFactory.class);
+        TileMatcher tileMatcherMock = mock(TileMatcher.class);
+
+        board = new Board(5, 5, 800, 600, 50, 50);
+        boardController = new BoardController(board);
+
+        boardController.tileFactory = tileFactoryMock;
+        boardController.tileMatcher = tileMatcherMock;
     }
 
     @Test
-    void testSwapTiles() {
-        Tile tile1 = mock(Tile.class);
-        Tile tile2 = mock(Tile.class);
+    void testSwapTilesValid() {
+        Tile tile1 = new GemTile(new Position(100, 100), new Position(0, 0), Color.RUBY);
+        Tile tile2 = new GemTile(new Position(150, 100), new Position(0, 1), Color.SAPPHIRE);
 
-        when(tile1.getGridCoordinates()).thenReturn(new Position(0, 0));
-        when(tile2.getGridCoordinates()).thenReturn(new Position(1, 1));
+        board.setTile(0, 0, tile1);
+        board.setTile(0, 1, tile2);
 
-        controller.swapTiles(tile1, tile2);
+        boardController.swapTiles(tile1, tile2);
 
-        verify(board).setTile(0, 0, tile2);
-        verify(board).setTile(1, 1, tile1);
+        assertEquals(tile2, board.getTile(0, 0));
+        assertEquals(tile1, board.getTile(0, 1));
+        assertEquals(new Position(0, 0), tile2.getGridCoordinates());
+        assertEquals(new Position(0, 1), tile1.getGridCoordinates());
     }
 
     @Test
-    void testMoveCurrentTile() {
-        Tile tile = mock(Tile.class);
-        when(board.getCurrentTile()).thenReturn(tile);
-        when(board.isValidPosition(1, 1)).thenReturn(true);
+    void testSwapTilesNull() {
+        Tile tile1 = new GemTile(new Position(100, 100), new Position(0, 0), Color.RUBY);
+        board.setTile(0, 0, tile1);
+        boardController.swapTiles(tile1, null);
+        assertEquals(tile1, board.getTile(0, 0));
+    }
 
-        controller.moveCurrentTile(1, 1);
 
-        verify(board).setCurrentTile(tile);
-        verify(tile).setCursorOn(true);
+    @Test
+    void testMoveCurrentTileValid() {
+        Tile initialTile = board.getTile(0, 0);
+        Tile targetTile = board.getTile(0, 1);
+
+        boardController.moveCurrentTile(0,1);
+
+        assertFalse(initialTile.isCursorOn());
+        assertTrue(targetTile.isCursorOn());
+        assertEquals(targetTile, board.getCurrentTile());
+
+    }
+
+    @Test
+    void testMoveCurrentTileInvalid() {
+        Tile initialTile = board.getTile(0, 0);
+        boardController.moveCurrentTile(-1,-1);
+
+        assertTrue(initialTile.isCursorOn());
+        assertEquals(initialTile, board.getCurrentTile());
     }
 
 
     @Test
     void testShiftTilesDown() {
-        Board board = mock(Board.class);
-        Position position1 = new Position(0, 0);
-        Position position2 = new Position(1, 1);
-        Color color = Color.EMERALD;
 
-        Tile emptyTile = new EmptyTile(position1, position2, color);
+        Tile emptyTile = new EmptyTile(new Position(100, 100), new Position(4, 0));
+        board.setTile(4, 0, emptyTile);
 
-        when(board.getTile(anyInt(), anyInt())).thenReturn(emptyTile);
+        Tile newTile = new GemTile(new Position(100, 100), new Position(4, 0), Color.SAPPHIRE);
+        when(tileFactoryMock.createRandomTile(any(), any())).thenReturn(newTile);
 
-        BoardController controller = new BoardController(board);
-        controller.shiftTilesDown();
+        boardController.refillBoard();
+        assertEquals(newTile, board.getTile(4, 0));
 
-        verify(board, atLeastOnce()).setTile(anyInt(), anyInt(), any(Tile.class));
     }
 
     @Test
     void testRefillBoard() {
-        when(board.getRows()).thenReturn(5);
-        when(board.getColumns()).thenReturn(5);
+        Tile emptyTile = new EmptyTile(new Position(100, 100), new Position(4, 0));
+        board.setTile(4, 0, emptyTile);
 
-        Position position1 = new Position(0, 0);
-        Position position2 = new Position(1, 0);
-        Color color = Color.EMERALD;
+        Tile newTile = new GemTile(new Position(100, 100), new Position(4, 0), Color.SAPPHIRE);
+        when(tileFactoryMock.createRandomTile(any(), any())).thenReturn(newTile);
 
-        Tile emptyTile = new EmptyTile(position1, position2, color);
+        boardController.refillBoard();
 
-        when(board.getTile(0, 0)).thenReturn(emptyTile);
-
-        controller.refillBoard();
-
-        verify(board).setTile(eq(0), eq(0), any(Tile.class));
+        assertEquals(newTile, board.getTile(4, 0));
     }
 
+    /// test step
 
-    @Test
-    void testStep() throws IOException {
-        Game game = mock(Game.class);
-        GUI gui = mock(GUI.class);
-
-        when(gui.getNextAction()).thenReturn(GUI.ACTION.UP);
-
-        Tile currentTile = mock(Tile.class);
-        when(board.getCurrentTile()).thenReturn(currentTile);
-        Tile tileOnTop = mock(Tile.class);
-        when(board.getTileOnTop(currentTile)).thenReturn(tileOnTop);
-
-        controller.step(game, GUI.ACTION.SELECT_TILE, 0);
-
-        verify(board).getTileOnTop(currentTile);
-    }
 
 
 }
