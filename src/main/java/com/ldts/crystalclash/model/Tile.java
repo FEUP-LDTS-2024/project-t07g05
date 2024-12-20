@@ -1,5 +1,7 @@
 package com.ldts.crystalclash.model;
 
+import java.util.Objects;
+
 public abstract class Tile {
     String symbol;
     Position screenPosition; // (X, Y), being X for columns since it aligns with the X-axis on screen, and Y for rows
@@ -51,5 +53,20 @@ public abstract class Tile {
 
     public int getColorRarity() {
         return color.getRarity();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tile tile = (Tile) o;
+        return cursorOn == tile.cursorOn &&
+                Objects.equals(screenPosition, tile.screenPosition) &&
+                Objects.equals(gridCoordinates, tile.gridCoordinates) &&
+                Objects.equals(color, tile.color);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(screenPosition, gridCoordinates, color, cursorOn);
     }
 }

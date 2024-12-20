@@ -5,10 +5,12 @@ import com.ldts.crystalclash.gui.GUI;
 import com.ldts.crystalclash.Game;
 import com.ldts.crystalclash.model.Menu;
 import com.ldts.crystalclash.states.GameState;
+import com.ldts.crystalclash.states.ScoresMenuState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;
+import java.io.IOException;
 
 public class MenuControllerTest {
     private MenuController controller;
@@ -24,18 +26,16 @@ public class MenuControllerTest {
 
     @Test
     void testStepUpAction() throws Exception {
-        when(menu.isSelectedPlay()).thenReturn(true);
-        controller.step(game, GUI.ACTION.UP, 0);
 
-        verify(menu).selectPrevious();
+        controller.step(game, GUI.ACTION.UP, 0);
+        verify(menu, times(1)).selectPrevious();
     }
 
     @Test
     void testStepDownAction() throws Exception {
-        when(menu.isSelectedPlay()).thenReturn(true);
-        controller.step(game, GUI.ACTION.DOWN, 0);
 
-        verify(menu).selectNext();
+        controller.step(game, GUI.ACTION.DOWN, 0);
+        verify(menu, times(1)).selectNext();
     }
 
     @Test
@@ -44,7 +44,16 @@ public class MenuControllerTest {
 
         controller.step(game, GUI.ACTION.SELECT, 0);
 
-        verify(game).setState(any(GameState.class));
+        verify(game, times(1)).setState(any(GameState.class));
+    }
+
+    @Test
+    void testStepSelectActionScores() throws IOException {
+        when(menu.isSelectedScores()).thenReturn(true);
+
+        controller.step(game, GUI.ACTION.SELECT, 0);
+
+        verify(game, times(1)).setState(any(ScoresMenuState.class));
     }
 
     @Test
