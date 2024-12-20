@@ -7,6 +7,8 @@ import com.ldts.crystalclash.gui.GUI;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 class TimerControllerTest {
@@ -22,7 +24,7 @@ class TimerControllerTest {
 
     @Test
     void testConstructor() {
-        assert controller != null;
+        assertNotNull(controller, "Controller should be instantiated");
     }
 
     @Test
@@ -33,12 +35,28 @@ class TimerControllerTest {
     }
 
     @Test
-    void testStep() throws Exception {
+    void testStepNoInteraction() throws Exception {
         Game game = mock(Game.class);
         GUI.ACTION action = GUI.ACTION.NONE;
 
         controller.step(game, action, 0);
 
         verifyNoInteractions(timer);
+    }
+
+    @Test
+    void testStepInteraction() throws Exception {
+        Game game = mock(Game.class);
+        GUI.ACTION action = GUI.ACTION.SELECT;
+        controller.step(game, action, 0);
+
+        verifyNoInteractions(timer);
+    }
+    @Test
+    void testStartTimerMultipleCalls() {
+        controller.startTimer();
+        controller.startTimer();
+
+        verify(timer, times(2)).start();
     }
 }
