@@ -3,9 +3,11 @@ package com.ldts.crystalclash.controller;
 import com.ldts.crystalclash.Game;
 import com.ldts.crystalclash.gui.GUI;
 import com.ldts.crystalclash.model.Board;
+import com.ldts.crystalclash.model.Instructions;
 import com.ldts.crystalclash.model.Menu;
 import com.ldts.crystalclash.model.ScoresMenu;
 import com.ldts.crystalclash.states.GameState;
+import com.ldts.crystalclash.states.InstructionsState;
 import com.ldts.crystalclash.states.ScoresMenuState;
 
 
@@ -30,16 +32,15 @@ public class MenuController extends Controller<Menu> {
                 if (getModel().isSelectedExit()) game.setState(null);
                 if (getModel().isSelectedPlay())
                     game.setState(new GameState(new Board(8, 8, 90, 40, 4, 4)));
-                //completar para o menuscores
+                    //completar para o menuscores
                 if (getModel().isSelectedScores()) {
                     game.setState(new ScoresMenuState(new ScoresMenu()));
                 }
-                if (getModel().isSelectedInstructions()) {
-                    game.setState();
+                if (getModel().isSelectedInstructions())
+                    game.setState(new InstructionsState(new Instructions()));
 
                 }
 
         }
 
     }
-}

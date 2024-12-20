@@ -9,7 +9,7 @@ import com.ldts.crystalclash.states.MenuState;
 
 import java.io.IOException;
 
-public class InstructionsController extends Controller<ScoresMenu> {
+public class InstructionsController extends Controller<Instructions> {
     public InstructionsController(Instructions model) {
         super(model);
     }
