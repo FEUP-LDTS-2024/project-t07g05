@@ -1,9 +1,9 @@
-package com.ldts.crystalclash.controller;
+package controller;
 
 import com.ldts.crystalclash.Game;
+import com.ldts.crystalclash.controller.TileController;
 import com.ldts.crystalclash.gui.GUI;
 import com.ldts.crystalclash.model.Board;
-import com.ldts.crystalclash.model.Score;
 import com.ldts.crystalclash.model.Tile;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
