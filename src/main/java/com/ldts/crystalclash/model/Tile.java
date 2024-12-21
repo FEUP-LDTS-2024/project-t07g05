@@ -1,11 +1,14 @@
 package com.ldts.crystalclash.model;
 
+import com.ldts.crystalclash.strategy.TileBehavior;
+
 public abstract class Tile {
     String symbol;
     Position screenPosition; // (X, Y), being X for columns since it aligns with the X-axis on screen, and Y for rows
     Position gridCoordinates; // (X, Y) being X for rows and Y for columns to access 2D-arrays with grid[x][y]
     boolean cursorOn;
     Color color;
+    private TileBehavior behavior;
 
     public Tile(Position screenPosition, Position gridCoordinates, Color color) {
         this.screenPosition = screenPosition;
@@ -48,5 +51,13 @@ public abstract class Tile {
 
     public int getColorRarity() {
         return color.getRarity();
+    }
+
+    protected TileBehavior getBehavior() {
+        return behavior;
+    }
+
+    protected void setBehavior(TileBehavior behavior) {
+        this.behavior = behavior;
     }
 }
