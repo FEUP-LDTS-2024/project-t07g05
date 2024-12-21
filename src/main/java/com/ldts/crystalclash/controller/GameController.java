@@ -17,14 +17,18 @@ public class GameController extends Controller<Board> {
 
     @Override
     public void step(Game game, GUI.ACTION action, long time) throws IOException {
-        if (getModel().getTimer().getTimeLeft() == 0) {
-            game.setState(new GameOverState(new GameOver(getModel().getScore().getScore())));
-        }
         if (action == GUI.ACTION.QUIT) {
             game.setState(new MenuState(new Menu()));
-        } else {
-            BoardController boardController = new BoardController(getModel());
-            boardController.step(game, action, time);
+            return;
         }
+
+        if (getModel().getTimer().getTimeLeft() == 0) {
+            game.setState(new GameOverState(new GameOver(getModel().getScore().getScore())));
+            return;
+        }
+
+        BoardController boardController = new BoardController(getModel());
+        boardController.step(game, action, time);
     }
+
 }

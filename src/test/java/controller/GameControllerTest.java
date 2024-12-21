@@ -2,11 +2,9 @@ package controller;
 
 import com.ldts.crystalclash.controller.BoardController;
 import com.ldts.crystalclash.controller.GameController;
+import com.ldts.crystalclash.model.*;
 import com.ldts.crystalclash.states.GameOverState;
 import com.ldts.crystalclash.states.MenuState;
-import com.ldts.crystalclash.model.Score;
-import com.ldts.crystalclash.model.Board;
-import com.ldts.crystalclash.model.Timer;
 import com.ldts.crystalclash.gui.GUI;
 import com.ldts.crystalclash.Game;
 
@@ -18,10 +16,9 @@ import java.io.IOException;
 import static org.mockito.Mockito.*;
 
 public class GameControllerTest {
-    private GameController controller;
+
+    private GameController gameController;
     private Game mockGame;
-    private BoardController mockBoardController;
-    private Timer mockTimer;
     private Board mockBoard;
 
     @BeforeEach
@@ -29,58 +26,76 @@ public class GameControllerTest {
     void setUp() {
         mockBoard = mock(Board.class);
         mockGame = mock(Game.class);
-        mockBoardController = mock(BoardController.class);
-        mockTimer = mock(Timer.class);
-
+        gameController = new GameController(mockBoard);
+        Timer mockTimer = mock(Timer.class);
+        when(mockTimer.getTimeLeft()).thenReturn(30L);
         when(mockBoard.getTimer()).thenReturn(mockTimer);
 
         Score mockScore = mock(Score.class);
         when(mockBoard.getScore()).thenReturn(mockScore);
 
-        controller = new GameController(mockBoard);
+        gameController = new GameController(mockBoard);
     }
 
-
-    @Test
-    void testStepCallsBoardControllerOnValidAction() throws IOException {
-        GUI.ACTION action = GUI.ACTION.UP;
-        long time = 100L;
-
-        controller.step(mockGame, action, time);
-
-        verify(mockBoardController, times(1)).step(mockGame, action, time);
-    }
-
-    @Test
-    void testStepSetsGameToGameOverStateWhenTimeExpires() throws IOException {
-        when(mockTimer.getTimeLeft()).thenReturn(0L);
-
-        controller.step(mockGame, GUI.ACTION.UP, 100L);
-
-        verify(mockGame).setState(any(GameOverState.class));
-    }
 
     @Test
     void testStepSetsGameToMenuStateOnQuitAction() throws IOException {
-        GUI.ACTION quitAction = GUI.ACTION.QUIT;
+        gameController.step(mockGame, GUI.ACTION.QUIT, System.currentTimeMillis());
 
-        controller.step(mockGame, quitAction, 100L);
-
-        verify(mockGame).setState(any(MenuState.class));
+        verify(mockGame, times(1)).setState(any(MenuState.class));
+        verifyNoInteractions(mockBoard);
     }
 
     @Test
     void testStepDoesNotCallBoardControllerOnQuitAction() throws IOException {
-        GUI.ACTION quitAction = GUI.ACTION.QUIT;
+        BoardController mockBoardController = mock(BoardController.class);
 
-        controller.step(mockGame, quitAction, 100L);
+        gameController.step(mockGame, GUI.ACTION.QUIT, System.currentTimeMillis());
 
-        verify(mockBoardController, times(0)).step(any(Game.class), eq(quitAction), anyLong());
+        verifyNoInteractions(mockBoardController);
+    }
+
+    @Test
+    void testStepSetsGameToGameOverStateWhenTimeRunsOut() throws IOException {
+        when(mockBoard.getTimer().getTimeLeft()).thenReturn(0L);
+
+        gameController.step(mockGame, GUI.ACTION.UP, System.currentTimeMillis());
+
+        verify(mockGame, times(1)).setState(any(GameOverState.class));
+    }
+
+
+    @Test
+    void testStepDelegatesActionToBoardController() throws IOException {
+        BoardController spyBoardController = spy(new BoardController(mockBoard));
+        doNothing().when(spyBoardController).step(any(Game.class), any(GUI.ACTION.class), anyLong());
+
+        gameController.step(mockGame, GUI.ACTION.UP, System.currentTimeMillis());
+
+        verify(spyBoardController, times(1)).step(mockGame, GUI.ACTION.UP, System.currentTimeMillis());
+    }
+
+    @Test
+    void testScoreIncrementsAfterValidAction() throws IOException {
+        Score mockScore = mock(Score.class);
+        when(mockBoard.getScore()).thenReturn(mockScore);
+
+        gameController.step(mockGame, GUI.ACTION.DOWN, System.currentTimeMillis());
+
+        verify(mockScore, times(1)).addScore(anyInt());
+    }
+
+
+    @Test
+    void testNoActionOnInvalidGUIAction() throws IOException {
+        gameController.step(mockGame, null, System.currentTimeMillis());
+
+        verifyNoInteractions(mockBoard);
+        verifyNoInteractions(mockGame);
     }
 
     @Test
     void testScoreIncrement() {
-
         Score mockScore = mock(Score.class);
         when(mockBoard.getScore()).thenReturn(mockScore);
 
