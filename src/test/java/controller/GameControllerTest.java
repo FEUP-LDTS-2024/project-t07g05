@@ -90,7 +90,6 @@ public class GameControllerTest {
     }
 
 
-
     @Test
     void testScoreIsIncrementedCorrectly() throws IOException {
         Score mockScore = mock(Score.class);
@@ -113,8 +112,6 @@ public class GameControllerTest {
 
         verify(mockScore, times(1)).addScore(10);
     }
-
-   
 
 
     @Test
@@ -163,6 +160,6 @@ public class GameControllerTest {
 
         verify(mockScore, times(1)).addScore(anyInt());
     }
-
+    //Add GUI test
 
 }
