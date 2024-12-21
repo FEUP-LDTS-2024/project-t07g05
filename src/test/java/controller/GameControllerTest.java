@@ -9,6 +9,7 @@ import com.ldts.crystalclash.gui.GUI;
 import com.ldts.crystalclash.Game;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -160,6 +161,12 @@ public class GameControllerTest {
 
         verify(mockScore, times(1)).addScore(anyInt());
     }
-    //Add GUI test
+
+    @AfterEach
+    void tearDown() {
+        mockBoard = null;
+        mockGame = null;
+        gameController = null;
+    }
 
 }

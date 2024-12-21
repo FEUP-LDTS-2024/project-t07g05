@@ -5,6 +5,7 @@ import com.ldts.crystalclash.gui.GUI;
 import com.ldts.crystalclash.model.Board;
 import com.ldts.crystalclash.model.Score;
 import com.ldts.crystalclash.model.Tile;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -99,4 +100,12 @@ class TileControllerTest {
         verify(currentTile, never()).setCursorOn(false);
         verify(board, never()).setCurrentTile(any());
     }
+
+    @AfterEach
+    void tearDown() {
+        controller = null;
+        board = null;
+        currentTile = null;
+    }
+
 }

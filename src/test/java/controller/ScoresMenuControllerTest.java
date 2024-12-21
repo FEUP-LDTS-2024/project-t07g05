@@ -5,6 +5,7 @@ import com.ldts.crystalclash.controller.ScoresMenuController;
 import com.ldts.crystalclash.gui.GUI;
 import com.ldts.crystalclash.model.ScoresMenu;
 import com.ldts.crystalclash.states.MenuState;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -48,4 +49,14 @@ public class ScoresMenuControllerTest {
 
         verify(game, times(0)).setState(any());
     }
+
+
+    @AfterEach
+    void tearDown() {
+        scoresMenuController = null;
+        game = null;
+        action = null;
+        menuStateCaptor = null;
+    }
+
 }

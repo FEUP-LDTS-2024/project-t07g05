@@ -3,6 +3,7 @@ package controller;
 import com.ldts.crystalclash.controller.BoardController;
 import com.ldts.crystalclash.factories.TileFactory;
 import com.ldts.crystalclash.model.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -226,5 +227,13 @@ class BoardControllerTest {
 
         assertEquals(newTile, board.getTile(4, 0));
     }
+
+    @AfterEach
+    void tearDown() {
+        board = null;
+        boardController = null;
+        tileFactoryMock = null;
+    }
+
 
 }

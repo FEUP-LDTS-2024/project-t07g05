@@ -4,6 +4,7 @@ import com.ldts.crystalclash.controller.TimerController;
 import com.ldts.crystalclash.model.Timer;
 import com.ldts.crystalclash.Game;
 import com.ldts.crystalclash.gui.GUI;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -58,5 +59,11 @@ class TimerControllerTest {
         controller.startTimer();
 
         verify(timer, times(2)).start();
+    }
+
+    @AfterEach
+    void tearDown() {
+        controller = null;
+        timer = null;
     }
 }

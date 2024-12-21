@@ -7,6 +7,7 @@ import com.ldts.crystalclash.model.GameOver;
 import com.ldts.crystalclash.states.GameState;
 import com.ldts.crystalclash.states.ScoresMenuState;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -71,4 +72,14 @@ public class GameOverControllerTest {
 
         verify(game).setState(null);
     }
+
+    @AfterEach
+    public void tearDown() {
+        gameOverController = null;
+        game = null;
+        action = null;
+        gameStateCaptor = null;
+        scoresMenuStateCaptor = null;
+    }
+
 }
