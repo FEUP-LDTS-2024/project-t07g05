@@ -142,7 +142,10 @@ public class Board {
                 grid[row][col] = tile;
             }
         }
+        this.currentTile = getTile(0, 0);
+        currentTile.setCursorOn(true);
     }
+
 
     public Position calculateScreenPosition(Position gridcoordinate) {
         int row = gridcoordinate.getX();

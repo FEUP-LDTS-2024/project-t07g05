@@ -47,26 +47,19 @@ public class BoardController extends GameController {
         t2.setScreenPosition(t2ScreenPos);
         System.out.println("Tile positions before swap: t1: " + t1.getGridCoordinates() + " and t2: " + t2.getGridCoordinates());
     }
+
     public void moveCurrentTile(int row, int column) {
         Tile prev = getModel().getCurrentTile();
 
-        // Check if the new position is valid
-        if (!getModel().isValidPosition(row, column)) {
-            // If move is invalid, ensure no state changes happen
-            return;  // No move is performed if the position is invalid
-        }
+        if (!getModel().isValidPosition(row, column)) {return;}
 
-        // Unset cursor from the previous tile
-        prev.setCursorOn(false);
-
-        // Get the tile at the new position and set it as the current tile
         Tile curr = getModel().getTile(row, column);
-        getModel().setCurrentTile(curr);
+        if (curr == null) {return;}
 
-        // Set cursor on the new tile
+        prev.setCursorOn(false);
+        getModel().setCurrentTile(curr);
         curr.setCursorOn(true);
     }
-
 
 
     public void shiftTilesDown() {

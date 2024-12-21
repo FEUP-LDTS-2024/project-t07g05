@@ -113,14 +113,11 @@ class BoardControllerTest {
         Tile tile1 = new GemTile(new Position(100, 100), new Position(0, 0), Color.RUBY);
         Tile tile2 = new GemTile(new Position(150, 100), new Position(0, 1), Color.SAPPHIRE);
 
-        // Set tiles
         board.setTile(0, 0, tile1);
         board.setTile(0, 1, tile2);
 
-        // Call swap tiles method
         boardController.swapTiles(tile1, tile2);
 
-        // Assert the correct swap
         assertEquals(tile2, board.getTile(0, 0)); // tile2 should be at (0, 0)
         assertEquals(tile1, board.getTile(0, 1)); // tile1 should be at (0, 1)
     }
@@ -189,25 +186,29 @@ class BoardControllerTest {
 
     @Test
     void testMoveCurrentTileAtBottomEdge() {
+        board.setCurrentTile(board.getTile(4, 0));
+        board.getCurrentTile().setCursorOn(true);
+
         Tile initialTile = board.getTile(4, 0);
 
-        boardController.moveCurrentTile(5, 0); // Invalid move (out of bounds)
+        boardController.moveCurrentTile(5, 0);
 
-        // Assert that the initial tile is still the current tile and the cursor remains on it
-        assertTrue(initialTile.isCursorOn());
-        assertEquals(initialTile, board.getCurrentTile());
+        assertTrue(initialTile.isCursorOn(), "The cursor should still be on the initial tile.");
+        assertEquals(initialTile, board.getCurrentTile(), "The current tile should not change.");
     }
 
     @Test
     void testMoveCurrentTileAtRightEdge() {
-        Tile initialTile = board.getTile(0, 4); // Assuming rightmost column is column 4
+        board.setCurrentTile(board.getTile(0, 4));
+        board.getCurrentTile().setCursorOn(true);
 
-        // Try to move right (out of bounds)
-        boardController.moveCurrentTile(0, 5); // Beyond the rightmost column
+        Tile initialTile = board.getTile(0, 4);
 
-        // Assert that the tile stays in place (cursor remains on the initial tile)
-        assertTrue(initialTile.isCursorOn());
-        assertEquals(initialTile, board.getCurrentTile());
+        boardController.moveCurrentTile(0, 5);
+
+        assertTrue(initialTile.isCursorOn(), "The cursor should still be on the initial tile.");
+
+        assertEquals(initialTile, board.getCurrentTile(), "The current tile should not change.");
     }
 
 
