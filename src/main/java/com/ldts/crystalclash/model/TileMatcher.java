@@ -107,7 +107,7 @@ public class TileMatcher {
 
             // Logic for bomb explosions
             for (Tile tile : matches) {
-                tile.getBehavior().popOff(tile, board, toRemove);
+                tile.getBehaviorContext().popOff(board, toRemove);
             }
 
             for (Tile tile : toRemove) {
@@ -123,7 +123,7 @@ public class TileMatcher {
         int points = 0;
 
         for (Tile tile : matches) {
-            points += tile.getBehavior().calculatePoints(tile, board);
+            points += tile.getBehaviorContext().calculatePoints(board);
         }
 
         return points;

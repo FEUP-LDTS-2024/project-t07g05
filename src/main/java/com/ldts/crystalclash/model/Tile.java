@@ -1,6 +1,6 @@
 package com.ldts.crystalclash.model;
 
-import com.ldts.crystalclash.strategy.TileBehavior;
+import com.ldts.crystalclash.strategy.BehaviorContext;
 
 public abstract class Tile {
     String symbol;
@@ -8,7 +8,7 @@ public abstract class Tile {
     Position gridCoordinates; // (X, Y) being X for rows and Y for columns to access 2D-arrays with grid[x][y]
     boolean cursorOn;
     Color color;
-    private TileBehavior behavior;
+    private BehaviorContext behaviorContext;
 
     public Tile(Position screenPosition, Position gridCoordinates, Color color) {
         this.screenPosition = screenPosition;
@@ -53,11 +53,11 @@ public abstract class Tile {
         return color.getRarity();
     }
 
-    protected TileBehavior getBehavior() {
-        return behavior;
+    public BehaviorContext getBehaviorContext() {
+        return behaviorContext;
     }
 
-    protected void setBehavior(TileBehavior behavior) {
-        this.behavior = behavior;
+    public void setBehaviorContext(BehaviorContext behaviorContext) {
+        this.behaviorContext = behaviorContext;
     }
 }
