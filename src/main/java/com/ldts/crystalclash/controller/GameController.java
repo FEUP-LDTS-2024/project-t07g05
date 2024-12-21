@@ -27,8 +27,11 @@ public class GameController extends Controller<Board> {
             return;
         }
 
-        BoardController boardController = new BoardController(getModel());
-        boardController.step(game, action, time);
+        if (action != null) {
+            BoardController boardController = new BoardController(getModel());
+            boardController.step(game, action, time);
+        }
     }
+
 
 }

@@ -99,39 +99,45 @@ public class BoardController extends GameController {
 
     @Override
     public void step(Game game, GUI.ACTION action, long time) throws IOException {
+
+        if (action == null) {
+            System.out.println("Received invalid action: null");
+            return;
+        }
+
         Board board = getModel();
         switch (action) {
-            case GUI.ACTION.UP:
+            case UP:
                 moveCurrentTile(board.getCurrentTile().getGridCoordinates().getX() - 1,
                         board.getCurrentTile().getGridCoordinates().getY());
                 break;
-            case GUI.ACTION.RIGHT:
+            case RIGHT:
                 moveCurrentTile(board.getCurrentTile().getGridCoordinates().getX(),
                         board.getCurrentTile().getGridCoordinates().getY() + 1);
                 break;
-            case GUI.ACTION.DOWN:
+            case DOWN:
                 moveCurrentTile(board.getCurrentTile().getGridCoordinates().getX() + 1,
                         board.getCurrentTile().getGridCoordinates().getY());
                 break;
-            case GUI.ACTION.LEFT:
+            case LEFT:
                 moveCurrentTile(board.getCurrentTile().getGridCoordinates().getX(),
                         board.getCurrentTile().getGridCoordinates().getY() - 1);
                 break;
-            case GUI.ACTION.SELECT_TILE:
+            case SELECT_TILE:
                 GUI.ACTION actionSwap = game.gui.waitsNextAction();
                 System.out.println(actionSwap);
                 switch (actionSwap) {
-                    case GUI.ACTION.UP:
+                    case UP:
                         System.out.println("WARNING: Up pressed");
                         swapTiles(board.getCurrentTile(), board.getTileOnTop(board.getCurrentTile()));
                         break;
-                    case GUI.ACTION.DOWN:
+                    case DOWN:
                         swapTiles(board.getCurrentTile(), board.getTileOnBottom(board.getCurrentTile()));
                         break;
-                    case GUI.ACTION.LEFT:
+                    case LEFT:
                         swapTiles(board.getCurrentTile(), board.getTileToTheLeft(board.getCurrentTile()));
                         break;
-                    case GUI.ACTION.RIGHT:
+                    case RIGHT:
                         swapTiles(board.getCurrentTile(), board.getTileToTheRight(board.getCurrentTile()));
                         break;
                 }
@@ -143,4 +149,5 @@ public class BoardController extends GameController {
         shiftTilesDown();
         refillBoard();
     }
+
 }

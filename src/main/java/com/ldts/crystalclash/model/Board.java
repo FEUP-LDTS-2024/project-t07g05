@@ -97,6 +97,12 @@ public class Board {
         }
     }
 
+    ///
+    public void setScore(Score score) {
+        this.score = score;
+    }
+
+
     public Tile getCurrentTile() {
         return currentTile;
     }

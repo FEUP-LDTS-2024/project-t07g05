@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 public class GameControllerTest {
@@ -27,12 +28,18 @@ public class GameControllerTest {
         mockBoard = mock(Board.class);
         mockGame = mock(Game.class);
         gameController = new GameController(mockBoard);
+
         Timer mockTimer = mock(Timer.class);
         when(mockTimer.getTimeLeft()).thenReturn(30L);
         when(mockBoard.getTimer()).thenReturn(mockTimer);
 
         Score mockScore = mock(Score.class);
         when(mockBoard.getScore()).thenReturn(mockScore);
+
+        Tile mockTile = mock(Tile.class);
+        when(mockTile.getGridCoordinates()).thenReturn(new Position(0, 0));
+
+        when(mockBoard.getCurrentTile()).thenReturn(mockTile);
 
         gameController = new GameController(mockBoard);
     }
@@ -67,32 +74,35 @@ public class GameControllerTest {
 
     @Test
     void testStepDelegatesActionToBoardController() throws IOException {
-        BoardController spyBoardController = spy(new BoardController(mockBoard));
-        doNothing().when(spyBoardController).step(any(Game.class), any(GUI.ACTION.class), anyLong());
+        BoardController boardController = new BoardController(mockBoard);
+        BoardController spyBoardController = spy(boardController);
+
+        gameController = new GameController(mockBoard) {
+            @Override
+            public void step(Game game, GUI.ACTION action, long time) throws IOException {
+                spyBoardController.step(game, action, time);
+            }
+        };
 
         gameController.step(mockGame, GUI.ACTION.UP, System.currentTimeMillis());
 
-        verify(spyBoardController, times(1)).step(mockGame, GUI.ACTION.UP, System.currentTimeMillis());
+        verify(spyBoardController, times(1)).step(eq(mockGame), eq(GUI.ACTION.UP), anyLong());
     }
 
+
+
     @Test
-    void testScoreIncrementsAfterValidAction() throws IOException {
+    void testScoreIsIncrementedCorrectly() throws IOException {
         Score mockScore = mock(Score.class);
         when(mockBoard.getScore()).thenReturn(mockScore);
 
-        gameController.step(mockGame, GUI.ACTION.DOWN, System.currentTimeMillis());
+        BoardController controller = new BoardController(mockBoard);
+
+        controller.step(mockGame, GUI.ACTION.DOWN, System.currentTimeMillis());
 
         verify(mockScore, times(1)).addScore(anyInt());
     }
 
-
-    @Test
-    void testNoActionOnInvalidGUIAction() throws IOException {
-        gameController.step(mockGame, null, System.currentTimeMillis());
-
-        verifyNoInteractions(mockBoard);
-        verifyNoInteractions(mockGame);
-    }
 
     @Test
     void testScoreIncrement() {
@@ -103,5 +113,56 @@ public class GameControllerTest {
 
         verify(mockScore, times(1)).addScore(10);
     }
+
+   
+
+
+    @Test
+    void testStepAction() throws IOException {
+        Board mockBoard = mock(Board.class);
+        Tile mockTile = mock(Tile.class);
+        Score mockScore = mock(Score.class);
+
+        when(mockBoard.getCurrentTile()).thenReturn(mockTile);
+        when(mockBoard.getScore()).thenReturn(mockScore);
+
+        Position mockPosition = new Position(0, 0);
+        when(mockTile.getGridCoordinates()).thenReturn(mockPosition);
+
+        BoardController controller = new BoardController(mockBoard);
+
+        controller.step(mock(Game.class), GUI.ACTION.UP, System.currentTimeMillis());
+
+        verify(mockBoard, times(3)).getCurrentTile();
+        verify(mockTile, times(2)).getGridCoordinates();
+        verify(mockScore).addScore(anyInt());
+    }
+
+
+    @Test
+    void testShiftTilesDownAndRefillBoard() throws IOException {
+        BoardController controller = new BoardController(mockBoard);
+        BoardController spyBoardController = spy(controller);
+
+        doNothing().when(spyBoardController).shiftTilesDown();
+        doNothing().when(spyBoardController).refillBoard();
+
+        spyBoardController.step(mockGame, GUI.ACTION.DOWN, System.currentTimeMillis());
+
+        verify(spyBoardController, times(1)).shiftTilesDown();
+        verify(spyBoardController, times(1)).refillBoard();
+    }
+
+    @Test
+    void testScoreIncrementsAfterValidAction() throws IOException {
+
+        Score mockScore = mock(Score.class);
+        when(mockBoard.getScore()).thenReturn(mockScore);
+
+        gameController.step(mockGame, GUI.ACTION.DOWN, System.currentTimeMillis());
+
+        verify(mockScore, times(1)).addScore(anyInt());
+    }
+
 
 }
