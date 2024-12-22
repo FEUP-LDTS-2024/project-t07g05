@@ -30,32 +30,128 @@ All the planned features were successfully implemented.
 
 ![UML diagram presenting project's design patterns and classes](./images/CrystalClashDiagramUML.png)
 
-### 🔧 Model-View-Controller Architecture
+### 🔧 Architecture
 
+#### Problem in Context:
 
-* **Why MVC?** Match-three puzzle games often involve complex mechanics like power-ups, animations, and custom rules. To simplify adding new features and ensure maintainability, we chose the Model-View-Controller (MVC) architecture. Its modular structure enhances clarity and makes the project more scalable.
+The challenge in our project was ensuring a clear separation between the game’s data, logic, and user interface. As the game involves complex interactions between the game state, player inputs, and visual feedback, managing all these aspects within a single monolithic class would quickly lead to tangled, difficult-to-maintain code. The primary concern was to design a system where changes in the UI would not interfere with the underlying game logic or data, and vice versa. We needed an architecture that could scale as we added more features and ensured modularity across the game's various components.
+#### The Pattern:
 
+The **Model-View-Controller** (MVC) architectural pattern to handle the separation of concerns between data, logic, and presentation.
 
-* **What is MVC?** The Model-View-Controller pattern is a design approach that organizes the application into three distinct components: the model (manages the core data), the controller (acts as an intermediary for both the model and the view) and the view (handles the visual representation of the game).
+#### Implementation:
 
+The implementation includes classes dedicated to specific roles:
+- Model: Stores and manages data.
+- Controller: Contains the logic that governs the game.
+- Viewer: Responsible for rendering visual elements.
 
-* **How We Applied MVC:** As for the model, it includes the game’s mechanics, such as detecting matches, managing tile movements, and handling board state changes. As for the controller, it manages user interactions, like selecting and swapping tiles, and triggers updates to the model and view based on user actions. And as for the view, it ensures the game is visually represented by reflecting changes in the model and keeping the user engaged with a responsive interface.
+These classes interact as shown below:
+[IMAGE]
 
+#### Consequences:
+
+The benefits of this design include:
+- Explicit representation of game states through distinct classes.
+- Adherence to the Single Responsibility Principle (SRP).
+- Enhanced extensibility for adding new features during development.
+
+### 🔧 State Pattern
+
+#### Problem in Context:
+
+The game involves multiple distinct states such as different menus and gameplay, each with its own set of behaviors and interactions. Without a clear structure to handle these state transitions, the game would quickly become difficult to manage, especially as new states were introduced. The primary challenge was to ensure smooth transitions between these states based on player actions while keeping the game logic clean and maintainable. A naive approach of using conditional checks throughout the code for state management would not only be error-prone but also difficult to extend or modify as the game evolved.
+
+#### The Pattern:
+
+We implemented the **State Pattern**, a behavioral design pattern that enables an object to change its behavior dynamically based on its internal state.
+
+#### Implementation:
+
+#### Consequences:
+
+- Adding or modifying game states is straightforward and does not require changes to unrelated parts of the code.
+- Each state encapsulates its behavior, avoiding clutter and promoting clean separation of concerns, which aligns with the Single Responsibility Principle (SRP).
+- Game states are explicitly represented, making the code easier to understand and maintain.
+
+### 🔧 Game Loop Pattern
+
+#### Problem in Context:
+
+A game requires a continuous cycle of receiving user inputs, processing game logic, and rendering visuals. Without a structured approach to manage this cycle, it could lead to performance issues, inconsistency in user input processing, or even a broken user experience. Achieving this efficiently without unnecessary delays or complexity was a critical design challenge.
+
+#### The Pattern:
+
+We implemented the **Game Loop Pattern**, which ensures a consistent and smooth flow of operations by repeating the following steps:
+1. Process inputs.
+2. Update game state.
+3. Render outputs.
+
+#### Implementation:
+
+The main game loop resides in the **Game** class and iterates over the above steps. The loop also maintains a timer to regulate the frame rate and ensure time-based gameplay. Each state (menu, gameplay, etc.) provides specific implementations for input handling and updates, enabling a modular approach.
+
+#### Consequences:
+
+The game loop pattern provides:
+- Consistency in game execution, regardless of the player's input speed.
+- A clear separation of concerns for input processing, logic updates, and rendering.
+- Flexibility to add new states or features without altering the loop structure.
 
 ### 🔧 Factory Design Pattern
 
-* **Why Factory?**
-  In a match-three puzzle game, different tile types (e.g., gems, bombs, empty tiles) may have unique behaviors, properties, and visuals. Managing the creation of these tiles directly within the game logic would lead to repetitive code and make future changes inconvenient. The Factory Design Pattern allows us to centralize and simplify the creation of tile objects while adhering to the *Single Responsibility Principle*.
+#### Problem in Context:
 
-* **What is Factory?**
-  The Factory pattern is a creational design pattern that provides an interface or method to instantiate objects based on specified criteria without exposing the instantiation logic. This helps in producing objects while keeping the creation logic modular and maintainable.
+The game features a variety of tiles, each with its own properties, behaviors, and visual representations (e.g., gems, bombs, empty tiles). If the creation of these tiles were handled directly within the core game logic, it would lead to tight coupling between the game’s mechanics and the tile instantiation process. This would result in repeated code, difficulty in adding new tile types, and reduced scalability. The problem was to manage tile creation in a way that decouples it from the rest of the game logic while maintaining flexibility to add new types of tiles with distinct behaviors in the future.
 
-* **How We Applied Factory:** Although the Factory pattern is not yet implemented, we plan to introduce it in the Tile class. Currently, tiles are created directly during the initialization of the game board. By applying the Factory pattern, we aim to facilitate the addition of new tile types in the future with minimal changes to the existing code and enhance code readability and maintainability by separating the instantiation logic from the game mechanics.
+#### The Pattern:
 
-### Game Loop Pattern
+To address this, we implemented a **Factory** design pattern, specifically a **Simple Factory**. It is a creational design pattern that centralizes object creation in a dedicated class. This approach decouples the instantiation of objects, such as tiles, from the main game logic, improving code modularity and scalability.
 
-* **Why Game Loop?** In games, actions like rendering visuals, processing player input, and updating the game state need to happen repeatedly and consistently to maintain a smooth and interactive experience. The Game Loop pattern allows us to manage these tasks in a structured way, ensuring the game progresses frame by frame while maintaining a steady rhythm regardless of input frequency or system performance.
+#### Implementation:
 
-* **What is Game Loop?** Game Loop is a design pattern that provides the structure for a game's main cycle. It repeatedly performs three main steps: processing input, updating game state and rendering.
+#### Consequences:
 
-* **How we Applied Game Loop:** In our project, the Game Loop manages the game's flow by continuously checking for player input, updating the game's internal state based on user actions (such as moving from the current tile or swapping tiles), and then rendering the board and its tiles.
+This pattern offers:
+- Loose coupling between the game logic and tile creation.
+- Flexibility in object creation without directly exposing this logic to clients.
+- Adheres to the Open/Closed Principle. It allows for easier extensions of object creation logic without modifying the existing client code.
+
+### 🔧 Strategy Design Pattern
+
+#### Problem in Context:
+
+Each tile in the game needs to exhibit different behaviors depending on its type. For example, some tiles pop when matched, while others might trigger special effects or score points based on specific conditions. Embedding all these behaviors directly into the Tile class would not only make the class bloated and difficult to maintain, but it would also violate the Single Responsibility Principle (SRP). Additionally, adding new behaviors or changing existing ones would require modifying the Tile class itself, leading to rigid and error-prone code. The challenge was to allow tiles to have different behaviors dynamically, without overloading the Tile class or making the system inflexible.
+#### The Pattern:
+
+We utilized the **Strategy Pattern**, a behavioral design pattern that enables selecting an algorithm's behavior at runtime.
+
+#### Implementation:
+
+#### Consequences:
+
+This design provides:
+- Clear separation of behavior logic from tile data.
+- Flexibility to introduce new behaviors without altering the Tile class.
+- Improved maintainability by adhering to the Open/Closed Principle (OCP)
+
+### 🔧 Facade Design Pattern
+
+#### Problem in Context:
+
+Our game uses the Lanterna library to handle GUI operations, but the library is complex and exposes many functions that are irrelevant to our specific needs. Furthermore, the library’s structure does not entirely align with the architecture of our game, which could lead to violations of design principles like the Interface Segregation Principle (ISP). A direct dependency on the library would also violate the Dependency Inversion Principle (DIP), as the high-level game logic would be tightly coupled to a low-level module. The challenge was to isolate the game from the complexities of the Lanterna library while still retaining the necessary functionality, making it easier to replace or extend the GUI subsystem in the future.
+#### The Pattern:
+
+We implemented the Facade Pattern, which provides a simplified interface to the Lanterna subsystem, exposing only the essential functionalities required by the game.
+
+#### Implementation:
+
+#### Consequences:
+
+The benefits include:
+- Isolation of game logic from the complexity of the GUI library.
+- Enhanced testability and modularity.
+- Ability to replace or extend GUI functionality without affecting the core game logic.
+
+
+
