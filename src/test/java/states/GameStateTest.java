@@ -1,5 +1,6 @@
 package states;
 
+import com.ldts.crystalclash.Game;
 import com.ldts.crystalclash.model.Board;
 import com.ldts.crystalclash.states.GameState;
 import com.ldts.crystalclash.viewer.GameViewer;
@@ -45,15 +46,15 @@ class GameStateTest {
     @Test
     void testStepCallsControllerAndViewer() throws IOException {
         long time = 100L;
+        Game mockGame = mock(Game.class);
 
         when(mockGUI.getNextAction()).thenReturn(GUI.ACTION.UP);
 
-        gameState.step(null, mockGUI, time);
+        gameState.step(mockGame, mockGUI, time);
 
-        verify(mockController, times(1)).step(null, GUI.ACTION.UP, time);
-
+        verify(mockController, times(1)).step(mockGame, GUI.ACTION.UP, time);
         verify(mockViewer, times(1)).draw(mockGUI);
-
         verify(mockGUI, times(1)).getNextAction();
     }
+
 }

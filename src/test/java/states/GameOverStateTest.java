@@ -10,6 +10,7 @@ import com.ldts.crystalclash.gui.GUI;
 
 import com.ldts.crystalclash.viewer.Viewer;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,10 +31,16 @@ public class GameOverStateTest {
         gameOverState = new GameOverState(mockGameOver);
     }
 
+    @AfterEach
+    public void tearDown() {
+        reset(mockGame, mockGUI, mockGameOver);
+    }
+
     @Test
     public void testGetModel() {
         assertEquals(mockGameOver, gameOverState.getModel());
     }
+
     @Test
     public void testStepCallsControllerAndViewerWithReflection() throws Exception {
         long time = 100L;
@@ -75,4 +82,31 @@ public class GameOverStateTest {
         GameOverController controller = new GameOverController(mockGameOver);
         assertNotNull(controller);
     }
+
+    @Test
+    public void testStepHandlesNullAction() throws Exception {
+        long time = 100L;
+
+        when(mockGUI.getNextAction()).thenReturn(GUI.ACTION.NONE);
+
+        GameOverController controllerSpy = spy(new GameOverController(mockGameOver));
+        GameOverViewer viewerSpy = spy(new GameOverViewer(mockGameOver));
+
+        GameOverState testState = new GameOverState(mockGameOver) {
+            @Override
+            protected Controller<GameOver> getController() {
+                return controllerSpy;
+            }
+
+            @Override
+            protected Viewer<GameOver> getViewer() {
+                return viewerSpy;
+            }
+        };
+
+        assertDoesNotThrow(() -> testState.step(mockGame, mockGUI, time));
+        verify(controllerSpy, times(1)).step(mockGame, GUI.ACTION.NONE, time);  // Assert that ACTION.NONE was passed
+        verify(viewerSpy, times(1)).draw(mockGUI);
+    }
+
 }
