@@ -1,6 +1,10 @@
 # LDTS_T07_G05 - CRYSTAL CLASH
 ## Game Description 
 
+Crystal Clash is a captivating puzzle game where every swap matters! Immerse yourself in fast-paced gameplay as you strategically match gems to make dazzling combos. Race against the clock and test your skills to achieve the highest score possible in this exhilarating challenge!
+
+This project was developed by **Ana Margarida Ribeiro** ([up202305264@fe.up.pt](mailto:up202305264@fe.up.pt)), **André Siqueira** ([up202300449@fe.up.pt](mailto:up202300449@fe.up.pt)) and **Henrique Perry** ([up202306582@fe.up.pt](mailto:up202306582@fe.up.pt)) as part of the **Software Design and Testing Laboratory** curricular unit at **Faculty of Engineering of University of Porto**.
+
 ## 🛠️ Technologies Used
 
 - **Java:** Core programming language for game logic and mechanics.
@@ -233,5 +237,11 @@ The benefits include:
 - Enhanced testability and modularity.
 - Ability to replace or extend GUI functionality without affecting the core game logic.
 
+## 🔍 Known code smells
 
+## 📊 Test coverage
+
+## 🛡️ Mutation testing
+
+## ✍️ Self-evaluation
 
