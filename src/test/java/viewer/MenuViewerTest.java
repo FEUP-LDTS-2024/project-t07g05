@@ -22,21 +22,13 @@ public class MenuViewerTest {
     public void setup() {
 
         gui = mock(GUI.class);
-        menu = mock(Menu.class);
-
+        menu = new Menu();
         menuViewer = new MenuViewer(menu);
     }
 
     @Test
     public void testDrawElementsCallsDrawTextWithCorrectArguments() {
-
-        when(menu.getNumberOptions()).thenReturn(3);
-        when(menu.getSelectedOption(0)).thenReturn("Option 1");
-        when(menu.getSelectedOption(1)).thenReturn("Option 2");
-        when(menu.getSelectedOption(2)).thenReturn("Option 3");
-        when(menu.isSelected(0)).thenReturn(true);
-        when(menu.isSelected(1)).thenReturn(false);
-        when(menu.isSelected(2)).thenReturn(false);
+        menu.selectNext();
 
         menuViewer.drawElements(gui);
 
@@ -47,15 +39,15 @@ public class MenuViewerTest {
         verify(gui, times(3)).drawText(positionCaptor.capture(), textCaptor.capture(), colorCaptor.capture());
 
         assertEquals(new Position(52, 20), positionCaptor.getAllValues().getFirst());
-        assertEquals("Option 1", textCaptor.getAllValues().getFirst());
-        assertEquals("#00FFFF", colorCaptor.getAllValues().getFirst());
+        assertEquals("PLAY", textCaptor.getAllValues().getFirst());
+        assertEquals("#FFFFFF", colorCaptor.getAllValues().getFirst());
 
         assertEquals(new Position(52, 21), positionCaptor.getAllValues().get(1));
-        assertEquals("Option 2", textCaptor.getAllValues().get(1));
-        assertEquals("#FFFFFF", colorCaptor.getAllValues().get(1));
+        assertEquals("SCORES", textCaptor.getAllValues().get(1));
+        assertEquals("#00FFFF", colorCaptor.getAllValues().get(1));
 
         assertEquals(new Position(52, 22), positionCaptor.getAllValues().get(2));
-        assertEquals("Option 3", textCaptor.getAllValues().get(2));
+        assertEquals("EXIT", textCaptor.getAllValues().get(2));
         assertEquals("#FFFFFF", colorCaptor.getAllValues().get(2));
     }
 
