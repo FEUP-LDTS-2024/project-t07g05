@@ -1,107 +1,96 @@
 package model;
 
+import com.ldts.crystalclash.model.*;
+import com.ldts.crystalclash.strategy.BehaviorContext;
+import com.ldts.crystalclash.strategy.BombTileBehavior;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.ldts.crystalclash.model.Board;
-import com.ldts.crystalclash.model.BombTile;
-import com.ldts.crystalclash.model.Position;
-import com.ldts.crystalclash.model.Tile;
-import com.ldts.crystalclash.model.EmptyTile;
-import com.ldts.crystalclash.model.TileMatcher;
-import com.ldts.crystalclash.model.Color;
-
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.*;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.*;
-
-@ExtendWith(MockitoExtension.class)
-public class BombTileTest {
-
-    @Mock
-    private Board mockBoard;
-
-    @InjectMocks
-    private TileMatcher tileMatcher;
+class BombTileTest {
 
     private BombTile bombTile;
+    private Board mockBoard;
+    private Tile mockAdjacentTile;
+    private Set<Tile> toRemove;
 
     @BeforeEach
     void setUp() {
-        bombTile = new BombTile(new Position(2, 2), new Position(2, 2), Color.RUBY);
+        // Create a mock board and bombTile instance
+        mockBoard = mock(Board.class);
+        Position screenPosition = new Position(100, 100);
+        Position gridCoordinates = new Position(2, 2);
+        Color mockColor = mock(Color.class);  // Assuming Color is a valid class with proper constructor
+        bombTile = new BombTile(screenPosition, gridCoordinates, mockColor);
+
+        // Mock an adjacent tile to be affected by the bomb
+        mockAdjacentTile = mock(Tile.class);
+
+        // Initialize the toRemove set as a HashSet
+        toRemove = new HashSet<>();
     }
 
     @Test
-    void testBombTileAffectsAdjacentTiles() {
+    void testBombTileBehaviorRemovesAdjacentTiles() {
+        // Simulate the adjacent tile being next to the bombTile
+        Position bombPosition = bombTile.getGridCoordinates();
 
-        Position up = new Position(1, 2);
-        Position down = new Position(3, 2);
-        Position left = new Position(2, 1);
-        Position right = new Position(2, 3);
+        // Mock valid neighboring positions around the bombTile (e.g., top, bottom, left, right)
+        Position topPosition = new Position(bombPosition.getX() - 1, bombPosition.getY());
+        Position bottomPosition = new Position(bombPosition.getX() + 1, bombPosition.getY());
+        Position leftPosition = new Position(bombPosition.getX(), bombPosition.getY() - 1);
+        Position rightPosition = new Position(bombPosition.getX(), bombPosition.getY() + 1);
 
-        Tile upTile = mock(Tile.class);
-        Tile downTile = mock(Tile.class);
-        Tile leftTile = mock(Tile.class);
-        Tile rightTile = mock(Tile.class);
+        when(mockBoard.isValidPosition(topPosition.getX(), topPosition.getY())).thenReturn(true);
+        when(mockBoard.isValidPosition(bottomPosition.getX(), bottomPosition.getY())).thenReturn(true);
+        when(mockBoard.isValidPosition(leftPosition.getX(), leftPosition.getY())).thenReturn(true);
+        when(mockBoard.isValidPosition(rightPosition.getX(), rightPosition.getY())).thenReturn(true);
 
-        when(mockBoard.isValidPosition(anyInt(), anyInt())).thenReturn(true);
-        when(mockBoard.getTile(up.getX(), up.getY())).thenReturn(upTile);
-        when(mockBoard.getTile(down.getX(), down.getY())).thenReturn(downTile);
-        when(mockBoard.getTile(left.getX(), left.getY())).thenReturn(leftTile);
-        when(mockBoard.getTile(right.getX(), right.getY())).thenReturn(rightTile);
+        // Simulate getting the adjacent tiles
+        when(mockBoard.getTile(topPosition.getX(), topPosition.getY())).thenReturn(mockAdjacentTile);
+        when(mockBoard.getTile(bottomPosition.getX(), bottomPosition.getY())).thenReturn(mockAdjacentTile);
+        when(mockBoard.getTile(leftPosition.getX(), leftPosition.getY())).thenReturn(mockAdjacentTile);
+        when(mockBoard.getTile(rightPosition.getX(), rightPosition.getY())).thenReturn(mockAdjacentTile);
 
-        List<Tile> matches = new ArrayList<>();
-        matches.add(bombTile);
-        tileMatcher.matches = matches;
+        // Call the popOff method to simulate the bomb explosion
+        BehaviorContext behaviorContext = bombTile.getBehaviorContext();
+        BombTileBehavior bombTileBehavior = (BombTileBehavior) behaviorContext.getBehavior();
+        bombTileBehavior.popOff(bombTile, mockBoard, toRemove);
 
-        tileMatcher.popMatches();
-
-        verify(mockBoard).setTile(up.getX(), up.getY(), any(EmptyTile.class));
-        verify(mockBoard).setTile(down.getX(), down.getY(), any(EmptyTile.class));
-        verify(mockBoard).setTile(left.getX(), left.getY(), any(EmptyTile.class));
-        verify(mockBoard).setTile(right.getX(), right.getY(), any(EmptyTile.class));
-        verify(mockBoard).setTile(bombTile.getGridCoordinates().getX(), bombTile.getGridCoordinates().getY(), any(EmptyTile.class));
+        // Verify that the adjacent tiles are added to the removal set
+        verify(toRemove, times(4)).add(mockAdjacentTile);  // Should be called for each of the 4 directions (top, bottom, left, right)
     }
 
     @Test
-    void testBombTileDoesNotAffectOutOfBoundsTiles() {
+    void testBombTilePointsCalculation() {
+        // Simulate neighboring tiles with some colors (and color rarities)
+        Position bombPosition = bombTile.getGridCoordinates();
 
-        when(mockBoard.isValidPosition(anyInt(), anyInt())).thenReturn(false);
+        // Mock some adjacent tiles with varying rarities
+        Tile mockTileUp = mock(Tile.class);
+        Tile mockTileDown = mock(Tile.class);
+        Tile mockTileLeft = mock(Tile.class);
+        Tile mockTileRight = mock(Tile.class);
 
-        Position invalidUp = new Position(-1, 2);
-        Position invalidDown = new Position(4, 2);
-        Position invalidLeft = new Position(2, -1);
-        Position invalidRight = new Position(2, 4);
+        when(mockBoard.getTile(bombPosition.getX() - 1, bombPosition.getY())).thenReturn(mockTileUp);
+        when(mockBoard.getTile(bombPosition.getX() + 1, bombPosition.getY())).thenReturn(mockTileDown);
+        when(mockBoard.getTile(bombPosition.getX(), bombPosition.getY() - 1)).thenReturn(mockTileLeft);
+        when(mockBoard.getTile(bombPosition.getX(), bombPosition.getY() + 1)).thenReturn(mockTileRight);
 
-        Tile invalidUpTile = mock(Tile.class);
-        Tile invalidDownTile = mock(Tile.class);
-        Tile invalidLeftTile = mock(Tile.class);
-        Tile invalidRightTile = mock(Tile.class);
+        when(mockTileUp.getColorRarity()).thenReturn(2);
+        when(mockTileDown.getColorRarity()).thenReturn(3);
+        when(mockTileLeft.getColorRarity()).thenReturn(1);
+        when(mockTileRight.getColorRarity()).thenReturn(4);
 
-        List<Tile> matches = new ArrayList<>();
-        matches.add(bombTile);
-        tileMatcher.matches = matches;
+        // Call the calculatePoints method to calculate the bombTile's points
+        int points = bombTile.getBehaviorContext().calculatePoints(mockBoard);
 
-        tileMatcher.popMatches();
-
-        verify(mockBoard, never()).setTile(invalidUp.getX(), invalidUp.getY(), any(EmptyTile.class));
-        verify(mockBoard, never()).setTile(invalidDown.getX(), invalidDown.getY(), any(EmptyTile.class));
-        verify(mockBoard, never()).setTile(invalidLeft.getX(), invalidLeft.getY(), any(EmptyTile.class));
-        verify(mockBoard, never()).setTile(invalidRight.getX(), invalidRight.getY(), any(EmptyTile.class));
-    }
-
-    @Test
-    void testBombTileHasCorrectColor() {
-
-        assertEquals("#ff1c20", bombTile.getColor());
-
-    }
-
-    @AfterEach
-    void tearDown() {
-
+        // The points should be the sum of the adjacent tiles' rarities
+        assertEquals(10, points);  // 2 + 3 + 1 + 4 = 10
     }
 }

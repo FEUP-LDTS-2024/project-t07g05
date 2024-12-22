@@ -4,12 +4,9 @@ import com.ldts.crystalclash.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
-
 
 class TileMatcherTest {
 
@@ -18,136 +15,100 @@ class TileMatcherTest {
 
     @BeforeEach
     void setUp() {
-        board = mock(Board.class);
+        board = new Board(5, 5, 500, 500, 50, 50);
         tileMatcher = new TileMatcher(board);
     }
 
     @Test
-    void testMatchesIsNotNull() {
-        when(board.getRows()).thenReturn(5);
-        when(board.getColumns()).thenReturn(5);
+    void testFindHorizontalMatches() {
+        Tile tile1 = new GemTile(new Position(0, 0), new Position(0, 0), Color.DIAMOND);
+        Tile tile2 = new GemTile(new Position(1, 0), new Position(0, 1), Color.DIAMOND);
+        Tile tile3 = new GemTile(new Position(2, 0), new Position(0, 2), Color.DIAMOND);
+
+        board.setTile(0, 0, tile1);
+        board.setTile(0, 1, tile2);
+        board.setTile(0, 2, tile3);
 
         tileMatcher.findMatches();
+        List<Tile> matches = tileMatcher.matches;
 
-        assertNotNull(tileMatcher.matches, "Matches should not be null");
+        assertEquals(3, matches.size());
+        assertTrue(matches.contains(tile1));
+        assertTrue(matches.contains(tile2));
+        assertTrue(matches.contains(tile3));
     }
 
     @Test
-    void testNoMatchesFound() {
-        when(board.getRows()).thenReturn(5);
-        when(board.getColumns()).thenReturn(5);
+    void testFindVerticalMatches() {
+        // Set up a vertical match of 3
+        Tile tile1 = new GemTile(new Position(0, 0), new Position(0, 0), Color.SAPPHIRE);
+        Tile tile2 = new GemTile(new Position(1, 0), new Position(1, 0), Color.SAPPHIRE);
+        Tile tile3 = new GemTile(new Position(2, 0), new Position(2, 0), Color.SAPPHIRE);
 
-        Tile tile1 = mock(Tile.class);
-        when(tile1.getColor()).thenReturn("Red");
+        board.setTile(0, 0, tile1);
+        board.setTile(1, 0, tile2);
+        board.setTile(2, 0, tile3);
 
-        Tile tile2 = mock(Tile.class);
-        when(tile2.getColor()).thenReturn("Blue");
+        tileMatcher.findMatches();
+        List<Tile> matches = tileMatcher.matches;
 
-        Tile tile3 = mock(Tile.class);
-        when(tile3.getColor()).thenReturn("Green");
+        assertEquals(3, matches.size());
+        assertTrue(matches.contains(tile1));
+        assertTrue(matches.contains(tile2));
+        assertTrue(matches.contains(tile3));
+    }
 
-        when(board.getTile(0, 0)).thenReturn(tile1);
-        when(board.getTile(0, 1)).thenReturn(tile2);
-        when(board.getTile(0, 2)).thenReturn(tile3);
+    @Test
+    void testNoMatches() {
+        Color[] colors = Color.values();
+        int colorIndex = 0;
 
-        for (int row = 1; row < 5; row++) {
-            for (int col = 0; col < 5; col++) {
-                Tile emptyTile = mock(Tile.class);
-                when(emptyTile.getColor()).thenReturn("Empty");
-                when(board.getTile(row, col)).thenReturn(emptyTile);
+        for (int row = 0; row < board.getRows(); row++) {
+            for (int col = 0; col < board.getColumns(); col++) {
+                Color color = colors[colorIndex];
+                colorIndex = (colorIndex + 1) % colors.length;
+                Tile tile = new GemTile(new Position(row, col), new Position(row, col), color);
+                board.setTile(row, col, tile);
             }
         }
 
         tileMatcher.findMatches();
-
-        assertTrue(tileMatcher.matches.isEmpty(), "Matches should be empty");
+        assertTrue(tileMatcher.matches.isEmpty(), "Matches list should be empty, but it's not.");
     }
 
 
-
-
     @Test
-    void testMatchesAreCleared() {
-        when(board.getRows()).thenReturn(5);
-        when(board.getColumns()).thenReturn(5);
+    void testPopMatches() {
+        Tile tile1 = new GemTile(new Position(0, 0), new Position(0, 0), Color.RUBY);
+        Tile tile2 = new GemTile(new Position(0, 1), new Position(0, 1), Color.RUBY);
+        Tile tile3 = new GemTile(new Position(0, 2), new Position(0, 2), Color.RUBY);
 
-        Tile tile1 = mock(Tile.class);
-        Tile tile2 = mock(Tile.class);
-        when(tile1.getGridCoordinates()).thenReturn(new Position(0, 0));
-        when(tile2.getGridCoordinates()).thenReturn(new Position(1, 1));
+        board.setTile(0, 0, tile1);
+        board.setTile(0, 1, tile2);
+        board.setTile(0, 2, tile3);
 
-        tileMatcher.matches = new ArrayList<>();
-        tileMatcher.matches.add(tile1);
-        tileMatcher.matches.add(tile2);
-
-        assertTrue(true, "Matches should not be empty initially");
-
+        tileMatcher.findMatches();
         tileMatcher.popMatches();
 
-        assertTrue(tileMatcher.matches.isEmpty(), "Matches should be cleared");
-
-        verify(board).setTile(eq(0), eq(0), any(EmptyTile.class));
-        verify(board).setTile(eq(1), eq(1), any(EmptyTile.class));
+        assertInstanceOf(EmptyTile.class, board.getTile(0, 0));
+        assertInstanceOf(EmptyTile.class, board.getTile(0, 1));
+        assertInstanceOf(EmptyTile.class, board.getTile(0, 2));
     }
 
     @Test
-    void testHorizontalMatch() {
-        // Set up the board with rows and columns
-        when(board.getRows()).thenReturn(5);
-        when(board.getColumns()).thenReturn(5);
+    void testCalculateScore() {
+        // Set up matches and verify score calculation
+        Tile tile1 = new GemTile(new Position(0, 0), new Position(0, 0), Color.EMERALD);
+        Tile tile2 = new GemTile(new Position(0, 1), new Position(0, 1), Color.EMERALD);
+        Tile tile3 = new GemTile(new Position(0, 2), new Position(0, 2), Color.EMERALD);
 
-        // Mock the tiles involved in the match
-        Tile tile1 = mock(Tile.class);
-        when(tile1.getColor()).thenReturn("Red");
-
-        Tile tile2 = mock(Tile.class);
-        when(tile2.getColor()).thenReturn("Red");
-
-        Tile tile3 = mock(Tile.class);
-        when(tile3.getColor()).thenReturn("Red");
-
-        // Mock the board's specific tiles to return the expected tiles at the matching positions
-        when(board.getTile(0, 0)).thenReturn(tile1);
-        when(board.getTile(0, 1)).thenReturn(tile2);
-        when(board.getTile(0, 2)).thenReturn(tile3);
-
-        // Mock the other tiles on the board to return some neutral or non-matching color
-        for (int row = 1; row < 5; row++) {
-            for (int col = 0; col < 5; col++) {
-                Tile emptyTile = mock(Tile.class);
-                when(emptyTile.getColor()).thenReturn("Empty");  // Return a non-matching color
-                when(board.getTile(row, col)).thenReturn(emptyTile);
-            }
-        }
-
-        // Now run the match finder
-        tileMatcher.findMatches();
-
-        // Assert that matches were found (horizontal match at row 0, columns 0, 1, and 2)
-        assertFalse(tileMatcher.matches.isEmpty(), "Matches should be found");
-    }
-
-
-
-    @Test
-    void testVerticalMatch() {
-        when(board.getRows()).thenReturn(5);
-        when(board.getColumns()).thenReturn(5);
-
-        Tile tile1 = mock(Tile.class);
-        Tile tile2 = mock(Tile.class);
-        Tile tile3 = mock(Tile.class);
-
-        when(tile1.getColor()).thenReturn("Blue");
-        when(tile2.getColor()).thenReturn("Blue");
-        when(tile3.getColor()).thenReturn("Blue");
-
-        when(board.getTile(0, 0)).thenReturn(tile1);
-        when(board.getTile(1, 0)).thenReturn(tile2);
-        when(board.getTile(2, 0)).thenReturn(tile3);
+        board.setTile(0, 0, tile1);
+        board.setTile(0, 1, tile2);
+        board.setTile(0, 2, tile3);
 
         tileMatcher.findMatches();
+        int score = tileMatcher.calculateScore();
 
-        assertFalse(tileMatcher.matches.isEmpty(), "Matches should be found");
+        assertEquals(15, score); // Adjust the expected value based on your scoring logic
     }
 }

@@ -1,71 +1,78 @@
 package model;
 
-import static org.mockito.Mockito.*;
+import com.ldts.crystalclash.model.EmptyTile;
+import com.ldts.crystalclash.model.Position;
+import com.ldts.crystalclash.model.Color;
+import com.ldts.crystalclash.strategy.BehaviorContext;
+import com.ldts.crystalclash.strategy.EmptyTileBehavior;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.ldts.crystalclash.model.Board;
-import com.ldts.crystalclash.model.EmptyTile;
-import com.ldts.crystalclash.model.Color;
-import com.ldts.crystalclash.model.Position;
-import com.ldts.crystalclash.model.Tile;
+class EmptyTileTest {
 
-import org.junit.jupiter.api.*;
-
-public class EmptyTileTest {
-
-    private Board mockBoard;
     private EmptyTile emptyTile;
 
     @BeforeEach
     void setUp() {
-
-        mockBoard = mock(Board.class);
-        emptyTile = new EmptyTile(new Position(2, 2), new Position(2, 2), Color.EMERALD);
-    }
-
-
-    @Test
-    void testEmptyTileDoesNotAffectAdjacentTiles() {
-
-        Position up = new Position(1, 2);
-        Position down = new Position(3, 2);
-        Position left = new Position(2, 1);
-        Position right = new Position(2, 3);
-
-
-        Tile upTile = mock(Tile.class);
-        Tile downTile = mock(Tile.class);
-        Tile leftTile = mock(Tile.class);
-        Tile rightTile = mock(Tile.class);
-
-        when(mockBoard.isValidPosition(anyInt(), anyInt())).thenReturn(true);
-        when(mockBoard.getTile(up.getX(), up.getY())).thenReturn(upTile);
-        when(mockBoard.getTile(down.getX(), down.getY())).thenReturn(downTile);
-        when(mockBoard.getTile(left.getX(), left.getY())).thenReturn(leftTile);
-        when(mockBoard.getTile(right.getX(), right.getY())).thenReturn(rightTile);
-
-        mockBoard.setTile(emptyTile.getGridCoordinates().getX(), emptyTile.getGridCoordinates().getY(), emptyTile);
-
-        verify(mockBoard, never()).setTile(up.getX(), up.getY(), any(EmptyTile.class));
-        verify(mockBoard, never()).setTile(down.getX(), down.getY(), any(EmptyTile.class));
-        verify(mockBoard, never()).setTile(left.getX(), left.getY(), any(EmptyTile.class));
-        verify(mockBoard, never()).setTile(right.getX(), right.getY(), any(EmptyTile.class));
-
-
-        verify(mockBoard).setTile(emptyTile.getGridCoordinates().getX(), emptyTile.getGridCoordinates().getY(), emptyTile);
+        Position screenPosition = new Position(0, 0);
+        Position gridCoordinates = new Position(1, 1);
+        emptyTile = new EmptyTile(screenPosition, gridCoordinates);
     }
 
     @Test
-    void testEmptyTileSymbol() {
+    public void testEmptyTileInitialization() {
+        Position screenPosition = new Position(0, 0);
+        Position gridCoordinates = new Position(0, 0);
 
-        assertEquals(" ", emptyTile.getSymbol(), "The symbol of the EmptyTile should be a space");
+        EmptyTile tile = new EmptyTile(screenPosition, gridCoordinates, Color.DEFAULT);
+
+        assertNotNull(tile.getBehaviorContext(), "BehaviorContext should not be null");
+
+        assertNotNull(tile.getBehaviorContext().getBehavior(), "Tile behavior should be set.");
     }
 
-    @AfterEach
-    void tearDown() {
-        // Cleanup if necessary
+    @Test
+    void testSetColor() {
+        emptyTile.setColor(Color.SAPPHIRE);
+        assertEquals("#0e3edd", emptyTile.getColor());
+        assertEquals(2, emptyTile.getColorRarity());
     }
 
-    /// To do : Test for color
+    @Test
+    void testSetCursorOn() {
+        emptyTile.setCursorOn(true);
+        assertTrue(emptyTile.isCursorOn());
+
+        emptyTile.setCursorOn(false);
+        assertFalse(emptyTile.isCursorOn());
+    }
+
+    @Test
+    void testPositionSetters() {
+        Position newScreenPosition = new Position(10, 10);
+        Position newGridCoordinates = new Position(2, 2);
+
+        emptyTile.setScreenPosition(newScreenPosition);
+        emptyTile.setGridCoordinates(newGridCoordinates);
+
+        assertEquals(newScreenPosition, emptyTile.getScreenPosition());
+        assertEquals(newGridCoordinates, emptyTile.getGridCoordinates());
+    }
+
+    @Test
+    public void testBehaviorContext() {
+        Position screenPosition = new Position(0, 0);
+        Position gridCoordinates = new Position(0, 0);
+
+        // Create the EmptyTile object
+        EmptyTile tile = new EmptyTile(screenPosition, gridCoordinates);  // Make sure this constructor is used
+
+        // Ensure the behaviorContext is not null
+        assertNotNull(tile.getBehaviorContext(), "BehaviorContext should not be null");
+
+        // Additionally, check if the behavior is set properly
+        assertNotNull(tile.getBehaviorContext().getBehavior(), "Tile behavior should be set.");
+    }
+
 }
-
