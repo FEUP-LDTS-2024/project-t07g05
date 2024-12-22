@@ -60,7 +60,6 @@ class GemTileTest {
 
     @Test
     void testPositionSetters() {
-        // Test setting new positions
         Position newScreenPosition = new Position(10, 10);
         Position newGridCoordinates = new Position(2, 2);
 
