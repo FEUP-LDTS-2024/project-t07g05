@@ -49,6 +49,8 @@ public abstract class Tile {
         return color.getHexCode();
     }
 
+    public void setColor(Color color) {this.color = color;}
+
     public int getColorRarity() {
         return color.getRarity();
     }

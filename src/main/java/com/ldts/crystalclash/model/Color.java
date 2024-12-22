@@ -15,6 +15,9 @@ public enum Color {
     private final int rarity;
 
     Color(String hexCode, int rarity) {
+        if (!hexCode.matches("^#[0-9A-Fa-f]{6}$")) {
+            throw new IllegalArgumentException("Invalid hex color code.");
+        }
         this.hexCode = hexCode;
         this.rarity = rarity;
     }
