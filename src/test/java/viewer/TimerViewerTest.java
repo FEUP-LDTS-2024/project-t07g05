@@ -1,34 +1,52 @@
 package viewer;
 
 import com.ldts.crystalclash.gui.GUI;
+import com.ldts.crystalclash.model.Position;
 import com.ldts.crystalclash.model.Timer;
 import com.ldts.crystalclash.viewer.TimerViewer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 public class TimerViewerTest {
     private TimerViewer timerViewer;
-    private Timer mockTimer;
-    private GUI mockGUI;
+    private Timer timer;
+    private GUI gui;
 
     @BeforeEach
     void setUp() {
-        mockGUI = mock(GUI.class);
-        mockTimer = mock(Timer.class);
-        timerViewer = new TimerViewer(mockTimer);
+        gui = mock(GUI.class);
+        timer = mock(Timer.class);
+        timerViewer = new TimerViewer(timer);
     }
 
     @Test
-    void testDrawElementsCallsDrawTextInGameWithCorrectArguments() {
+    void drawElementsDisplaysTimeLeftCorrectly() {
+        when(timer.getTimeLeft()).thenReturn(30L);
 
-        when(mockTimer.getTimeLeft()).thenReturn(90L);
+        timerViewer.drawElements(gui);
 
-        timerViewer.drawElements(mockGUI);
+        verify(gui).drawTextInGame(new Position(100, 12), "TIME LEFT:", "#FFFFFF");
+        verify(gui).drawTextInGame(new Position(100, 14), "30", "#FFFFFF");
+        verifyNoMoreInteractions(gui);
+    }
+    @Test
+    void drawElementsDisplaysZeroTimeLeft() {
+        when(timer.getTimeLeft()).thenReturn(0L);
 
-        verify(mockGUI).drawTextInGame(any(), eq("TIME LEFT:"), eq("#FFFFFF"));
+        timerViewer.drawElements(gui);
 
-        verify(mockGUI).drawTextInGame(any(), eq("90"), eq("#FFFFFF"));
+        verify(gui).drawTextInGame(new Position(100, 12), "TIME LEFT:", "#FFFFFF");
+        verify(gui).drawTextInGame(new Position(100, 14), "0", "#FFFFFF");
+        verifyNoMoreInteractions(gui);
+    }
+
+    @Test
+    void drawElementsHandlesException() {
+        when(timer.getTimeLeft()).thenThrow(new RuntimeException("Timer error"));
+
+        assertThrows(RuntimeException.class, () -> timerViewer.drawElements(gui));
     }
 }
