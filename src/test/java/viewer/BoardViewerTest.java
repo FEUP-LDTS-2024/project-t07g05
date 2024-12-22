@@ -7,38 +7,70 @@ import com.ldts.crystalclash.viewer.BoardViewer;
 import com.ldts.crystalclash.viewer.TileViewer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class BoardViewerTest {
-    private Board mockBoard;
+    private Board board;
     private BoardViewer boardViewer;
-    private GUI mockGUI;
+    private GUI gui;
+    private TileViewer tileViewer;
 
     @BeforeEach
     void setUp() {
-        mockGUI = mock(GUI.class);
-        mockBoard = mock(Board.class);
+        gui = mock(GUI.class);  // Mock the GUI interface
+        board = mock(Board.class);  // Mock the Board model
 
-        boardViewer = new BoardViewer(mockBoard);
+        // Create a mock 3x3 grid
+        Tile[][] mockGrid = new Tile[3][3];
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                mockGrid[i][j] = mock(Tile.class);  // Mock each tile
+            }
+        }
+        when(board.getGrid()).thenReturn(mockGrid);  // Return mock grid for the Board
+
+        // Instantiate the BoardViewer with the mocked Board
+        boardViewer = new BoardViewer(board);
     }
 
     @Test
-    void testDrawElementsCallsTileViewer() {
+    public void testDrawElementsCallsDrawTileForEachTile() {
+        // Capture the arguments passed to drawTile
+        ArgumentCaptor<Tile> tileCaptor = ArgumentCaptor.forClass(Tile.class);
 
-        Tile mockTile1 = mock(Tile.class);
-        Tile mockTile2 = mock(Tile.class);
-        Tile[][] grid = new Tile[][]{{mockTile1, mockTile2}};
-        when(mockBoard.getGrid()).thenReturn(grid);
+        // Call drawElements on the BoardViewer
+        boardViewer.drawElements(gui);
 
-        TileViewer mockTileViewer1 = mock(TileViewer.class);
-        TileViewer mockTileViewer2 = mock(TileViewer.class);
+        // Verify that drawTile was called 9 times (once for each tile in the 3x3 grid)
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                // Verify that drawTile was called once for each tile in the grid
+                verify(gui, times(1)).drawTile(tileCaptor.capture());
 
-        //whenNew(TileViewer.class).withArguments(mockTile1).thenReturn(mockTileViewer1);
-        //whenNew(TileViewer.class).withArguments(mockTile2).thenReturn(mockTileViewer2);
+                // Ensure that the captured tile is the same as the one from the grid
+                assertEquals(board.getGrid()[i][j], tileCaptor.getValue());
+            }
+        }
+    }
+    @Test
+    public void testDrawElementsInteractionsWithGUI() {
+        Tile[][] mockGrid = new Tile[3][3];
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                mockGrid[i][j] = mock(Tile.class);
+            }
+        }
+        when(board.getGrid()).thenReturn(mockGrid);
 
-        boardViewer.drawElements(mockGUI);
+        boardViewer.drawElements(gui);
 
-        verify(mockTileViewer1, times(1)).drawElements(mockGUI);
-        verify(mockTileViewer2, times(1)).drawElements(mockGUI);
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                verify(gui, times(1)).drawTile(mockGrid[i][j]);
+            }
+        }
     }
 }
