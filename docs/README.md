@@ -47,13 +47,19 @@ The implementation includes classes dedicated to specific roles:
 - Viewer: Responsible for rendering visual elements.
 
 These classes interact as shown below:
-[IMAGE]
+
+<p align="center" justify="center">
+  <img src="images/mvcUML.png"/>
+</p>
+<p align="center">
+  <b><i>Fig 1. Model, Controller and View architecture</i></b>
+</p>
 
 #### Consequences:
 
 The benefits of this design include:
 - Explicit representation of game states through distinct classes.
-- Adherence to the Single Responsibility Principle (SRP).
+- Adherence to the **Single Responsibility Principle (SRP)**.
 - Enhanced extensibility for adding new features during development.
 
 ### 🔧 State Pattern
@@ -62,16 +68,33 @@ The benefits of this design include:
 
 The game involves multiple distinct states such as different menus and gameplay, each with its own set of behaviors and interactions. Without a clear structure to handle these state transitions, the game would quickly become difficult to manage, especially as new states were introduced. The primary challenge was to ensure smooth transitions between these states based on player actions while keeping the game logic clean and maintainable. A naive approach of using conditional checks throughout the code for state management would not only be error-prone but also difficult to extend or modify as the game evolved.
 
+<p align="center" justify="center">
+  <img src="images/stateDiagram.png"/>
+</p>
+<p align="center">
+  <b><i>Fig 2. Game's state diagram</i></b>
+</p>
+
 #### The Pattern:
 
 We implemented the **State Pattern**, a behavioral design pattern that enables an object to change its behavior dynamically based on its internal state.
 
 #### Implementation:
 
+The **Game** class acts as the context that manages the current state of the game. It delegates behavior to the active state object. The **State** abstract class defines the shared structure and behaviors for all game states, including methods such as `getViewer()`, `getController()`, and `step(game, gui, time)` — used as part of the game loop implementation. Subclasses such as **MenuState** and **GameState** extend **State** and provide their specific implementations of the defined methods. Each state encapsulates its own logic, separating concerns and making the codebase more modular and extensible.
+
+<p align="center" justify="center">
+  <img src="images/stateUML.png"/>
+</p>
+<p align="center">
+  <b><i>Fig 3. State design</i></b>
+</p>
+
+
 #### Consequences:
 
 - Adding or modifying game states is straightforward and does not require changes to unrelated parts of the code.
-- Each state encapsulates its behavior, avoiding clutter and promoting clean separation of concerns, which aligns with the Single Responsibility Principle (SRP).
+- Each state encapsulates its behavior, avoiding clutter and promoting clean separation of concerns, which aligns with the **Single Responsibility Principle (SRP)**.
 - Game states are explicitly represented, making the code easier to understand and maintain.
 
 ### 🔧 Game Loop Pattern
@@ -89,7 +112,14 @@ We implemented the **Game Loop Pattern**, which ensures a consistent and smooth 
 
 #### Implementation:
 
-The main game loop resides in the **Game** class and iterates over the above steps. The loop also maintains a timer to regulate the frame rate and ensure time-based gameplay. Each state (menu, gameplay, etc.) provides specific implementations for input handling and updates, enabling a modular approach.
+The main game loop resides in the **Game** class and iterates over the above steps with the `step(game, gui, time)` method. The loop also maintains a timer to regulate the frame rate and ensure time-based gameplay. Each state (menu, gameplay, etc.) provides specific implementations for input handling and updates, enabling a modular approach. Additionally, the Game Loop interacts seamlessly with the State Pattern, as the active state defines specific input handling, logic updates, and rendering behavior, making the loop adaptable and modular.
+
+<p align="center" justify="center">
+  <img src="images/gameloopUML.png"/>
+</p>
+<p align="center">
+  <b><i>Fig 4. Game loop design</i></b>
+</p>
 
 #### Consequences:
 
@@ -110,41 +140,91 @@ To address this, we implemented a **Factory** design pattern, specifically a **S
 
 #### Implementation:
 
+The **TileFactory** class handles the creation of tile instances, centralizing the logic for instantiating different tile types. It provides methods such as `createTile(type, screenPosition, gridCoordinates)`, which returns a specific tile based on the provided parameters, and `getRandomGemTile()`, which has a predefined probability of creating a **BombTile**. By using the Factory pattern, the class abstracts the tile creation process, effectively decoupling it from the main game flow and promoting greater modularity and maintainability.
+
+<p align="center" justify="center">
+  <img src="images/factoryUML.png"/>
+</p>
+<p align="center">
+  <b><i>Fig 5. Factory design</i></b>
+</p>
+
+These classes can be found in the following files:
+- [TileFactory](../src/main/java/com/ldts/crystalclash/factories/TileFactory.java)
+- [Tile](../src/main/java/com/ldts/crystalclash/model/Tile.java)
+- [GemTile](../src/main/java/com/ldts/crystalclash/model/GemTile.java)
+- [EmptyTile](../src/main/java/com/ldts/crystalclash/model/EmptyTile.java)
+- [BombTile](../src/main/java/com/ldts/crystalclash/model/BombTile.java)
+
 #### Consequences:
 
 This pattern offers:
 - Loose coupling between the game logic and tile creation.
 - Flexibility in object creation without directly exposing this logic to clients.
-- Adheres to the Open/Closed Principle. It allows for easier extensions of object creation logic without modifying the existing client code.
+- Adherence to the **Open/Closed Principle**. It allows for easier extensions of object creation logic without modifying the existing client code.
 
 ### 🔧 Strategy Design Pattern
 
 #### Problem in Context:
 
-Each tile in the game needs to exhibit different behaviors depending on its type. For example, some tiles pop when matched, while others might trigger special effects or score points based on specific conditions. Embedding all these behaviors directly into the Tile class would not only make the class bloated and difficult to maintain, but it would also violate the Single Responsibility Principle (SRP). Additionally, adding new behaviors or changing existing ones would require modifying the Tile class itself, leading to rigid and error-prone code. The challenge was to allow tiles to have different behaviors dynamically, without overloading the Tile class or making the system inflexible.
+Each tile in the game needs to exhibit different behaviors depending on its type. For example, some tiles pop when matched, while others might trigger special effects or score points based on specific conditions. Embedding all these behaviors directly into the Tile class would not only make the class bloated and difficult to maintain, but it would also violate the **Single Responsibility Principle (SRP)**. Additionally, adding new behaviors or changing existing ones would require modifying the Tile class itself, leading to rigid and error-prone code. The challenge was to allow tiles to have different behaviors dynamically, without overloading the Tile class or making the system inflexible.
+
 #### The Pattern:
 
 We utilized the **Strategy Pattern**, a behavioral design pattern that enables selecting an algorithm's behavior at runtime.
 
 #### Implementation:
 
+The **Tile** class maintains a reference to a **BehaviorContext** object, which acts as a mediator between the tile and its behavior. The **BehaviorContext** holds a **TileBehavior** interface, which defines the contract for behaviors such as `popOff(tile, board, toRemove)` and `calculatePoints(tile, board)`. Concrete implementations of this interface — **EmptyTileBehavior**, **GemTileBehavior**, and **BombTileBehavior** — provide the specific behavior logic for each type of tile.
+
+When a tile is created, its behavior is set via the **BehaviorContext** using the `setBehavior()` method.
+
+<p align="center" justify="center">
+  <img src="images/strategyUML.png"/>
+</p>
+<p align="center">
+  <b><i>Fig 6. Strategy design</i></b>
+</p>
+
+These classes can be found in the following files:
+- [TileBehavior](../src/main/java/com/ldts/crystalclash/strategy/TileBehavior.java)
+- [GemTileBehavior](../src/main/java/com/ldts/crystalclash/strategy/GemTileBehavior.java)
+- [EmptyTileBehavior](../src/main/java/com/ldts/crystalclash/strategy/EmptyTileBehavior.java)
+- [BombTileBehavior](../src/main/java/com/ldts/crystalclash/strategy/BombTileBehavior.java)
+- [BehaviorContext](../src/main/java/com/ldts/crystalclash/strategy/BehaviorContext.java)
+- [Tile](../src/main/java/com/ldts/crystalclash/model/Tile.java)
+
 #### Consequences:
 
 This design provides:
 - Clear separation of behavior logic from tile data.
 - Flexibility to introduce new behaviors without altering the Tile class.
-- Improved maintainability by adhering to the Open/Closed Principle (OCP)
+- Improved maintainability by adhering to the **Open/Closed Principle (OCP)**.
 
 ### 🔧 Facade Design Pattern
 
 #### Problem in Context:
 
-Our game uses the Lanterna library to handle GUI operations, but the library is complex and exposes many functions that are irrelevant to our specific needs. Furthermore, the library’s structure does not entirely align with the architecture of our game, which could lead to violations of design principles like the Interface Segregation Principle (ISP). A direct dependency on the library would also violate the Dependency Inversion Principle (DIP), as the high-level game logic would be tightly coupled to a low-level module. The challenge was to isolate the game from the complexities of the Lanterna library while still retaining the necessary functionality, making it easier to replace or extend the GUI subsystem in the future.
+Our game uses the Lanterna library to handle GUI operations, but the library is complex and exposes many functions that are irrelevant to our specific needs. Furthermore, the library’s structure does not entirely align with the architecture of our game, which could lead to violations of design principles like the **Interface Segregation Principle (ISP)**. A direct dependency on the library would also violate the **Dependency Inversion Principle (DIP)**, as the high-level game logic would be tightly coupled to a low-level module. The challenge was to isolate the game from the complexities of the Lanterna library while still retaining the necessary functionality, making it easier to replace or extend the GUI subsystem in the future.
 #### The Pattern:
 
 We implemented the Facade Pattern, which provides a simplified interface to the Lanterna subsystem, exposing only the essential functionalities required by the game.
 
 #### Implementation:
+
+The **LanternaGUI** class acts as a facade, providing a streamlined interface to the library by exposing only the functionality necessary for the game. The game logic interacts exclusively with **LanternaGUI**, avoiding direct dependencies on the library's complex low-level details. This abstraction isolates the game logic from the GUI implementation, making it easier to replace or extend the GUI subsystem in the future.
+
+<p align="center" justify="center">
+  <img src="images/facadeUML.png"/>
+</p>
+<p align="center">
+  <b><i>Fig 7. Facade design</i></b>
+</p>
+
+These classes can be found in the following files:
+- [Game](../src/main/java/com/ldts/crystalclash/Game.java)
+- [GUI](../src/main/java/com/ldts/crystalclash/gui/GUI.java)
+- [LanternaGUI](../src/main/java/com/ldts/crystalclash/gui/LanternaGUI.java)
 
 #### Consequences:
 
