@@ -22,7 +22,10 @@ The following screenshots illustrate the general look of our game, as well as th
 
 ### Menus
 
-![A preview of the game's menu](./docs/gifs/menu.gif)
+![A preview of the game's main menu](./docs/gifs/menu.gif)
+![A preview of the game's high scores menu](./docs/images/scores.png)
+![A preview of the game's menu](./docs/images/instructions.png)
+![A preview of the game's menu](./docs/images/gameOver.png)
 
 ### End game
 
