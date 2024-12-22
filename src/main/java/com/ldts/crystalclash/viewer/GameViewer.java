@@ -7,6 +7,7 @@ public class GameViewer extends Viewer<Board> {
     private final int width = 120;
     private final int height = 40;
 
+
     public GameViewer(Board model) {
         super(model);
     }

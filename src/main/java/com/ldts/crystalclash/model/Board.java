@@ -18,6 +18,9 @@ public class Board {
     TileFactory tileFactory;
 
     public Board(int rows, int columns, int width, int height, int rowSpacing, int columnSpacing) {
+        if (rows <= 0 || columns <= 0) {
+            throw new IllegalArgumentException("Rows and columns must be positive integers");
+        }
         this.rows = rows;
         this.columns = columns;
         this.grid = new Tile[rows][columns];
@@ -145,6 +148,9 @@ public class Board {
                 Position gridco = new Position(row, col);
                 Position screenpos = calculateScreenPosition(gridco);
                 Tile tile = tileFactory.createRandomTile(screenpos, gridco);
+                if (tile == null) {
+                    throw new RuntimeException("Failed to create tile at position (" + row + ", " + col + ")");
+                }
                 grid[row][col] = tile;
             }
         }

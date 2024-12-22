@@ -29,7 +29,9 @@ public class GameOverViewer extends Viewer<GameOver> {
             gui.drawText(new Position(40, 10), "YOUR SCORE:" + getModel().getScore(), "#FFFFFF");
 
 
+            gui.drawLogo(17, 5, "#f7fbfc");
 
+            gui.refresh();
 
         } catch (Exception e) {
             throw new RuntimeException(e);
