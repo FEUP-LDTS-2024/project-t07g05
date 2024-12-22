@@ -18,10 +18,12 @@ The following screenshots illustrate the general look of our game, as well as th
 
 ### Game preview
 
-![A preview of the game's appearance](./docs/gameDemo.png)
+![A preview of the game's appearance](./docs/gifs/game.gif)
 
 ### Menus
 
-![A preview of the game's menu](./docs/menuDemo.png)
+![A preview of the game's menu](./docs/gifs/menu.gif)
 
 ### End game
+
+![A preview of the game over's menu](./docs/gifs/endgame.gif)
