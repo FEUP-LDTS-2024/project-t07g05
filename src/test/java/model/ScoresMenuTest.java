@@ -43,7 +43,7 @@ public class ScoresMenuTest {
         scoresMenu.addScore(200, "02/01/2024 13:00");
         scoresMenu.addScore(150, "03/01/2024 14:00");
 
-        ScoreEntry lastScore = scoresMenu.getEntries().get(0);
+        ScoreEntry lastScore = scoresMenu.getEntries().getFirst();
         assertEquals(115, lastScore.getPoints());
     }
 

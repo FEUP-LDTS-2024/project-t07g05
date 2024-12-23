@@ -37,46 +37,37 @@ public class GameViewerTest {
 
     @Test
     public void testDrawElementsCallsDrawGameBackground() {
-        // Call the drawElements method of GameViewer
+
         gameViewer.drawElements(gui);
 
-        // Verify that the drawGameBackground method was called once
         verify(gui).drawGameBackground(120, 40);
     }
 
     @Test
     public void testDrawElementsCallsDrawBoard() {
-        // Call the drawElements method of GameViewer
         gameViewer.drawElements(gui);
 
-        // Verify that the drawBoard method was called once with the board argument
         verify(gui).drawBoard(board);
     }
 
     @Test
     public void testDrawElementsCallsBoardViewerDrawElements() {
-        // We manually call the drawElements method of BoardViewer for testing
         gameViewer.drawElements(gui);
 
-        // Verify that BoardViewer's drawElements method was called once
         verify(boardViewer).drawElements(gui);
     }
 
     @Test
     public void testDrawElementsCallsScoreViewerDrawElements() {
-        // We manually call the drawElements method of ScoreViewer for testing
         gameViewer.drawElements(gui);
 
-        // Verify that ScoreViewer's drawElements method was called once
         verify(scoreViewer).drawElements(gui);
     }
 
     @Test
     public void testDrawElementsCallsTimerViewerDrawElements() {
-        // We manually call the drawElements method of TimerViewer for testing
         gameViewer.drawElements(gui);
 
-        // Verify that TimerViewer's drawElements method was called once
         verify(timerViewer).drawElements(gui);
     }
 }
