@@ -21,6 +21,7 @@ public class BombTileTest {
     private Position screenPosition;
     private Position gridCoordinates;
     private Color color;
+
     @BeforeEach
     public void setUp() {
         screenPosition = new Position(10, 10);
@@ -33,6 +34,7 @@ public class BombTileTest {
         mockTile3 = mock(Tile.class);
         mockTile4 = mock(Tile.class);
     }
+
     @Test
     public void testBombTileInitialization() {
         assertEquals("@", bombTile.getSymbol());
