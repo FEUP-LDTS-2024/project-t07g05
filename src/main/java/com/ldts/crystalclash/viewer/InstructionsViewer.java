@@ -16,7 +16,7 @@ public class InstructionsViewer extends Viewer<Instructions> {
 
         gui.drawText(new Position(1, 1),  "Welcome to Crystal Clash!", "#ffffff");
         gui.drawText(new Position(1, 3),  "1. The game board is an 8x8 grid of crystals.", "#ffffff");
-        gui.drawText(new Position(1, 5),  "2. The crystals are: DIAMOND, EMERALD, RUGBY,", "#ffffff");
+        gui.drawText(new Position(1, 5),  "2. The crystals are: DIAMOND, EMERALD, RUBY,", "#ffffff");
         gui.drawText(new Position(1, 6), "   SAPPHIRE, AMETHYST, and DEFAULT.", "#ffffff");
         gui.drawText(new Position(1, 8), "3. Match 3 or more identical crystals in a row or", "#ffffff");
         gui.drawText(new Position(1, 9), "   column to score points.", "#ffffff");
@@ -27,7 +27,7 @@ public class InstructionsViewer extends Viewer<Instructions> {
         gui.drawText(new Position(1, 18), "6. Crystal point values (highest to lowest):", "#ffffff");
         gui.drawText(new Position(3, 20), "   - DIAMOND --> 5 points", "#00ffff");
         gui.drawText(new Position(3, 21), "   - EMERALD --> 4 points", "#00ff00");
-        gui.drawText(new Position(3, 22), "   - RUGBY --> 3", "#ff8800");
+        gui.drawText(new Position(3, 22), "   - RUBY --> 3", "#ff8800");
         gui.drawText(new Position(3, 23), "   - SAPPHIRE --> 2", "#0000ff");
         gui.drawText(new Position(3, 24), "   - AMETHYST --> 1", "#ff00ff");
         gui.drawText(new Position(3, 25), "   - DEFAULT --> 1", "#aaaaaa");
