@@ -1,95 +1,103 @@
 package model;
 
 import com.ldts.crystalclash.model.*;
+import com.ldts.crystalclash.strategy.BombTileBehavior;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-class BombTileTest {
-
+public class BombTileTest {
     private BombTile bombTile;
     private Board mockBoard;
-    private Tile mockTileUp, mockTileDown, mockTileLeft, mockTileRight;
-    private Set<Tile> toRemove;
-
+    private Tile mockTile1;
+    private Tile mockTile2;
+    private Tile mockTile3;
+    private Tile mockTile4;
+    private Position screenPosition;
+    private Position gridCoordinates;
+    private Color color;
     @BeforeEach
-    void setUp() {
-        // Mock board and initialize bombTile
-        mockBoard = mock(Board.class);
-        Position screenPosition = new Position(100, 100);
-        Position gridCoordinates = new Position(2, 2);
-        Color color = Color.DIAMOND;
+    public void setUp() {
+        screenPosition = new Position(10, 10);
+        gridCoordinates = new Position(5, 5);
+        color = Color.RUBY;
         bombTile = new BombTile(screenPosition, gridCoordinates, color);
-
-        // Initialize adjacent mock tiles
-        mockTileUp = mock(Tile.class);
-        mockTileDown = mock(Tile.class);
-        mockTileLeft = mock(Tile.class);
-        mockTileRight = mock(Tile.class);
-
-        // Initialize the removal set
-        toRemove = new HashSet<>();
+        mockBoard = mock(Board.class);
+        mockTile1 = mock(Tile.class);
+        mockTile2 = mock(Tile.class);
+        mockTile3 = mock(Tile.class);
+        mockTile4 = mock(Tile.class);
+    }
+    @Test
+    public void testBombTileInitialization() {
+        assertEquals("@", bombTile.getSymbol());
+        assertEquals(screenPosition, bombTile.getScreenPosition());
+        assertEquals(gridCoordinates, bombTile.getGridCoordinates());
+        assertEquals(color.getHexCode(), bombTile.getColor());
+        assertNotNull(bombTile.getBehaviorContext());
+        assertInstanceOf(BombTileBehavior.class, bombTile.getBehaviorContext().getBehavior());
     }
 
     @Test
-    void testBombTileBehaviorRemovesAdjacentTiles() {
-        // Setup mock board behavior for adjacent tiles
-        Position bombPosition = bombTile.getGridCoordinates();
-        when(mockBoard.getTile(bombPosition.getX() - 1, bombPosition.getY())).thenReturn(mockTileUp);
-        when(mockBoard.getTile(bombPosition.getX() + 1, bombPosition.getY())).thenReturn(mockTileDown);
-        when(mockBoard.getTile(bombPosition.getX(), bombPosition.getY() - 1)).thenReturn(mockTileLeft);
-        when(mockBoard.getTile(bombPosition.getX(), bombPosition.getY() + 1)).thenReturn(mockTileRight);
+    public void testPopOffBehavior() {
+        Set<Tile> toRemove = new HashSet<>();
+        when(mockBoard.isValidPosition(4, 5)).thenReturn(true);
+        when(mockBoard.isValidPosition(6, 5)).thenReturn(true);
+        when(mockBoard.isValidPosition(5, 4)).thenReturn(true);
+        when(mockBoard.isValidPosition(5, 6)).thenReturn(true);
 
-        // Call the popOff method
+        when(mockBoard.getTile(4, 5)).thenReturn(mockTile1);
+        when(mockBoard.getTile(6, 5)).thenReturn(mockTile2);
+        when(mockBoard.getTile(5, 4)).thenReturn(mockTile3);
+        when(mockBoard.getTile(5, 6)).thenReturn(mockTile4);
+
+
         bombTile.getBehaviorContext().popOff(mockBoard, toRemove);
 
-        // Debug: Print contents of toRemove
-        System.out.println("toRemove size: " + toRemove.size());
-        for (Tile tile : toRemove) {
-            System.out.println(tile);
-        }
-
-        // Verify all adjacent tiles were added to the removal set
-        assertEquals(4, toRemove.size());
-        assertTrue(toRemove.contains(mockTileUp));
-        assertTrue(toRemove.contains(mockTileDown));
-        assertTrue(toRemove.contains(mockTileLeft));
-        assertTrue(toRemove.contains(mockTileRight));
+        assertTrue(toRemove.contains(mockTile1));
+        assertTrue(toRemove.contains(mockTile2));
+        assertTrue(toRemove.contains(mockTile3));
+        assertTrue(toRemove.contains(mockTile4));
     }
 
     @Test
-    void testBombTilePointsCalculation() {
-        // Setup mock board behavior and tile rarities
-        Position bombPosition = bombTile.getGridCoordinates();
-        when(mockBoard.getTile(bombPosition.getX() - 1, bombPosition.getY())).thenReturn(mockTileUp);
-        when(mockBoard.getTile(bombPosition.getX() + 1, bombPosition.getY())).thenReturn(mockTileDown);
-        when(mockBoard.getTile(bombPosition.getX(), bombPosition.getY() - 1)).thenReturn(mockTileLeft);
-        when(mockBoard.getTile(bombPosition.getX(), bombPosition.getY() + 1)).thenReturn(mockTileRight);
+    public void testCalculatePoints() {
+        // Arrange
+        when(mockBoard.isValidPosition(4, 5)).thenReturn(true);
+        when(mockBoard.isValidPosition(6, 5)).thenReturn(true);
+        when(mockBoard.isValidPosition(5, 4)).thenReturn(true);
+        when(mockBoard.isValidPosition(5, 6)).thenReturn(true);
 
-        when(mockTileUp.getColorRarity()).thenReturn(2);
-        when(mockTileDown.getColorRarity()).thenReturn(3);
-        when(mockTileLeft.getColorRarity()).thenReturn(1);
-        when(mockTileRight.getColorRarity()).thenReturn(4);
+        when(mockBoard.getTile(4, 5)).thenReturn(mockTile1);
+        when(mockBoard.getTile(6, 5)).thenReturn(mockTile2);
+        when(mockBoard.getTile(5, 4)).thenReturn(mockTile3);
+        when(mockBoard.getTile(5, 6)).thenReturn(mockTile4);
 
-        // Debug: Check rarities
-        System.out.println("Tile Up Rarity: " + mockTileUp.getColorRarity());
-        System.out.println("Tile Down Rarity: " + mockTileDown.getColorRarity());
-        System.out.println("Tile Left Rarity: " + mockTileLeft.getColorRarity());
-        System.out.println("Tile Right Rarity: " + mockTileRight.getColorRarity());
+        when(mockTile1.getColorRarity()).thenReturn(1);
+        when(mockTile2.getColorRarity()).thenReturn(2);
+        when(mockTile3.getColorRarity()).thenReturn(3);
+        when(mockTile4.getColorRarity()).thenReturn(4);
 
-        // Calculate points
         int points = bombTile.getBehaviorContext().calculatePoints(mockBoard);
 
-        // Debug: Print points
-        System.out.println("Calculated points: " + points);
-
-        // Verify points calculation
-        assertEquals(10, points); // 2 + 3 + 1 + 4 = 10
+        assertEquals(10, points);
     }
 
+    @Test
+    public void testNoAdjacentTiles() {
+        Set<Tile> toRemove = new HashSet<>();
+        when(mockBoard.isValidPosition(4, 5)).thenReturn(false);
+        when(mockBoard.isValidPosition(6, 5)).thenReturn(false);
+        when(mockBoard.isValidPosition(5, 4)).thenReturn(false);
+        when(mockBoard.isValidPosition(5, 6)).thenReturn(false);
+
+        bombTile.getBehaviorContext().popOff(mockBoard, toRemove);
+
+        assertTrue(toRemove.isEmpty());
+    }
 }
