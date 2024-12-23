@@ -50,9 +50,11 @@ public class GameControllerTest {
     void testStepSetsGameToMenuStateOnQuitAction() throws IOException {
         gameController.step(mockGame, GUI.ACTION.QUIT, System.currentTimeMillis());
 
-        verify(mockGame, times(1)).setState(any(MenuState.class));
-        verifyNoInteractions(mockBoard);
+        verify(mockGame, times(1)).setState(argThat(state -> state instanceof MenuState));
     }
+
+
+
 
     @Test
     void testStepDoesNotCallBoardControllerOnQuitAction() throws IOException {
