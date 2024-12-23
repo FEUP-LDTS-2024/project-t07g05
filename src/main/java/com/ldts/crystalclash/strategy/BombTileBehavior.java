@@ -9,8 +9,9 @@ import java.util.Set;
 
 public class BombTileBehavior implements TileBehavior {
     @Override
-    public void popOff(Tile tile, Board board, Set<Tile> toRemove) {
+    public void popOff(Tile tile, Board board, Set<Tile> toRemove) {;
         Position pos = tile.getGridCoordinates();
+
 
         // Only consider adjacent tiles (no diagonals)
         int[][] directions = {
@@ -37,6 +38,11 @@ public class BombTileBehavior implements TileBehavior {
     public int calculatePoints(Tile tile, Board board) {
         int points = 0;
         Position pos = tile.getGridCoordinates();
+
+        // Check if Position is null
+        if (pos == null) {
+            return points;
+        }
 
         // Only consider adjacent tiles
         int[][] directions = {
