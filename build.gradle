@@ -25,5 +25,5 @@ test {
 }
 
 application {
-    mainClass.set("Game")
+    mainClass.set("com.ldts.crystalclash.Game")
 }
