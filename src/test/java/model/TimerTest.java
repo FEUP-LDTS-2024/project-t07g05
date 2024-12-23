@@ -35,9 +35,11 @@ class TimerTest {
         timer.start();
         TimeUnit.MILLISECONDS.sleep(100);
         long timeLeft = timer.getTimeLeft();
-        long expectedTimeLeft = (90 * 1000 - 100) / 1000;
-        assertEquals(expectedTimeLeft, timeLeft, "Time left should reflect elapsed time.");
+        long elapsedMillis = 100;
+        long expectedTimeLeft = (90 * 1000 - elapsedMillis) / 1000;
+        assertEquals(expectedTimeLeft, timeLeft, "Time left should reflect elapsed time in seconds.");
     }
+
 
     @Test
     void testGetTimeLeft_BeforeStart() {
