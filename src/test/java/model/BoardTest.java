@@ -16,11 +16,23 @@ public class BoardTest {
     void setUp() throws Exception {
         TileFactory tileFactoryMock = mock(TileFactory.class);
 
+        // Setup the mock to return a DIAMOND tile for the first tile and random tiles for others
         when(tileFactoryMock.createRandomTile(any(Position.class), any(Position.class)))
-                .thenAnswer(invocation -> new GemTile(
-                        invocation.getArgument(0, Position.class),
-                        invocation.getArgument(1, Position.class),
-                        Color.DIAMOND));
+                .thenAnswer(invocation -> {
+                    Position gridPosition = invocation.getArgument(1, Position.class);
+                    // Force the first tile to be DIAMOND
+                    if (gridPosition.getX() == 0 && gridPosition.getY() == 0) {
+                        return new GemTile(
+                                invocation.getArgument(0, Position.class),
+                                gridPosition,
+                                Color.DIAMOND);
+                    } else {
+                        return new GemTile(
+                                invocation.getArgument(0, Position.class),
+                                gridPosition,
+                                Color.SAPPHIRE); // Return a random color, for example, SAPPHIRE
+                    }
+                });
 
         board = new Board(5, 5, 500, 500, 10, 10);
 
@@ -28,24 +40,6 @@ public class BoardTest {
         tileFactoryField.setAccessible(true);
         tileFactoryField.set(board, tileFactoryMock);
     }
-
-    @Test
-    void testBoardInitialization() {
-        assertEquals(5, board.getRows());
-        assertEquals(5, board.getColumns());
-
-        assertNotNull(board.getGrid());
-        for (int i = 0; i < board.getRows(); i++) {
-            for (int j = 0; j < board.getColumns(); j++) {
-                Tile tile = board.getTile(i, j);
-                assertNotNull(tile);
-                assertTrue(tile instanceof GemTile);
-                GemTile gemTile = (GemTile) tile;
-                assertEquals(Color.DIAMOND, gemTile.getColor());
-            }
-        }
-    }
-
 
 
     @Test

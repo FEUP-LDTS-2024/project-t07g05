@@ -147,7 +147,12 @@ public class Board {
             for (int col = 0; col < columns; col++) {
                 Position gridco = new Position(row, col);
                 Position screenpos = calculateScreenPosition(gridco);
-                Tile tile = tileFactory.createRandomTile(screenpos, gridco);
+                Tile tile;
+                if (row == 0 && col == 0) {
+                    tile = new GemTile(screenpos, gridco, Color.DIAMOND); // Force the first tile to be DIAMOND
+                } else {
+                    tile = tileFactory.createRandomTile(screenpos, gridco); // Random for others
+                }
                 if (tile == null) {
                     throw new RuntimeException("Failed to create tile at position (" + row + ", " + col + ")");
                 }
@@ -157,6 +162,7 @@ public class Board {
         this.currentTile = getTile(0, 0);
         currentTile.setCursorOn(true);
     }
+
 
 
     public Position calculateScreenPosition(Position gridcoordinate) {

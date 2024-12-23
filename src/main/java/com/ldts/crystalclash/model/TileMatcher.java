@@ -33,7 +33,8 @@ public class TileMatcher {
 
             for (int col = 1; col < board.getColumns(); col++) {
                 Tile currTile = board.getTile(row, col);
-                if (prevTile != null && prevTile.getColor().equals(currTile.getColor())) {
+
+                if (prevTile != null && currTile != null && prevTile.getColor().equals(currTile.getColor())) {
                     matchLength++;
                 } else {
                     if (matchLength >= 3) {
@@ -41,7 +42,7 @@ public class TileMatcher {
                     }
                     matchLength = 1;
                 }
-                prevTile = currTile;
+                prevTile = currTile; // Update prevTile even if currTile is null
             }
 
             if (matchLength >= 3) {
@@ -52,6 +53,7 @@ public class TileMatcher {
         return horizontalMatches;
     }
 
+
     private List<Tile> findVerticalMatches() {
         List<Tile> verticalMatches = new ArrayList<>();
 
@@ -61,15 +63,16 @@ public class TileMatcher {
 
             for (int row = 1; row < board.getRows(); row++) {
                 Tile currTile = board.getTile(row, col);
-                if (prevTile != null && prevTile.getColor().equals(currTile.getColor())) {
+
+                if (prevTile != null && currTile != null && prevTile.getColor().equals(currTile.getColor())) {
                     matchLength++;
                 } else {
                     if (matchLength >= 3) {
-                        addMatchTilesToList(verticalMatches, row-matchLength, col, matchLength, false);
+                        addMatchTilesToList(verticalMatches, row - matchLength, col, matchLength, false);
                     }
                     matchLength = 1;
                 }
-                prevTile = currTile;
+                prevTile = currTile; // Update prevTile even if currTile is null
             }
 
             if (matchLength >= 3) {
@@ -79,6 +82,7 @@ public class TileMatcher {
 
         return verticalMatches;
     }
+
 
     private void addMatchTilesToList(List<Tile> matchList, int startRow, int startCol, int length, boolean isHorizontal) {
         for (int i = 0; i < length; i++) {
