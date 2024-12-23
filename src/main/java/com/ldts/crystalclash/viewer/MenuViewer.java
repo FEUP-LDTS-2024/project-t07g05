@@ -14,16 +14,12 @@ public class MenuViewer extends Viewer<Menu> {
 
     public void drawElements(GUI gui) {
         try {
-            gui.clear();
             gui.drawGameBackground(120,40);
             for (int i = 0; i < getModel().getNumberOptions(); i++)
                 gui.drawText(
                         new Position(52, 20 + i),
                         getModel().getSelectedOption(i),
                         getModel().isSelected(i) ? "#00FFFF" : "#FFFFFF");
-
-
-
 
             gui.drawLine(41, 17, 69, 17, "*", "#5ad4f2");//1linha horizonta de cima
             gui.drawLine(40, 18, 70, 18, "*", "#5ad4f2");//2linha horizonta de cima
@@ -41,8 +37,6 @@ public class MenuViewer extends Viewer<Menu> {
             gui.drawLine(74, 21, 74, 21, "*", "#5ad4f2");
 
             gui.drawLogo(17, 5, "#f7fbfc");
-            gui.refresh();
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

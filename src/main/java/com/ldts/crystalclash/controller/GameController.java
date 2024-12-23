@@ -19,12 +19,10 @@ public class GameController extends Controller<Board> {
     public void step(Game game, GUI.ACTION action, long time) throws IOException {
         if (action == GUI.ACTION.QUIT) {
             game.setState(new MenuState(new Menu()));
-            return;
         }
 
         if (getModel().getTimer().getTimeLeft() == 0) {
             game.setState(new GameOverState(new GameOver(getModel().getScore().getScore())));
-            return;
         }
 
         if (action != null) {

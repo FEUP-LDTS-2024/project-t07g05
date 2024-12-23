@@ -9,7 +9,6 @@ public class TimerViewer extends Viewer<Timer> {
 
     @Override
     public void drawElements(GUI gui) {
-        long timeLeft = getModel().getTimeLeft();
         gui.drawTextInGame(new Position(100, 12),
                 "TIME LEFT:",
                 "#FFFFFF");

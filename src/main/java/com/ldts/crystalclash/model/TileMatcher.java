@@ -21,7 +21,6 @@ public class TileMatcher {
         newMatches.addAll(findVerticalMatches());
 
         this.matches = newMatches;
-        System.out.println(matches);
     }
 
     private List<Tile> findHorizontalMatches() {

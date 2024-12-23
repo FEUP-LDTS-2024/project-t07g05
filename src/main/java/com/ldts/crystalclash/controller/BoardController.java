@@ -9,7 +9,6 @@ import com.ldts.crystalclash.model.Board;
 import java.io.IOException;
 
 public class BoardController extends GameController {
-    // TODO: algorithm must identify if it is a gemtile or a bombtile before verifying matches
     public TileMatcher tileMatcher;
     public TileFactory tileFactory;
 
@@ -20,7 +19,6 @@ public class BoardController extends GameController {
     }
 
     public void swapTiles(Tile t1, Tile t2) {
-        System.out.println("Swapping tiles: " + t1 + " and " + t2);
         // Swaps tile t1 with tile t2
         if (t1 == null || t2 == null) {
             return;
@@ -45,7 +43,6 @@ public class BoardController extends GameController {
         Position t2ScreenPos = getModel().calculateScreenPosition(t1GridCoord);
         t1.setScreenPosition(t1ScreenPos);
         t2.setScreenPosition(t2ScreenPos);
-        System.out.println("Tile positions before swap: t1: " + t1.getGridCoordinates() + " and t2: " + t2.getGridCoordinates());
     }
 
     public void moveCurrentTile(int row, int column) {
@@ -82,7 +79,6 @@ public class BoardController extends GameController {
         }
     }
 
-    // TODO: Refactor it when FactoryTile is created
     public void refillBoard() {
         for (int col = 0; col < getModel().getColumns(); col++) {
             for (int row = 0; row < getModel().getRows(); row++) {
@@ -125,10 +121,8 @@ public class BoardController extends GameController {
                 break;
             case SELECT_TILE:
                 GUI.ACTION actionSwap = game.gui.waitsNextAction();
-                System.out.println(actionSwap);
                 switch (actionSwap) {
                     case UP:
-                        System.out.println("WARNING: Up pressed");
                         swapTiles(board.getCurrentTile(), board.getTileOnTop(board.getCurrentTile()));
                         break;
                     case DOWN:
