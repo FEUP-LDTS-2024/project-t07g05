@@ -13,7 +13,7 @@ import com.ldts.crystalclash.viewer.Viewer;
 public class MenuState extends State<Menu>{
     public MenuState(Menu model) {
         super(model);
-    } // utilizado para chamar o construtor da classe pai (superclasse)
+    }
 
     @Override
     protected Viewer<Menu> getViewer() {

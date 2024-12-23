@@ -27,7 +27,6 @@ public class Game {
 
 
     public static void main(String[] args) throws IOException, URISyntaxException, FontFormatException {
-
         new Game().start();
     }
 
