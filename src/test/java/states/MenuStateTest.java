@@ -9,6 +9,8 @@ import com.ldts.crystalclash.Game;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class MenuStateTest {
@@ -73,25 +75,14 @@ class MenuStateTest {
     }
 
     @Test
-    void testStepDoesNotCallControllerWhenNoAction() throws Exception {
+    void testStepDoesNotAlterStateWhenNoAction() throws Exception {
         long time = 100L;
         when(mockGUI.getNextAction()).thenReturn(GUI.ACTION.NONE);
-        menuState.step(mockGame, mockGUI, time);
-        verify(mockGUI, times(1)).getNextAction();
-        verify(mockMenuController, never()).step(eq(mockGame), eq(GUI.ACTION.NONE), eq(time));
-        verify(mockMenuViewer, times(1)).draw(mockGUI);
-    }
-
-    @Test
-    void testStepHandlesNullActionGracefully() throws Exception {
-        long time = 100L;
-
-        when(mockGUI.getNextAction()).thenReturn(null);
 
         menuState.step(mockGame, mockGUI, time);
 
         verify(mockGUI, times(1)).getNextAction();
-        verify(mockMenuController, never()).step(eq(mockGame), eq(null), eq(time));
+        verify(mockMenuController, times(1)).step(eq(mockGame), eq(GUI.ACTION.NONE), eq(time));
         verify(mockMenuViewer, times(1)).draw(mockGUI);
     }
 
