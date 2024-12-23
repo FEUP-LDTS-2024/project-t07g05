@@ -62,4 +62,5 @@ public abstract class Tile {
     public void setBehaviorContext(BehaviorContext behaviorContext) {
         this.behaviorContext = behaviorContext;
     }
+
 }
