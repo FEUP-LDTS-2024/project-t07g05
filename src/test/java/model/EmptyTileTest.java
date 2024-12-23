@@ -3,33 +3,32 @@ package model;
 import com.ldts.crystalclash.model.EmptyTile;
 import com.ldts.crystalclash.model.Position;
 import com.ldts.crystalclash.model.Color;
-import com.ldts.crystalclash.strategy.BehaviorContext;
-import com.ldts.crystalclash.strategy.EmptyTileBehavior;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class EmptyTileTest {
 
+public class EmptyTileTest {
     private EmptyTile emptyTile;
 
     @BeforeEach
     void setUp() {
         Position screenPosition = new Position(0, 0);
         Position gridCoordinates = new Position(1, 1);
-        emptyTile = new EmptyTile(screenPosition, gridCoordinates);
+        emptyTile = new EmptyTile(screenPosition, gridCoordinates, Color.DEFAULT);
     }
 
     @Test
-    public void testEmptyTileInitialization() {
-        Position screenPosition = new Position(0, 0);
-        Position gridCoordinates = new Position(0, 0);
+    void testEmptyTileInitialization() {
+        assertNotNull(emptyTile.getBehaviorContext(), "BehaviorContext should not be null");
+        assertNotNull(emptyTile.getBehaviorContext().getBehavior(), "Tile behavior should be set.");
+    }
 
-        EmptyTile tile = new EmptyTile(screenPosition, gridCoordinates, Color.DEFAULT);
-
-        assertNotNull(tile.getBehaviorContext(), "BehaviorContext should not be null");
-
-        assertNotNull(tile.getBehaviorContext().getBehavior(), "Tile behavior should be set.");
+    @Test
+    void testDefaultConstructorBehavior() {
+        EmptyTile tile = new EmptyTile(new Position(0, 0), new Position(1, 1));
+        assertNull(tile.getBehaviorContext(), "BehaviorContext should be null for default constructor.");
     }
 
     @Test
@@ -43,7 +42,6 @@ class EmptyTileTest {
     void testSetCursorOn() {
         emptyTile.setCursorOn(true);
         assertTrue(emptyTile.isCursorOn());
-
         emptyTile.setCursorOn(false);
         assertFalse(emptyTile.isCursorOn());
     }
@@ -59,20 +57,4 @@ class EmptyTileTest {
         assertEquals(newScreenPosition, emptyTile.getScreenPosition());
         assertEquals(newGridCoordinates, emptyTile.getGridCoordinates());
     }
-
-    @Test
-    public void testBehaviorContext() {
-        Position screenPosition = new Position(0, 0);
-        Position gridCoordinates = new Position(0, 0);
-
-        // Create the EmptyTile object
-        EmptyTile tile = new EmptyTile(screenPosition, gridCoordinates);  // Make sure this constructor is used
-
-        // Ensure the behaviorContext is not null
-        assertNotNull(tile.getBehaviorContext(), "BehaviorContext should not be null");
-
-        // Additionally, check if the behavior is set properly
-        assertNotNull(tile.getBehaviorContext().getBehavior(), "Tile behavior should be set.");
-    }
-
 }
