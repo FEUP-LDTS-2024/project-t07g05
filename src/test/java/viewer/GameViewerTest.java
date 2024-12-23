@@ -22,22 +22,18 @@ public class GameViewerTest {
 
     @BeforeEach
     public void setup() {
-        // Mock dependencies
+
         gui = mock(GUI.class);
         board = mock(Board.class);
-
-        // Create the GameViewer instance
-        gameViewer = new GameViewer(board);
-
-        // Manually instantiate BoardViewer, ScoreViewer, TimerViewer as mocks
         boardViewer = mock(BoardViewer.class);
         scoreViewer = mock(ScoreViewer.class);
         timerViewer = mock(TimerViewer.class);
+
+        gameViewer = new GameViewer(board, boardViewer, scoreViewer, timerViewer);
     }
 
     @Test
     public void testDrawElementsCallsDrawGameBackground() {
-
         gameViewer.drawElements(gui);
 
         verify(gui).drawGameBackground(120, 40);
