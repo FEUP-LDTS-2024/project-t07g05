@@ -16,16 +16,14 @@ public class BoardTest {
     void setUp() throws Exception {
         TileFactory tileFactoryMock = mock(TileFactory.class);
 
-        // Ensure that the mocked factory always creates DIAMOND color
         when(tileFactoryMock.createRandomTile(any(Position.class), any(Position.class)))
                 .thenAnswer(invocation -> new GemTile(
                         invocation.getArgument(0, Position.class),
                         invocation.getArgument(1, Position.class),
-                        Color.DIAMOND)); // Always return DIAMOND color for test purposes
+                        Color.DIAMOND));
 
         board = new Board(5, 5, 500, 500, 10, 10);
 
-        // Use reflection to inject the mocked TileFactory
         Field tileFactoryField = Board.class.getDeclaredField("tileFactory");
         tileFactoryField.setAccessible(true);
         tileFactoryField.set(board, tileFactoryMock);
@@ -41,9 +39,9 @@ public class BoardTest {
             for (int j = 0; j < board.getColumns(); j++) {
                 Tile tile = board.getTile(i, j);
                 assertNotNull(tile);
-                assertTrue(tile instanceof GemTile);  // Check if it's an instance of GemTile
+                assertTrue(tile instanceof GemTile);
                 GemTile gemTile = (GemTile) tile;
-                assertEquals(Color.DIAMOND, gemTile.getColor());  // Ensure the color is DIAMOND
+                assertEquals(Color.DIAMOND, gemTile.getColor());
             }
         }
     }
