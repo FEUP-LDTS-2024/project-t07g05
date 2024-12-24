@@ -4,12 +4,14 @@ import com.ldts.crystalclash.gui.GUI;
 import com.ldts.crystalclash.model.Menu;
 import com.ldts.crystalclash.controller.MenuController;
 import com.ldts.crystalclash.viewer.MenuViewer;
+import com.ldts.crystalclash.controller.Controller;
 import com.ldts.crystalclash.Game;
+import com.ldts.crystalclash.viewer.Viewer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class MenuStateTest {
@@ -82,6 +84,31 @@ class MenuStateTest {
 
         verify(mockGUI, times(1)).getNextAction();
         verify(mockMenuController, times(1)).step(eq(mockGame), eq(GUI.ACTION.NONE), eq(time));
+        verify(mockMenuViewer, times(1)).draw(mockGUI);
+    }
+
+    @Test
+    void testViewerInitialization() {
+        Viewer<Menu> viewer = menuState.getViewer();
+        assertNotNull(viewer, "Viewer should not be null");
+        assertInstanceOf(MenuViewer.class, viewer, "Viewer should be an instance of MenuViewer");
+    }
+
+    @Test
+    void testControllerInitialization() {
+        Controller<Menu> controller = menuState.getController();
+        assertNotNull(controller, "Controller should not be null");
+        assertInstanceOf(MenuController.class, controller, "Controller should be an instance of MenuController");
+    }
+    @Test
+    void testStepHandlesNullAction() throws Exception {
+        long time = 100L;
+
+        when(mockGUI.getNextAction()).thenReturn(null);
+
+        menuState.step(mockGame, mockGUI, time);
+
+        verify(mockMenuController, times(1)).step(eq(mockGame), isNull(), eq(time));
         verify(mockMenuViewer, times(1)).draw(mockGUI);
     }
 
