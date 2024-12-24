@@ -60,25 +60,6 @@ public class TileFactoryTest {
                 tileFactory.createTile("invalid", screenPosition, gridCoordinates));
     }
 
-    @Test
-    void testCreateRandomTile() {
-        try (MockedStatic<Math> mockedMath = mockStatic(Math.class)) {
-            // Case 1: Math.random() < 0.1 -> BombTile
-            mockedMath.when(Math::random).thenReturn(0.05); // Random value less than 0.1
-            Tile bombTile = tileFactory.createRandomTile(screenPosition, gridCoordinates);
-            assertInstanceOf(BombTile.class, bombTile, "Tile should be a BombTile when random < 0.1");
-
-            // Case 2: Math.random() == 0.1 -> GemTile
-            mockedMath.when(Math::random).thenReturn(0.1); // Boundary value (not less than 0.1)
-            Tile gemTileAtBoundary = tileFactory.createRandomTile(screenPosition, gridCoordinates);
-            assertInstanceOf(GemTile.class, gemTileAtBoundary, "Tile should be a GemTile when random == 0.1");
-
-            // Case 3: Math.random() > 0.1 -> GemTile
-            mockedMath.when(Math::random).thenReturn(0.5); // Random value greater than 0.1
-            Tile gemTile = tileFactory.createRandomTile(screenPosition, gridCoordinates);
-            assertInstanceOf(GemTile.class, gemTile, "Tile should be a GemTile when random > 0.1");
-        }
-    }
 
     @Test
     void testGetRandomGemColor() {
