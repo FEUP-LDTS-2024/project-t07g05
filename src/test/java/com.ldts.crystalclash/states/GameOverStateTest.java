@@ -108,4 +108,18 @@ public class GameOverStateTest {
         verify(viewerSpy, times(1)).draw(mockGUI);
     }
 
+    @Test
+    public void testGetViewer() {
+        Viewer<GameOver> viewer = gameOverState.getViewer();
+        assertNotNull(viewer, "Viewer should not be null");
+        assertInstanceOf(GameOverViewer.class, viewer, "Viewer should be an instance of GameOverViewer");
+    }
+
+    @Test
+    public void testGetController() {
+        Controller<GameOver> controller = gameOverState.getController();
+        assertNotNull(controller, "Controller should not be null");
+        assertInstanceOf(GameOverController.class, controller, "Controller should be an instance of GameOverController");
+    }
+
 }
