@@ -273,7 +273,7 @@ None of these warnings currently impact the correctness or performance of the ap
   <img src="images/testcoverage.jpeg"/>
 </p>
 <p align="center">
-  <b><i>Fig 9. Test coverage</i></b>
+  <b><i>Fig 8. Test coverage</i></b>
 </p>
 
 ## 🛡️ Mutation testing
@@ -282,7 +282,7 @@ None of these warnings currently impact the correctness or performance of the ap
   <img src="images/mutationtesting.png"/>
 </p>
 <p align="center">
-  <b><i>Fig 8. Mutation testing</i></b>
+  <b><i>Fig 9. Mutation testing</i></b>
 </p>
 
 For the mutation testing report, click [here](./pitest/index.html).
