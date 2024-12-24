@@ -12,6 +12,7 @@ public class GameOverViewer extends Viewer<GameOver> {
         super(model);
     }
 
+    @Override
     public void drawElements(GUI gui) {
         try {
             gui.clear();

@@ -33,3 +33,4 @@ application {
 pitest {
     junit5PluginVersion = '1.2.1'
 }
+
