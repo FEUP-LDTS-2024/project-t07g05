@@ -245,3 +245,9 @@ The benefits include:
 
 ## ✍️ Self-evaluation
 
+Work distribution between the group members:
+
+- **Ana Margarida Ribeiro**: 33,3%
+- **André Siqueira**: 33,3%
+- **Henrique Perry**: 33,3%
+
