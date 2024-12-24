@@ -49,7 +49,6 @@ public class ScoresMenuControllerTest {
         verify(game, times(0)).setState(any());
     }
 
-
     @AfterEach
     void tearDown() {
         scoresMenuController = null;

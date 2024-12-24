@@ -52,8 +52,6 @@ public class GameControllerTest {
     }
 
 
-
-
     @Test
     void testStepDoesNotCallBoardControllerOnQuitAction() throws IOException {
         BoardController mockBoardController = mock(BoardController.class);
