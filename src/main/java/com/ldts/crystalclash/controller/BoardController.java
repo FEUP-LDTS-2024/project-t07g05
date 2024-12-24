@@ -134,7 +134,11 @@ public class BoardController extends GameController {
                     case RIGHT:
                         swapTiles(board.getCurrentTile(), board.getTileToTheRight(board.getCurrentTile()));
                         break;
+                    default:
+                        break;
                 }
+                break;
+            default:
                 break;
         }
         tileMatcher.findMatches();
