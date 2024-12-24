@@ -30,6 +30,14 @@ class GameOverViewerTest {
     }
 
     @Test
+    void drawElements_handlesExceptions() {
+        doThrow(new RuntimeException("GUI error"))
+                .when(gui).drawGameBackground(120, 40);
+
+        org.junit.jupiter.api.Assertions.assertThrows(RuntimeException.class, () -> gameOverViewer.drawElements(gui));
+    }
+
+    @Test
     void drawElements_drawsOptions() {
         when(gameOver.getNumberOptions()).thenReturn(3);
         when(gameOver.getSelectedOption(0)).thenReturn("PLAY AGAIN");
@@ -41,17 +49,19 @@ class GameOverViewerTest {
 
         gameOverViewer.drawElements(gui);
 
-        verify(gui).drawText(new Position(52, 20), "PLAY AGAIN", "#00FFFF");
-        verify(gui).drawText(new Position(52, 21), "SCORES", "#FFFFFF");
-        verify(gui).drawText(new Position(52, 22), "EXIT", "#FFFFFF");
+        verify(gui).drawText(new Position(52, 21), "PLAY AGAIN", "#00FFFF");
+        verify(gui).drawText(new Position(52, 22), "SCORES", "#FFFFFF");
+        verify(gui).drawText(new Position(52, 23), "EXIT", "#FFFFFF");
     }
+
 
     @Test
     void drawElements_drawsGameOverTitle() {
         gameOverViewer.drawElements(gui);
 
-        verify(gui).drawText(new Position(50, 5), "G A M E  O V E R:", "#eaff00");
+        verify(gui).drawText(new Position(49, 5), "G A M E  O V E R:", "#eaff00");
     }
+
 
     @Test
     void drawElements_drawsScore() {
@@ -59,14 +69,8 @@ class GameOverViewerTest {
 
         gameOverViewer.drawElements(gui);
 
-        verify(gui).drawText(new Position(50, 10), "YOUR SCORE:12345", "#FFFFFF");
+        verify(gui).drawText(new Position(51, 10), "YOUR SCORE:12345", "#00e348");
     }
 
-    @Test
-    void drawElements_handlesExceptions() {
-        doThrow(new RuntimeException("GUI error"))
-                .when(gui).drawGameBackground(120, 40);
 
-        org.junit.jupiter.api.Assertions.assertThrows(RuntimeException.class, () -> gameOverViewer.drawElements(gui));
-    }
 }
