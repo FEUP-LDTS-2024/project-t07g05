@@ -251,7 +251,7 @@ The benefits include:
 ## 🛡️ Mutation testing
 
 <p align="center" justify="center">
-  <img src="images/mutationtesting.jpeg.jpeg"/>
+  <img src="images/mutationtesting.jpeg"/>
 </p>
 <p align="center">
   <b><i>Fig 8. Mutation testing</i></b>
