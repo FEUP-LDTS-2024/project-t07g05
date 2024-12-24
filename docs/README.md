@@ -237,7 +237,35 @@ The benefits include:
 - Enhanced testability and modularity.
 - Ability to replace or extend GUI functionality without affecting the core game logic.
 
-## 🔍 Known code smells
+## 🔍 Code smells
+
+We have used the **errorprone** plugin, and we have made changes to our code based on the given warnings. Still, some warnings are still present because we have decided it was not worth it to change our code based on those, and we justify it below.
+
+\main\java\com\ldts\crystalclash\model\Position.java:31: 
+
+warning: [EqualsGetClass] Prefer instanceof to getClass when implementing Object#equals.
+
+**Justification:** The current implementation is already functional and meets the project requirements.
+
+src\main\java\com\ldts\crystalclash\model\Music.java:39: 
+
+warning: [CatchAndPrintStackTrace] Logging or rethrowing exceptions should usually be preferred to catching and calling printStackTrace
+
+**Justification:** The printStackTrace method provides sufficient debugging information for this context; the exception does not impact critical system functionality.
+
+src\main\java\com\ldts\crystalclash\model\ScoresMenu.java:29: 
+
+warning: [JavaUtilDate] Date has a bad API that leads to bugs; prefer java.time.Instant or LocalDate.
+
+**Justification:** The use of java.util.Date in this context is minimal and encapsulated within a single format operation. Changing it to java.time classes would require updating related dependencies and test cases.
+
+src\main\java\com\ldts\crystalclash\model\ScoresMenu.java:20: 
+
+warning: [DefaultCharset] Implicit use of the platform default charset, which can result in differing behaviour between JVM executions or incorrect behavior if the encoding of the data source doesn't match expectations.
+
+**Justification:** The project does not target multiple platforms with varying default charsets, and it is expected to run in a controlled environment where the default charset is consistent and sufficient.
+
+None of these warnings currently impact the correctness or performance of the application in a meaningful way.
 
 ## 📊 Test coverage
 
@@ -251,12 +279,13 @@ The benefits include:
 ## 🛡️ Mutation testing
 
 <p align="center" justify="center">
-  <img src="images/mutationtesting.jpeg"/>
+  <img src="images/mutationtesting.png"/>
 </p>
 <p align="center">
   <b><i>Fig 8. Mutation testing</i></b>
 </p>
 
+For the mutation testing report, click [here](./pitest/index.html).
 
 ## ✍️ Self-evaluation
 

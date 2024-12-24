@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>TileFactory.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_1'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package com.ldts.crystalclash.factories;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_2'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.ldts.crystalclash.model.*;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_3'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_4'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.Locale;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_5'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.Random;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_6'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.List;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_7'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_8'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>public class TileFactory {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_9'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public Tile createTile(String type, Position screenPosition, Position gridCoordinates) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_10'/>
+10
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_10'>1</a>
+<span>
+
+1. createTile : replaced return value with null for com/ldts/crystalclash/factories/TileFactory::createTile &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return switch (type.toLowerCase(Locale.ENGLISH)) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_11'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            case &#34;bomb&#34; -&#62; new BombTile(screenPosition, gridCoordinates, Color.DEFAULT);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_12'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            case &#34;gem&#34; -&#62; new GemTile(screenPosition, gridCoordinates, getRandomGemColor());</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_13'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            case &#34;empty&#34; -&#62; new EmptyTile(screenPosition, gridCoordinates, Color.DEFAULT);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_14'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            default -&#62; throw new IllegalArgumentException(&#34;Invalid tile type: &#34; + type);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_15'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        };</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_16'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_17'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_18'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public Tile createRandomTile(Position screenPosition, Position gridCoordinates) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_19'/>
+19
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_19'>2</a>
+<span>
+
+1. createRandomTile : changed conditional boundary &rarr; SURVIVED<br/>
+
+2. createRandomTile : negated conditional &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        boolean isBomb = Math.random() &#60; 0.1; // chance of being a bomb</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_20'/>
+20
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_20'>2</a>
+<span>
+
+1. createRandomTile : negated conditional &rarr; SURVIVED<br/>
+
+2. createRandomTile : replaced return value with null for com/ldts/crystalclash/factories/TileFactory::createRandomTile &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        return isBomb</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_21'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                ? new BombTile(screenPosition, gridCoordinates, Color.DEFAULT)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_22'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                :  new GemTile(screenPosition, gridCoordinates, getRandomGemColor());</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_23'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_24'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_25'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public Color getRandomGemColor() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_26'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        List&#60;Color&#62; GEM_COLORS = List.of(Color.DIAMOND, Color.EMERALD, Color.RUBY, Color.SAPPHIRE, Color.AMETHYST);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_27'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        Random RANDOM = new Random();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_28'/>
+28
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_28'>1</a>
+<span>
+
+1. getRandomGemColor : replaced return value with null for com/ldts/crystalclash/factories/TileFactory::getRandomGemColor &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return GEM_COLORS.get(RANDOM.nextInt(GEM_COLORS.size()));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_29'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_30'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b8ec001_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_31'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b8ec001_10'>10</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_10'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>createTile<br/><b>Killed by : </b>com.ldts.crystalclash.factories.TileFactoryTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.factories.TileFactoryTest]/[method:testCreateTileNullReturn()]</span></span> replaced return value with null for com/ldts/crystalclash/factories/TileFactory::createTile &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b8ec001_19'>19</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_19'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>createRandomTile<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>createRandomTile<br/><b>Killed by : </b>none</span></span> negated conditional &rarr; SURVIVED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b8ec001_20'>20</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_20'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>createRandomTile<br/><b>Killed by : </b>com.ldts.crystalclash.factories.TileFactoryTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.factories.TileFactoryTest]/[method:testCreateRandomTileNullReturn()]</span></span> replaced return value with null for com/ldts/crystalclash/factories/TileFactory::createRandomTile &rarr; KILLED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>createRandomTile<br/><b>Killed by : </b>none</span></span> negated conditional &rarr; SURVIVED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b8ec001_28'>28</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b8ec001_28'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getRandomGemColor<br/><b>Killed by : </b>com.ldts.crystalclash.factories.TileFactoryTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.factories.TileFactoryTest]/[method:testCreateTileGem()]</span></span> replaced return value with null for com/ldts/crystalclash/factories/TileFactory::getRandomGemColor &rarr; KILLED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+
+<li class='mutator'>CONDITIONALS_BOUNDARY</li>
+
+<li class='mutator'>EMPTY_RETURNS</li>
+
+<li class='mutator'>FALSE_RETURNS</li>
+
+<li class='mutator'>INCREMENTS</li>
+
+<li class='mutator'>INVERT_NEGS</li>
+
+<li class='mutator'>MATH</li>
+
+<li class='mutator'>NEGATE_CONDITIONALS</li>
+
+<li class='mutator'>NULL_RETURNS</li>
+
+<li class='mutator'>PRIMITIVE_RETURNS</li>
+
+<li class='mutator'>TRUE_RETURNS</li>
+
+<li class='mutator'>VOID_METHOD_CALLS</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>com.ldts.crystalclash.factories.TileFactoryTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.factories.TileFactoryTest]/[method:testCreateRandomTileNullReturn()] (0 ms)</li><li>com.ldts.crystalclash.factories.TileFactoryTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.factories.TileFactoryTest]/[method:testCreateRandomTile()] (5 ms)</li><li>com.ldts.crystalclash.model.BoardTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.model.BoardTest]/[method:testInitialTileCursor()] (0 ms)</li><li>com.ldts.crystalclash.model.BoardTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.model.BoardTest]/[method:testMoveCursorRight()] (0 ms)</li><li>com.ldts.crystalclash.model.BoardTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.model.BoardTest]/[method:testMoveCursorDown()] (0 ms)</li><li>com.ldts.crystalclash.model.BoardTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.model.BoardTest]/[method:testInvalidTileMovement()] (2 ms)</li><li>com.ldts.crystalclash.controller.BoardControllerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.controller.BoardControllerTest]/[method:testMoveCurrentTileOutOfBounds()] (1 ms)</li><li>com.ldts.crystalclash.controller.BoardControllerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.controller.BoardControllerTest]/[method:testMoveCurrentTileAtTopEdge()] (1 ms)</li><li>com.ldts.crystalclash.controller.BoardControllerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.controller.BoardControllerTest]/[method:testMoveCurrentTileInvalid()] (2 ms)</li><li>com.ldts.crystalclash.controller.BoardControllerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.controller.BoardControllerTest]/[method:testSwapTilesNull()] (1 ms)</li><li>com.ldts.crystalclash.controller.BoardControllerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.controller.BoardControllerTest]/[method:testMoveCurrentTileAtBottomEdge()] (2 ms)</li><li>com.ldts.crystalclash.controller.BoardControllerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.controller.BoardControllerTest]/[method:testMoveCurrentTileValid()] (2 ms)</li><li>com.ldts.crystalclash.controller.BoardControllerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.controller.BoardControllerTest]/[method:testMoveCurrentTileAtRightEdge()] (4 ms)</li><li>com.ldts.crystalclash.controller.BoardControllerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.controller.BoardControllerTest]/[method:testRefillBoardWithInvalidTile()] (1 ms)</li><li>com.ldts.crystalclash.controller.MenuControllerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.controller.MenuControllerTest]/[method:testStepSelectActionPlay()] (1 ms)</li><li>com.ldts.crystalclash.controller.BoardControllerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.controller.BoardControllerTest]/[method:testSwapTilesValid()] (2 ms)</li><li>com.ldts.crystalclash.controller.BoardControllerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.controller.BoardControllerTest]/[method:testSwapTilesOutOfBounds()] (3 ms)</li><li>com.ldts.crystalclash.controller.BoardControllerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.controller.BoardControllerTest]/[method:testRefillBoard()] (5 ms)</li><li>com.ldts.crystalclash.controller.BoardControllerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.controller.BoardControllerTest]/[method:testComplexTileInteraction()] (4 ms)</li><li>com.ldts.crystalclash.controller.BoardControllerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.controller.BoardControllerTest]/[method:testRefillBoardVerifiesTileFactoryCall()] (13 ms)</li><li>com.ldts.crystalclash.controller.GameOverControllerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.controller.GameOverControllerTest]/[method:testStep_PlayAgain()] (11 ms)</li><li>com.ldts.crystalclash.controller.BoardControllerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.controller.BoardControllerTest]/[method:testShiftTilesDown()] (1626 ms)</li><li>com.ldts.crystalclash.factories.TileFactoryTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.factories.TileFactoryTest]/[method:testCreateTileNullPosition()] (0 ms)</li><li>com.ldts.crystalclash.factories.TileFactoryTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.factories.TileFactoryTest]/[method:testCreateTileGem()] (1 ms)</li><li>com.ldts.crystalclash.factories.TileFactoryTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.factories.TileFactoryTest]/[method:testCreateTileCaseInsensitive()] (0 ms)</li><li>com.ldts.crystalclash.factories.TileFactoryTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.factories.TileFactoryTest]/[method:testGetRandomGemColor()] (8 ms)</li><li>com.ldts.crystalclash.factories.TileFactoryTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.factories.TileFactoryTest]/[method:testCreateTileNullReturn()] (0 ms)</li><li>com.ldts.crystalclash.factories.TileFactoryTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.factories.TileFactoryTest]/[method:testCreateTileBomb()] (0 ms)</li><li>com.ldts.crystalclash.factories.TileFactoryTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.factories.TileFactoryTest]/[method:testCreateTileEmpty()] (0 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='https://pitest.org'>PIT</a> 1.15.0
+
+</body>
+</html>

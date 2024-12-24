@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>MenuViewer.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_1'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package com.ldts.crystalclash.viewer;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_2'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.googlecode.lanterna.TextColor;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_3'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.ldts.crystalclash.gui.GUI;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_4'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.ldts.crystalclash.gui.LanternaGUI;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_5'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.ldts.crystalclash.model.Menu;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_6'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.ldts.crystalclash.model.Position;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_7'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_8'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_9'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public class MenuViewer extends Viewer&#60;Menu&#62; {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_10'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_11'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public MenuViewer(Menu model) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_12'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        super(model);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_13'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_14'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_15'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_16'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public void drawElements(GUI gui) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_17'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        try {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_18'/>
+18
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_18'>1</a>
+<span>
+
+1. drawElements : removed call to com/ldts/crystalclash/gui/GUI::clear &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>            gui.clear();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_19'/>
+19
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_19'>1</a>
+<span>
+
+1. drawElements : removed call to com/ldts/crystalclash/gui/GUI::drawGameBackground &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>            gui.drawGameBackground(120, 40);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_20'/>
+20
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_20'>2</a>
+<span>
+
+1. drawElements : changed conditional boundary &rarr; KILLED<br/>
+
+2. drawElements : negated conditional &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            for (int i = 0; i &#60; getModel().getNumberOptions(); i++) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_21'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                // Ajusta a posi&#231;&#227;o horizontal com base no &#237;ndice</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_22'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                int xPosition;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_23'/>
+23
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_23'>1</a>
+<span>
+
+1. drawElements : negated conditional &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                if (i == 2) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_24'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    xPosition = 50; // Para i == 2</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_25'/>
+25
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_25'>1</a>
+<span>
+
+1. drawElements : negated conditional &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                } else if (i == 1) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_26'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    xPosition = 53; // Para i == 1</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_27'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                } else {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_28'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    xPosition = 54;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_29'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_30'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_31'/>
+31
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_31'>2</a>
+<span>
+
+1. drawElements : removed call to com/ldts/crystalclash/gui/GUI::drawText &rarr; KILLED<br/>
+
+2. drawElements : Replaced integer addition with subtraction &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                gui.drawText(</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_32'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                        new Position(xPosition, 20 + i),</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_33'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                        getModel().getSelectedOption(i),</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_34'/>
+34
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_34'>1</a>
+<span>
+
+1. drawElements : negated conditional &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                        getModel().isSelected(i) ? &#34;#00FFFF&#34; : &#34;#FFFFFF&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_35'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_36'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_37'/>
+37
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_37'>1</a>
+<span>
+
+1. drawElements : removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            gui.drawLine(44, 16, 66, 16, &#34;*&#34;, &#34;#5ad4f2&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_38'/>
+38
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_38'>1</a>
+<span>
+
+1. drawElements : removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            gui.drawLine(42, 17, 68, 17, &#34;*&#34;, &#34;#5ad4f2&#34;);//1linha horizonta de cima</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_39'/>
+39
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_39'>1</a>
+<span>
+
+1. drawElements : removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            gui.drawLine(40, 18, 70, 18, &#34;*&#34;, &#34;#5ad4f2&#34;);//2linha horizonta de cima</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_40'/>
+40
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_40'>1</a>
+<span>
+
+1. drawElements : removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            gui.drawLine(40, 25, 70, 25, &#34;*&#34;, &#34;#5ad4f2&#34;);//1linha horizontal de baixo</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_41'/>
+41
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_41'>1</a>
+<span>
+
+1. drawElements : removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            gui.drawLine(41, 26, 69, 26, &#34;*&#34;, &#34;#5ad4f2&#34;);//2linha horizontal de baixo</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_42'/>
+42
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_42'>1</a>
+<span>
+
+1. drawElements : removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            gui.drawLine(43, 27, 67, 27, &#34;*&#34;, &#34;#5ad4f2&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_43'/>
+43
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_43'>1</a>
+<span>
+
+1. drawElements : removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            gui.drawLine(40, 18, 40, 25, &#34;*&#34;, &#34;#5ad4f2&#34;);//linha mais a direita da esquerda</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_44'/>
+44
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_44'>1</a>
+<span>
+
+1. drawElements : removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            gui.drawLine(39, 19, 39, 25, &#34;*&#34;, &#34;#5ad4f2&#34;);//2linha mais a direita da esquerda</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_45'/>
+45
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_45'>1</a>
+<span>
+
+1. drawElements : removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            gui.drawLine(38, 20, 38, 24, &#34;*&#34;, &#34;#5ad4f2&#34;);//3linha mais a direita da esquerda</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_46'/>
+46
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_46'>1</a>
+<span>
+
+1. drawElements : removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            gui.drawLine(37, 21, 37, 23, &#34;*&#34;, &#34;#5ad4f2&#34;);//4linha mais a direita da esquerda</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_47'/>
+47
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_47'>1</a>
+<span>
+
+1. drawElements : removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            gui.drawLine(36, 22, 36, 22, &#34;*&#34;, &#34;#5ad4f2&#34;);//5linha mais a direita da esquerda</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_48'/>
+48
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_48'>1</a>
+<span>
+
+1. drawElements : removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            gui.drawLine(70, 19, 70, 25, &#34;*&#34;, &#34;#5ad4f2&#34;);//1 linhas da direita</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_49'/>
+49
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_49'>1</a>
+<span>
+
+1. drawElements : removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            gui.drawLine(71, 19, 71, 25, &#34;*&#34;, &#34;#5ad4f2&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_50'/>
+50
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_50'>1</a>
+<span>
+
+1. drawElements : removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            gui.drawLine(72, 20, 72, 24, &#34;*&#34;, &#34;#5ad4f2&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_51'/>
+51
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_51'>1</a>
+<span>
+
+1. drawElements : removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            gui.drawLine(73, 21, 73, 23, &#34;*&#34;, &#34;#5ad4f2&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_52'/>
+52
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_52'>1</a>
+<span>
+
+1. drawElements : removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            gui.drawLine(74, 22, 74, 22, &#34;*&#34;, &#34;#5ad4f2&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_53'/>
+53
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_53'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_54'/>
+54
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_54'>1</a>
+<span>
+
+1. drawElements : removed call to com/ldts/crystalclash/gui/GUI::drawLogo &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            gui.drawLogo(17, 5, &#34;#f7fbfc&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_55'/>
+55
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_55'>1</a>
+<span>
+
+1. drawElements : removed call to com/ldts/crystalclash/gui/GUI::refresh &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>            gui.refresh();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_56'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_57'/>
+57
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_57'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>        } catch (Exception e) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_58'/>
+58
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_58'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>            throw new RuntimeException(e);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_59'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_60'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7377781e_61'/>
+61
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_61'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7377781e_18'>18</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_18'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>none</span></span> removed call to com/ldts/crystalclash/gui/GUI::clear &rarr; SURVIVED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7377781e_19'>19</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_19'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>none</span></span> removed call to com/ldts/crystalclash/gui/GUI::drawGameBackground &rarr; SURVIVED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7377781e_20'>20</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_20'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawLogo()]</span></span> changed conditional boundary &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawElementsCallsDrawTextWithCorrectArguments()]</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7377781e_23'>23</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_23'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawElementsCallsDrawTextWithCorrectArguments()]</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7377781e_25'>25</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_25'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawElementsCallsDrawTextWithCorrectArguments()]</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7377781e_31'>31</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_31'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawElementsCallsDrawTextWithCorrectArguments()]</span></span> removed call to com/ldts/crystalclash/gui/GUI::drawText &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawElementsCallsDrawTextWithCorrectArguments()]</span></span> Replaced integer addition with subtraction &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7377781e_34'>34</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_34'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawElementsCallsDrawTextWithCorrectArguments()]</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7377781e_37'>37</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_37'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawElementsCallsDrawLine()]</span></span> removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7377781e_38'>38</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_38'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawElementsCallsDrawLine()]</span></span> removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7377781e_39'>39</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_39'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawElementsCallsDrawLine()]</span></span> removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7377781e_40'>40</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_40'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawElementsCallsDrawLine()]</span></span> removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7377781e_41'>41</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_41'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawElementsCallsDrawLine()]</span></span> removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7377781e_42'>42</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_42'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawElementsCallsDrawLine()]</span></span> removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7377781e_43'>43</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_43'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawElementsCallsDrawLine()]</span></span> removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7377781e_44'>44</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_44'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawElementsCallsDrawLine()]</span></span> removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7377781e_45'>45</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_45'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawElementsCallsDrawLine()]</span></span> removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7377781e_46'>46</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_46'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawElementsCallsDrawLine()]</span></span> removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7377781e_47'>47</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_47'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawElementsCallsDrawLine()]</span></span> removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7377781e_48'>48</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_48'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawElementsCallsDrawLine()]</span></span> removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7377781e_49'>49</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_49'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawElementsCallsDrawLine()]</span></span> removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7377781e_50'>50</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_50'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawElementsCallsDrawLine()]</span></span> removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7377781e_51'>51</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_51'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawElementsCallsDrawLine()]</span></span> removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7377781e_52'>52</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_52'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawElementsCallsDrawLine()]</span></span> removed call to com/ldts/crystalclash/gui/GUI::drawLine &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7377781e_54'>54</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_54'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawLogo()]</span></span> removed call to com/ldts/crystalclash/gui/GUI::drawLogo &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7377781e_55'>55</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7377781e_55'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>drawElements<br/><b>Killed by : </b>none</span></span> removed call to com/ldts/crystalclash/gui/GUI::refresh &rarr; SURVIVED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+
+<li class='mutator'>CONDITIONALS_BOUNDARY</li>
+
+<li class='mutator'>EMPTY_RETURNS</li>
+
+<li class='mutator'>FALSE_RETURNS</li>
+
+<li class='mutator'>INCREMENTS</li>
+
+<li class='mutator'>INVERT_NEGS</li>
+
+<li class='mutator'>MATH</li>
+
+<li class='mutator'>NEGATE_CONDITIONALS</li>
+
+<li class='mutator'>NULL_RETURNS</li>
+
+<li class='mutator'>PRIMITIVE_RETURNS</li>
+
+<li class='mutator'>TRUE_RETURNS</li>
+
+<li class='mutator'>VOID_METHOD_CALLS</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawLogo()] (0 ms)</li><li>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawElementsCallsDrawLine()] (1 ms)</li><li>com.ldts.crystalclash.viewer.MenuViewerTest.[engine:junit-jupiter]/[class:com.ldts.crystalclash.viewer.MenuViewerTest]/[method:testDrawElementsCallsDrawTextWithCorrectArguments()] (0 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='https://pitest.org'>PIT</a> 1.15.0
+
+</body>
+</html>
