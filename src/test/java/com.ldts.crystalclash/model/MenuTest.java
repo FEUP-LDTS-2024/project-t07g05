@@ -16,9 +16,10 @@ class MenuTest {
 
     @Test
     void testInitialization() {
-        assertEquals(3, menu.getNumberOptions());
+        assertEquals(4, menu.getNumberOptions());
         assertTrue(menu.isSelectedPlay());
         assertFalse(menu.isSelectedScores());
+        assertFalse(menu.isSelectedInstructions());
         assertFalse(menu.isSelectedExit());
     }
 
@@ -27,34 +28,52 @@ class MenuTest {
         menu.selectNext();
         assertTrue(menu.isSelectedScores());
         assertFalse(menu.isSelectedPlay());
+        assertFalse(menu.isSelectedInstructions());
+        assertFalse(menu.isSelectedExit());
+
+        menu.selectNext();
+        assertTrue(menu.isSelectedInstructions());
+        assertFalse(menu.isSelectedPlay());
+        assertFalse(menu.isSelectedScores());
         assertFalse(menu.isSelectedExit());
 
         menu.selectNext();
         assertTrue(menu.isSelectedExit());
         assertFalse(menu.isSelectedPlay());
         assertFalse(menu.isSelectedScores());
+        assertFalse(menu.isSelectedInstructions());
 
-        menu.selectNext(); // Wrap around to the first option
+        menu.selectNext();
         assertTrue(menu.isSelectedPlay());
         assertFalse(menu.isSelectedScores());
+        assertFalse(menu.isSelectedInstructions());
         assertFalse(menu.isSelectedExit());
     }
 
     @Test
     void testSelectPrevious() {
-        menu.selectPrevious(); // Wrap around to the last option
+        menu.selectPrevious();
         assertTrue(menu.isSelectedExit());
         assertFalse(menu.isSelectedPlay());
         assertFalse(menu.isSelectedScores());
+        assertFalse(menu.isSelectedInstructions());
+
+        menu.selectPrevious();
+        assertTrue(menu.isSelectedInstructions());
+        assertFalse(menu.isSelectedPlay());
+        assertFalse(menu.isSelectedScores());
+        assertFalse(menu.isSelectedExit());
 
         menu.selectPrevious();
         assertTrue(menu.isSelectedScores());
         assertFalse(menu.isSelectedPlay());
+        assertFalse(menu.isSelectedInstructions());
         assertFalse(menu.isSelectedExit());
 
         menu.selectPrevious();
         assertTrue(menu.isSelectedPlay());
         assertFalse(menu.isSelectedScores());
+        assertFalse(menu.isSelectedInstructions());
         assertFalse(menu.isSelectedExit());
     }
 
@@ -62,12 +81,13 @@ class MenuTest {
     void testGetSelectedOption() {
         assertEquals("PLAY", menu.getSelectedOption(0));
         assertEquals("SCORES", menu.getSelectedOption(1));
-        assertEquals("EXIT", menu.getSelectedOption(2));
+        assertEquals("INSTRUCTIONS", menu.getSelectedOption(2));
+        assertEquals("EXIT", menu.getSelectedOption(3));
     }
 
     @Test
     void testOutOfBoundsGetSelectedOption() {
         assertThrows(IndexOutOfBoundsException.class, () -> menu.getSelectedOption(-1));
-        assertThrows(IndexOutOfBoundsException.class, () -> menu.getSelectedOption(3));
+        assertThrows(IndexOutOfBoundsException.class, () -> menu.getSelectedOption(4));
     }
 }
