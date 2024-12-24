@@ -241,7 +241,22 @@ The benefits include:
 
 ## 📊 Test coverage
 
+<p align="center" justify="center">
+  <img src="images/testcoverage.jpeg"/>
+</p>
+<p align="center">
+  <b><i>Fig 8. Test coverage</i></b>
+</p>
+
 ## 🛡️ Mutation testing
+
+<p align="center" justify="center">
+  <img src="images/mutationtesting.jpeg.jpeg"/>
+</p>
+<p align="center">
+  <b><i>Fig 8. Mutation testing</i></b>
+</p>
+
 
 ## ✍️ Self-evaluation
 
