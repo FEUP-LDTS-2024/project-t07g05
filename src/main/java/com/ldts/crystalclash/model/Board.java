@@ -18,6 +18,9 @@ public class Board {
     TileFactory tileFactory;
 
     public Board(int rows, int columns, int width, int height, int rowSpacing, int columnSpacing) {
+        if (rows <= 0 || columns <= 0) {
+            throw new IllegalArgumentException("Rows and columns must be positive integers");
+        }
         this.rows = rows;
         this.columns = columns;
         this.grid = new Tile[rows][columns];
@@ -91,8 +94,17 @@ public class Board {
     public void setTile(int row, int column, Tile newTile) {
         if (isValidPosition(row, column)) {
             grid[row][column] = newTile;
+            if (newTile != null) {
+                newTile.setGridCoordinates(new Position(row, column));
+            }
         }
     }
+
+    ///
+    public void setScore(Score score) {
+        this.score = score;
+    }
+
 
     public Tile getCurrentTile() {
         return currentTile;
@@ -135,11 +147,23 @@ public class Board {
             for (int col = 0; col < columns; col++) {
                 Position gridco = new Position(row, col);
                 Position screenpos = calculateScreenPosition(gridco);
-                Tile tile = tileFactory.createRandomTile(screenpos, gridco);
+                Tile tile;
+                if (row == 0 && col == 0) {
+                    tile = new GemTile(screenpos, gridco, Color.DIAMOND); // Force the first tile to be DIAMOND
+                } else {
+                    tile = tileFactory.createRandomTile(screenpos, gridco); // Random for others
+                }
+                if (tile == null) {
+                    throw new RuntimeException("Failed to create tile at position (" + row + ", " + col + ")");
+                }
                 grid[row][col] = tile;
             }
         }
+        this.currentTile = getTile(0, 0);
+        currentTile.setCursorOn(true);
     }
+
+
 
     public Position calculateScreenPosition(Position gridcoordinate) {
         int row = gridcoordinate.getX();

@@ -13,17 +13,14 @@ public class BoardViewer extends Viewer<Board> {
 
     @Override
     public void drawElements(GUI gui) {
-        try {
-            // Draw the board with tiles
-            for (Tile[] row : getModel().getGrid()) {
-                for (Tile cell : row) {
-                    TileViewer tileViewer = new TileViewer(cell);
-                    tileViewer.drawElements(gui);
-                }
+        Tile[][] grid = getModel().getGrid();
+        for (int row = 0; row < grid.length; row++) {
+            for (int col = 0; col < grid[row].length; col++) {
+                Tile tile = grid[row][col];
+                TileViewer tileViewer = new TileViewer(tile);  // Instantiate TileViewer for each tile
+                tileViewer.drawElements(gui);  // Call drawElements on the TileViewer
             }
-        }catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-
+        }
     }
+
 }

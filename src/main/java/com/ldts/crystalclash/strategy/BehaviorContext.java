@@ -18,6 +18,10 @@ public class BehaviorContext {
         this.behavior = behavior;
     }
 
+    public TileBehavior getBehavior() {
+        return behavior;
+    }
+
     public void popOff(Board board, Set<Tile> toRemove) {
         if (behavior != null) {
             behavior.popOff(tile, board, toRemove);

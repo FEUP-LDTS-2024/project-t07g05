@@ -9,9 +9,8 @@ import com.ldts.crystalclash.model.Board;
 import java.io.IOException;
 
 public class BoardController extends GameController {
-    // TODO: algorithm must identify if it is a gemtile or a bombtile before verifying matches
-    TileMatcher tileMatcher;
-    TileFactory tileFactory;
+    public TileMatcher tileMatcher;
+    public TileFactory tileFactory;
 
     public BoardController(Board board) {
         super(board);
@@ -20,7 +19,6 @@ public class BoardController extends GameController {
     }
 
     public void swapTiles(Tile t1, Tile t2) {
-        System.out.println("Swapping tiles: " + t1 + " and " + t2);
         // Swaps tile t1 with tile t2
         if (t1 == null || t2 == null) {
             return;
@@ -45,18 +43,21 @@ public class BoardController extends GameController {
         Position t2ScreenPos = getModel().calculateScreenPosition(t1GridCoord);
         t1.setScreenPosition(t1ScreenPos);
         t2.setScreenPosition(t2ScreenPos);
-        System.out.println("Tile positions before swap: t1: " + t1.getGridCoordinates() + " and t2: " + t2.getGridCoordinates());
     }
 
     public void moveCurrentTile(int row, int column) {
-        if (getModel().isValidPosition(row, column)) {
-            Tile prev = getModel().getCurrentTile();
-            prev.setCursorOn(false);
-            Tile curr = getModel().getTile(row, column);
-            getModel().setCurrentTile(curr);
-            curr.setCursorOn(true);
-        }
+        Tile prev = getModel().getCurrentTile();
+
+        if (!getModel().isValidPosition(row, column)) {return;}
+
+        Tile curr = getModel().getTile(row, column);
+        if (curr == null) {return;}
+
+        prev.setCursorOn(false);
+        getModel().setCurrentTile(curr);
+        curr.setCursorOn(true);
     }
+
 
     public void shiftTilesDown() {
         for (int col = 0; col < getModel().getColumns(); col++) {
@@ -78,7 +79,6 @@ public class BoardController extends GameController {
         }
     }
 
-    // TODO: Refactor it when FactoryTile is created
     public void refillBoard() {
         for (int col = 0; col < getModel().getColumns(); col++) {
             for (int row = 0; row < getModel().getRows(); row++) {
@@ -95,39 +95,43 @@ public class BoardController extends GameController {
 
     @Override
     public void step(Game game, GUI.ACTION action, long time) throws IOException {
+
+        if (action == null) {
+            System.out.println("Received invalid action: null");
+            return;
+        }
+
         Board board = getModel();
         switch (action) {
-            case GUI.ACTION.UP:
+            case UP:
                 moveCurrentTile(board.getCurrentTile().getGridCoordinates().getX() - 1,
                         board.getCurrentTile().getGridCoordinates().getY());
                 break;
-            case GUI.ACTION.RIGHT:
+            case RIGHT:
                 moveCurrentTile(board.getCurrentTile().getGridCoordinates().getX(),
                         board.getCurrentTile().getGridCoordinates().getY() + 1);
                 break;
-            case GUI.ACTION.DOWN:
+            case DOWN:
                 moveCurrentTile(board.getCurrentTile().getGridCoordinates().getX() + 1,
                         board.getCurrentTile().getGridCoordinates().getY());
                 break;
-            case GUI.ACTION.LEFT:
+            case LEFT:
                 moveCurrentTile(board.getCurrentTile().getGridCoordinates().getX(),
                         board.getCurrentTile().getGridCoordinates().getY() - 1);
                 break;
-            case GUI.ACTION.SELECT_TILE:
+            case SELECT_TILE:
                 GUI.ACTION actionSwap = game.gui.waitsNextAction();
-                System.out.println(actionSwap);
                 switch (actionSwap) {
-                    case GUI.ACTION.UP:
-                        System.out.println("WARNING: Up pressed");
+                    case UP:
                         swapTiles(board.getCurrentTile(), board.getTileOnTop(board.getCurrentTile()));
                         break;
-                    case GUI.ACTION.DOWN:
+                    case DOWN:
                         swapTiles(board.getCurrentTile(), board.getTileOnBottom(board.getCurrentTile()));
                         break;
-                    case GUI.ACTION.LEFT:
+                    case LEFT:
                         swapTiles(board.getCurrentTile(), board.getTileToTheLeft(board.getCurrentTile()));
                         break;
-                    case GUI.ACTION.RIGHT:
+                    case RIGHT:
                         swapTiles(board.getCurrentTile(), board.getTileToTheRight(board.getCurrentTile()));
                         break;
                 }
@@ -139,4 +143,5 @@ public class BoardController extends GameController {
         shiftTilesDown();
         refillBoard();
     }
+
 }

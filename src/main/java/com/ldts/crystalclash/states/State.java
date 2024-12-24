@@ -40,7 +40,12 @@ public abstract class State<T> {
     public void step(Game game, GUI gui, long time) throws IOException {
         GUI.ACTION action = gui.getNextAction();
 
-        controller.step(game, action, time);
+        //if (action != GUI.ACTION.NONE && action != null) {
+            controller.step(game, action, time);
+        //}
+
         viewer.draw(gui);
     }
+
+
 }

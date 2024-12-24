@@ -7,15 +7,20 @@ import javax.sound.sampled.FloatControl;
 import java.io.File;
 
 public class Music {
-    private final Clip music;
+    protected final Clip music;
     private static Music instance;
+
+    // Constructor that accepts a Clip for testing purposes
+    public Music(Clip music) {
+        this.music = music;
+    }
 
     public Music() {
         this.music = loadMusic();
     }
 
-    public static Music getInstance(){
-        if (instance == null){
+    public static Music getInstance() {
+        if (instance == null) {
             instance = new Music();
         }
         return instance;
@@ -45,5 +50,4 @@ public class Music {
     public void stopMusic() {
         music.stop();
     }
-
 }
