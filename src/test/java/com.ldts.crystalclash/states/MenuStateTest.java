@@ -100,6 +100,7 @@ class MenuStateTest {
         assertNotNull(controller, "Controller should not be null");
         assertInstanceOf(MenuController.class, controller, "Controller should be an instance of MenuController");
     }
+
     @Test
     void testStepHandlesNullAction() throws Exception {
         long time = 100L;
@@ -108,8 +109,34 @@ class MenuStateTest {
 
         menuState.step(mockGame, mockGUI, time);
 
-        verify(mockMenuController, times(1)).step(eq(mockGame), isNull(), eq(time));
+        verify(mockMenuController, times(1)).step(mockGame, null, time);
         verify(mockMenuViewer, times(1)).draw(mockGUI);
     }
+
+
+    @Test
+    void testViewerComposition() {
+        MenuViewer viewer = new MenuViewer(mockMenu);
+        assertNotNull(viewer, "MenuViewer should not be null");
+        assertEquals(mockMenu, viewer.getModel(), "MenuViewer should have the correct model");
+    }
+
+    @Test
+    void testStepHandlesMultipleActions() throws Exception {
+        long time = 100L;
+        Game mockGame = mock(Game.class);
+
+        when(mockGUI.getNextAction()).thenReturn(GUI.ACTION.UP, GUI.ACTION.SELECT, GUI.ACTION.NONE);
+
+        menuState.step(mockGame, mockGUI, time);
+        menuState.step(mockGame, mockGUI, time);
+        menuState.step(mockGame, mockGUI, time);
+
+        verify(mockMenuController, times(1)).step(mockGame, GUI.ACTION.UP, time);
+        verify(mockMenuController, times(1)).step(mockGame, GUI.ACTION.SELECT, time);
+        verify(mockMenuController, times(1)).step(mockGame, GUI.ACTION.NONE, time);
+        verify(mockMenuViewer, times(3)).draw(mockGUI);
+    }
+
 
 }
