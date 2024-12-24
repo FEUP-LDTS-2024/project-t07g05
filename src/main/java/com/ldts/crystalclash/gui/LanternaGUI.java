@@ -75,6 +75,7 @@ public class LanternaGUI implements GUI {
         return ACTION.NONE;
     }
 
+    @Override
     public ACTION getNextAction() throws IOException {
         KeyStroke keyStroke = screen.pollInput();
         if (keyStroke == null) return ACTION.NONE;
