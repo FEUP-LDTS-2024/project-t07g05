@@ -7,7 +7,7 @@ public class Menu {
     private final List<String> options;
     private int selectedOption = 0;
 
-    public Menu() {this.options = Arrays.asList("PLAY", "SCORES", "EXIT");}
+    public Menu() {this.options = Arrays.asList("PLAY", "SCORES", "INSTRUCTIONS", "EXIT");}
 
     public void selectNext() {
         selectedOption++;
@@ -30,6 +30,10 @@ public class Menu {
     }
 
     public boolean isSelectedExit() {
+        return isSelected(3);
+    }
+
+    public boolean isSelectedInstructions() {
         return isSelected(2);
     }
 
