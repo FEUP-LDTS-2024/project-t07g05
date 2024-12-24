@@ -3,10 +3,11 @@ package com.ldts.crystalclash.states;
 import com.ldts.crystalclash.Game;
 import com.ldts.crystalclash.controller.Controller;
 import com.ldts.crystalclash.model.Board;
+import com.ldts.crystalclash.model.Score;
+import com.ldts.crystalclash.model.Timer;
 import com.ldts.crystalclash.viewer.*;
 import com.ldts.crystalclash.controller.GameController;
 import com.ldts.crystalclash.gui.GUI;
-import com.ldts.crystalclash.viewer.Viewer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,10 +26,8 @@ class GameStateTest {
 
     @BeforeEach
     void setUp() {
-
         mockBoard = mock(Board.class);
         mockGUI = mock(GUI.class);
-
         mockController = mock(GameController.class);
         mockViewer = mock(GameViewer.class);
 
@@ -73,7 +72,6 @@ class GameStateTest {
         assertInstanceOf(GameController.class, controller, "Controller should be an instance of GameController");
     }
 
-
     @Test
     void testStepHandlesNullAction() throws IOException {
         long time = 100L;
@@ -89,14 +87,21 @@ class GameStateTest {
 
     @Test
     void testViewerComposition() {
+        Score mockScore = mock(Score.class);
+        Timer mockTimer = mock(Timer.class);
+
+        when(mockBoard.getScore()).thenReturn(mockScore);
+        when(mockBoard.getTimer()).thenReturn(mockTimer);
+
         BoardViewer boardViewer = new BoardViewer(mockBoard);
-        ScoreViewer scoreViewer = new ScoreViewer(mockBoard.getScore());
-        TimerViewer timerViewer = new TimerViewer(mockBoard.getTimer());
+        ScoreViewer scoreViewer = new ScoreViewer(mockScore);
+        TimerViewer timerViewer = new TimerViewer(mockTimer);
 
         GameViewer viewer = new GameViewer(mockBoard, boardViewer, scoreViewer, timerViewer);
         assertNotNull(viewer, "GameViewer should not be null");
         assertEquals(mockBoard, viewer.getModel(), "GameViewer should have the correct model");
     }
+
 
     @Test
     void testStepHandlesMultipleActions() throws IOException {
@@ -114,5 +119,4 @@ class GameStateTest {
         verify(mockController, times(1)).step(mockGame, GUI.ACTION.NONE, time);
         verify(mockViewer, times(3)).draw(mockGUI);
     }
-
 }
