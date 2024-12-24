@@ -32,15 +32,14 @@ public class MenuController extends Controller<Menu> {
                 if (getModel().isSelectedExit()) game.setState(null);
                 if (getModel().isSelectedPlay())
                     game.setState(new GameState(new Board(8, 8, 90, 40, 4, 4)));
-                    //completar para o menuscores
-                if (getModel().isSelectedScores()) {
+                if (getModel().isSelectedScores())
                     game.setState(new ScoresMenuState(new ScoresMenu()));
-                }
                 if (getModel().isSelectedInstructions())
                     game.setState(new InstructionsState(new Instructions()));
-
+                break;
+            default:
+                break;
                 }
-
         }
 
     }
