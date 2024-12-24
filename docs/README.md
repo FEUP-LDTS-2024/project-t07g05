@@ -273,7 +273,7 @@ None of these warnings currently impact the correctness or performance of the ap
   <img src="images/testcoverage.jpeg"/>
 </p>
 <p align="center">
-  <b><i>Fig 8. Test coverage</i></b>
+  <b><i>Fig 9. Test coverage</i></b>
 </p>
 
 ## 🛡️ Mutation testing
