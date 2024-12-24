@@ -134,5 +134,103 @@ public class LanternaGUITest {
         lanternaGUI.close();
         verify(mockScreen).close();
     }
+    @Test
+    void testWaitsNextActionNoKey() throws IOException {
+        when(mockScreen.readInput()).thenReturn(null);
+
+        ACTION action = lanternaGUI.waitsNextAction();
+
+        assertEquals(ACTION.NONE, action, "Expected ACTION.NONE when no key is pressed");
+    }
+
+    @Test
+    void testWaitsNextActionQuitKey() throws IOException {
+        when(mockScreen.readInput()).thenReturn(mockKeyStroke);
+        when(mockKeyStroke.getKeyType()).thenReturn(KeyType.Character);
+        when(mockKeyStroke.getCharacter()).thenReturn('q');
+
+        ACTION action = lanternaGUI.waitsNextAction();
+
+        assertEquals(ACTION.QUIT, action, "Expected ACTION.QUIT when 'q' is pressed");
+    }
+
+    @Test
+    void testWaitsNextActionArrowLeft() throws IOException {
+        when(mockScreen.readInput()).thenReturn(mockKeyStroke);
+        when(mockKeyStroke.getKeyType()).thenReturn(KeyType.ArrowLeft);
+
+        ACTION action = lanternaGUI.waitsNextAction();
+
+        assertEquals(ACTION.LEFT, action, "Expected ACTION.LEFT for ArrowLeft key");
+    }
+
+    @Test
+    void testDrawLineHorizontal() {
+        TextGraphics mockTextGraphics = mock(TextGraphics.class);
+
+        when(mockScreen.newTextGraphics()).thenReturn(mockTextGraphics);
+
+        lanternaGUI.drawLine(0, 0, 5, 0, "*", "#FFFFFF");
+
+        verify(mockTextGraphics, times(6)).putString(anyInt(), eq(0), eq("*"));
+
+        verify(mockTextGraphics).setForegroundColor(TextColor.Factory.fromString("#FFFFFF"));
+    }
+
+
+    @Test
+    void testDrawLineVertical() {
+        TextGraphics mockTextGraphics = mock(TextGraphics.class);
+
+        when(mockScreen.newTextGraphics()).thenReturn(mockTextGraphics);
+
+        lanternaGUI.drawLine(0, 0, 0, 5, "*", "#FFFFFF");
+
+        verify(mockTextGraphics, times(6)).putString(eq(0), anyInt(), eq("*"));
+
+        verify(mockTextGraphics).setForegroundColor(TextColor.Factory.fromString("#FFFFFF"));
+
+        verify(mockTextGraphics).setBackgroundColor(TextColor.Factory.fromString("#143b5e"));
+    }
+
+    @Test
+    void testDrawLogo() {
+        TextGraphics mockTextGraphics = mock(TextGraphics.class);
+
+        Screen mockScreen = mock(Screen.class);
+        when(mockScreen.newTextGraphics()).thenReturn(mockTextGraphics);
+
+        LanternaGUI lanternaGUI = new LanternaGUI(mockScreen);
+
+        int startX = 0;
+        int startY = 0;
+        String color = "#FFFFFF";
+        lanternaGUI.drawLogo(startX, startY, color);
+
+        verify(mockTextGraphics).setForegroundColor(any(TextColor.class));
+        verify(mockTextGraphics).setBackgroundColor(any(TextColor.class));
+    }
+
+
+
+    @Test
+    void testDrawBoardLarge() {
+        TextGraphics mockTextGraphics = mock(TextGraphics.class);
+
+        Screen mockScreen = mock(Screen.class);
+        when(mockScreen.newTextGraphics()).thenReturn(mockTextGraphics);
+
+        Board mockBoard = mock(Board.class);
+        when(mockBoard.getWidth()).thenReturn(20);
+        when(mockBoard.getHeight()).thenReturn(20);
+
+        LanternaGUI lanternaGUI = new LanternaGUI(mockScreen);
+
+        lanternaGUI.drawBoard(mockBoard);
+
+        verify(mockTextGraphics).setBackgroundColor(TextColor.Factory.fromString("#2e3440"));
+        verify(mockTextGraphics).fillRectangle(any(), any(), eq(' '));
+    }
+
 }
 
