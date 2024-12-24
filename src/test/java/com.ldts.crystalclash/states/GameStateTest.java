@@ -119,4 +119,80 @@ class GameStateTest {
         verify(mockController, times(1)).step(mockGame, GUI.ACTION.NONE, time);
         verify(mockViewer, times(3)).draw(mockGUI);
     }
+    @Test
+    void testViewerReturnsNull() {
+        gameState = new GameState(mockBoard) {
+            @Override
+            protected GameViewer getViewer() {
+                return null;
+            }
+
+            @Override
+            protected GameController getController() {
+                return mockController;
+            }
+        };
+
+        Viewer<Board> viewer = gameState.getViewer();
+        assertNull(viewer, "Viewer should be null when it's not initialized");
+    }
+
+
+    @Test
+    void testControllerReturnsNull() {
+        gameState = new GameState(mockBoard) {
+            @Override
+            protected GameViewer getViewer() {
+                return mockViewer;
+            }
+
+            @Override
+            protected GameController getController() {
+                return null;
+            }
+        };
+
+        Controller<Board> controller = gameState.getController();
+        assertNull(controller, "Controller should be null when it's not initialized");
+    }
+
+
+    @Test
+    void testStepWithNullController() throws IOException {
+        gameState = new GameState(mockBoard) {
+            @Override
+            protected GameViewer getViewer() {
+                return mockViewer;
+            }
+
+            @Override
+            protected GameController getController() {
+                return null;
+            }
+        };
+
+        long time = 100L;
+        Game mockGame = mock(Game.class);
+        when(mockGUI.getNextAction()).thenReturn(GUI.ACTION.UP);
+
+        assertThrows(NullPointerException.class, () -> {
+            gameState.step(mockGame, mockGUI, time);
+        }, "Expected NullPointerException to be thrown when controller is null");
+    }
+
+
+    @Test
+    void testViewerAndControllerCallCounts() throws IOException {
+        long time = 100L;
+        Game mockGame = mock(Game.class);
+
+        when(mockGUI.getNextAction()).thenReturn(GUI.ACTION.UP);
+
+        gameState.step(mockGame, mockGUI, time);
+
+        verify(mockViewer, times(1)).draw(mockGUI);
+        verify(mockGUI, times(1)).getNextAction();
+    }
+
+
 }
