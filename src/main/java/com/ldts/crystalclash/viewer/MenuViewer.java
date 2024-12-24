@@ -12,6 +12,7 @@ public class MenuViewer extends Viewer<Menu> {
         super(model);
     }
 
+    @Override
     public void drawElements(GUI gui) {
         try {
             gui.clear();

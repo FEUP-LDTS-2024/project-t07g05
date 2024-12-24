@@ -46,6 +46,7 @@ public class Game {
             try {
                 if (sleepTime > 0) Thread.sleep(sleepTime);
             } catch (InterruptedException e) {
+                System.out.println("Caught exception in game loop");
             }
         }
         closeGame();

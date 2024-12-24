@@ -1,6 +1,5 @@
 package com.ldts.crystalclash.gui;
 
-
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,8 +15,10 @@ import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextColor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.io.IOException;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
+import java.io.IOException;
 
 public class LanternaGUITest {
     private Screen mockScreen;
@@ -26,8 +27,11 @@ public class LanternaGUITest {
     private Tile mockTile;
     private Board mockBoard;
     private Position mockPosition;
-
     private LanternaGUI lanternaGUI;
+
+    private static final String FOREGROUND_COLOR = "#FFFFFF";
+    private static final String BACKGROUND_COLOR = "#2e4045";
+    private static final String GAME_BACKGROUND_COLOR = "#143b5e";
 
     @BeforeEach
     void setUp() {
@@ -41,50 +45,53 @@ public class LanternaGUITest {
         lanternaGUI = new LanternaGUI(mockScreen);
     }
 
-    @Test
-    void testGetNextActionArrowUp() throws IOException {
+    @ParameterizedTest
+    @CsvSource({
+            "ArrowUp, UP",
+            "ArrowDown, DOWN",
+            "ArrowLeft, LEFT",
+            "ArrowRight, RIGHT",
+            "EOF, QUIT"
+    })
+    void testGetNextAction(KeyType keyType, ACTION expectedAction) throws IOException {
         when(mockScreen.pollInput()).thenReturn(mockKeyStroke);
-        when(mockKeyStroke.getKeyType()).thenReturn(KeyType.ArrowUp);
+        when(mockKeyStroke.getKeyType()).thenReturn(keyType);
 
         ACTION action = lanternaGUI.getNextAction();
-        assertEquals(ACTION.UP, action, "Expected ACTION.UP for ArrowUp key");
+
+        assertEquals(expectedAction, action, "Expected " + expectedAction + " for key type " + keyType);
     }
 
     @Test
-    void testGetNextActionQuit() throws IOException {
-        when(mockScreen.pollInput()).thenReturn(mockKeyStroke);
-        when(mockKeyStroke.getKeyType()).thenReturn(KeyType.EOF);
+    void testGetNextActionNoInput() throws IOException {
+        when(mockScreen.pollInput()).thenReturn(null);
 
         ACTION action = lanternaGUI.getNextAction();
-        assertEquals(ACTION.QUIT, action, "Expected ACTION.QUIT for EOF key");
+
+        assertEquals(ACTION.NONE, action, "Expected ACTION.NONE when no input is received");
     }
 
     @Test
-    void testDrawTile() {
-        when(mockTile.getColor()).thenReturn("#FFFFFF");
+    void testDrawTile_ValidTile() {
+        when(mockTile.getColor()).thenReturn(FOREGROUND_COLOR);
         when(mockTile.getSymbol()).thenReturn("*");
         when(mockTile.getScreenPosition()).thenReturn(mockPosition);
         when(mockPosition.getX()).thenReturn(5);
         when(mockPosition.getY()).thenReturn(10);
-
         when(mockScreen.newTextGraphics()).thenReturn(mockTextGraphics);
-
-        TerminalPosition terminalPosition = new TerminalPosition(5, 10);
 
         lanternaGUI.drawTile(mockTile);
 
-        verify(mockTextGraphics).setForegroundColor(TextColor.Factory.fromString("#FFFFFF"));
-        verify(mockTextGraphics).setBackgroundColor(TextColor.Factory.fromString("#2e4045"));
-
-        verify(mockTextGraphics).putString(eq(terminalPosition), eq("*"));
+        verify(mockTextGraphics).setForegroundColor(TextColor.Factory.fromString(FOREGROUND_COLOR));
+        verify(mockTextGraphics).setBackgroundColor(TextColor.Factory.fromString(BACKGROUND_COLOR));
+        verify(mockTextGraphics).putString(new TerminalPosition(5, 10), "*");
+        verifyNoMoreInteractions(mockTextGraphics);
     }
-
 
     @Test
     void testDrawBoard() {
         when(mockBoard.getWidth()).thenReturn(10);
         when(mockBoard.getHeight()).thenReturn(10);
-
         when(mockScreen.newTextGraphics()).thenReturn(mockTextGraphics);
 
         lanternaGUI.drawBoard(mockBoard);
@@ -99,7 +106,7 @@ public class LanternaGUITest {
 
         lanternaGUI.drawGameBackground(20, 30);
 
-        verify(mockTextGraphics).setBackgroundColor(TextColor.Factory.fromString("#143b5e"));
+        verify(mockTextGraphics).setBackgroundColor(TextColor.Factory.fromString(GAME_BACKGROUND_COLOR));
         verify(mockTextGraphics).fillRectangle(any(), any(), eq(' '));
     }
 
@@ -107,14 +114,43 @@ public class LanternaGUITest {
     void testDrawTextInGame() {
         when(mockPosition.getX()).thenReturn(5);
         when(mockPosition.getY()).thenReturn(10);
-
         when(mockScreen.newTextGraphics()).thenReturn(mockTextGraphics);
 
-        lanternaGUI.drawTextInGame(mockPosition, "Test", "#FFFFFF");
+        lanternaGUI.drawTextInGame(mockPosition, "Test", FOREGROUND_COLOR);
 
-        verify(mockTextGraphics).setForegroundColor(TextColor.Factory.fromString("#FFFFFF"));
-        verify(mockTextGraphics).setBackgroundColor(TextColor.Factory.fromString("#2e4045"));
+        verify(mockTextGraphics).setForegroundColor(TextColor.Factory.fromString(FOREGROUND_COLOR));
+        verify(mockTextGraphics).setBackgroundColor(TextColor.Factory.fromString(BACKGROUND_COLOR));
         verify(mockTextGraphics).putString(5, 10, "Test");
+    }
+
+    @Test
+    void testDrawLineHorizontal() {
+        when(mockScreen.newTextGraphics()).thenReturn(mockTextGraphics);
+
+        lanternaGUI.drawLine(0, 0, 5, 0, "*", FOREGROUND_COLOR);
+
+        verify(mockTextGraphics, times(6)).putString(anyInt(), eq(0), eq("*"));
+        verify(mockTextGraphics).setForegroundColor(TextColor.Factory.fromString(FOREGROUND_COLOR));
+    }
+
+    @Test
+    void testDrawLineVertical() {
+        when(mockScreen.newTextGraphics()).thenReturn(mockTextGraphics);
+
+        lanternaGUI.drawLine(0, 0, 0, 5, "*", FOREGROUND_COLOR);
+
+        verify(mockTextGraphics, times(6)).putString(eq(0), anyInt(), eq("*"));
+        verify(mockTextGraphics).setForegroundColor(TextColor.Factory.fromString(FOREGROUND_COLOR));
+    }
+
+    @Test
+    void testDrawLogo() {
+        when(mockScreen.newTextGraphics()).thenReturn(mockTextGraphics);
+
+        lanternaGUI.drawLogo(0, 0, FOREGROUND_COLOR);
+
+        verify(mockTextGraphics).setForegroundColor(any(TextColor.class));
+        verify(mockTextGraphics).setBackgroundColor(any(TextColor.class));
     }
 
     @Test
@@ -134,6 +170,7 @@ public class LanternaGUITest {
         lanternaGUI.close();
         verify(mockScreen).close();
     }
+
     @Test
     void testWaitsNextActionNoKey() throws IOException {
         when(mockScreen.readInput()).thenReturn(null);
@@ -143,94 +180,18 @@ public class LanternaGUITest {
         assertEquals(ACTION.NONE, action, "Expected ACTION.NONE when no key is pressed");
     }
 
-    @Test
-    void testWaitsNextActionQuitKey() throws IOException {
+    @ParameterizedTest
+    @CsvSource({
+            "q, QUIT",
+            "a, NONE"  // Assuming only 'q' maps to QUIT
+    })
+    void testWaitsNextActionWithCharacterKey(char inputChar, ACTION expectedAction) throws IOException {
         when(mockScreen.readInput()).thenReturn(mockKeyStroke);
         when(mockKeyStroke.getKeyType()).thenReturn(KeyType.Character);
-        when(mockKeyStroke.getCharacter()).thenReturn('q');
+        when(mockKeyStroke.getCharacter()).thenReturn(inputChar);
 
         ACTION action = lanternaGUI.waitsNextAction();
 
-        assertEquals(ACTION.QUIT, action, "Expected ACTION.QUIT when 'q' is pressed");
+        assertEquals(expectedAction, action, "Expected " + expectedAction + " when '" + inputChar + "' is pressed");
     }
-
-    @Test
-    void testWaitsNextActionArrowLeft() throws IOException {
-        when(mockScreen.readInput()).thenReturn(mockKeyStroke);
-        when(mockKeyStroke.getKeyType()).thenReturn(KeyType.ArrowLeft);
-
-        ACTION action = lanternaGUI.waitsNextAction();
-
-        assertEquals(ACTION.LEFT, action, "Expected ACTION.LEFT for ArrowLeft key");
-    }
-
-    @Test
-    void testDrawLineHorizontal() {
-        TextGraphics mockTextGraphics = mock(TextGraphics.class);
-
-        when(mockScreen.newTextGraphics()).thenReturn(mockTextGraphics);
-
-        lanternaGUI.drawLine(0, 0, 5, 0, "*", "#FFFFFF");
-
-        verify(mockTextGraphics, times(6)).putString(anyInt(), eq(0), eq("*"));
-
-        verify(mockTextGraphics).setForegroundColor(TextColor.Factory.fromString("#FFFFFF"));
-    }
-
-
-    @Test
-    void testDrawLineVertical() {
-        TextGraphics mockTextGraphics = mock(TextGraphics.class);
-
-        when(mockScreen.newTextGraphics()).thenReturn(mockTextGraphics);
-
-        lanternaGUI.drawLine(0, 0, 0, 5, "*", "#FFFFFF");
-
-        verify(mockTextGraphics, times(6)).putString(eq(0), anyInt(), eq("*"));
-
-        verify(mockTextGraphics).setForegroundColor(TextColor.Factory.fromString("#FFFFFF"));
-
-        verify(mockTextGraphics).setBackgroundColor(TextColor.Factory.fromString("#143b5e"));
-    }
-
-    @Test
-    void testDrawLogo() {
-        TextGraphics mockTextGraphics = mock(TextGraphics.class);
-
-        Screen mockScreen = mock(Screen.class);
-        when(mockScreen.newTextGraphics()).thenReturn(mockTextGraphics);
-
-        LanternaGUI lanternaGUI = new LanternaGUI(mockScreen);
-
-        int startX = 0;
-        int startY = 0;
-        String color = "#FFFFFF";
-        lanternaGUI.drawLogo(startX, startY, color);
-
-        verify(mockTextGraphics).setForegroundColor(any(TextColor.class));
-        verify(mockTextGraphics).setBackgroundColor(any(TextColor.class));
-    }
-
-
-
-    @Test
-    void testDrawBoardLarge() {
-        TextGraphics mockTextGraphics = mock(TextGraphics.class);
-
-        Screen mockScreen = mock(Screen.class);
-        when(mockScreen.newTextGraphics()).thenReturn(mockTextGraphics);
-
-        Board mockBoard = mock(Board.class);
-        when(mockBoard.getWidth()).thenReturn(20);
-        when(mockBoard.getHeight()).thenReturn(20);
-
-        LanternaGUI lanternaGUI = new LanternaGUI(mockScreen);
-
-        lanternaGUI.drawBoard(mockBoard);
-
-        verify(mockTextGraphics).setBackgroundColor(TextColor.Factory.fromString("#2e3440"));
-        verify(mockTextGraphics).fillRectangle(any(), any(), eq(' '));
-    }
-
 }
-

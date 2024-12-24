@@ -1,12 +1,13 @@
 package com.ldts.crystalclash.factories;
 import com.ldts.crystalclash.model.*;
 
+import java.util.Locale;
 import java.util.Random;
 import java.util.List;
 
 public class TileFactory {
     public Tile createTile(String type, Position screenPosition, Position gridCoordinates) {
-        return switch (type.toLowerCase()) {
+        return switch (type.toLowerCase(Locale.ENGLISH)) {
             case "bomb" -> new BombTile(screenPosition, gridCoordinates, Color.DEFAULT);
             case "gem" -> new GemTile(screenPosition, gridCoordinates, getRandomGemColor());
             case "empty" -> new EmptyTile(screenPosition, gridCoordinates, Color.DEFAULT);

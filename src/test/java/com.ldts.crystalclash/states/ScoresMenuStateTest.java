@@ -6,9 +6,9 @@ import com.ldts.crystalclash.viewer.ScoresMenuViewer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 public class ScoresMenuStateTest {
 
@@ -17,11 +17,7 @@ public class ScoresMenuStateTest {
 
     @BeforeEach
     public void setup() {
-        try {
-            scoresMenuMock = new ScoresMenu();
-        } catch (IOException e) {
-            fail("Failed to create ScoresMenu instance due to IOException: " + e.getMessage());
-        }
+        scoresMenuMock = mock(ScoresMenu.class);
         scoresMenuState = new TestScoresMenuState(scoresMenuMock);
     }
 
@@ -59,4 +55,5 @@ public class ScoresMenuStateTest {
             return (ScoresMenuController) super.getController();
         }
     }
+    
 }

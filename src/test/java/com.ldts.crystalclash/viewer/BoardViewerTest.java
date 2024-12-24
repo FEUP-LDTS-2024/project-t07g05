@@ -16,7 +16,6 @@ public class BoardViewerTest {
     private Board board;
     private BoardViewer boardViewer;
     private GUI gui;
-    private TileViewer tileViewer;
 
     @BeforeEach
     void setUp() {

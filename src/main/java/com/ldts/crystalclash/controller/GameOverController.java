@@ -44,6 +44,8 @@ public class GameOverController extends Controller<GameOver> {
                     game.setState(new ScoresMenuState(currentScore));
                 }
                 break;
+            default:
+                break;
         }
 
     }

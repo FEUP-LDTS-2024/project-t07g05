@@ -3,7 +3,6 @@ plugins {
     id 'application'
     id 'info.solidsoft.pitest' version '1.15.0'
     id "net.ltgt.errorprone" version "4.1.0"
-
 }
 
 group = 'com.ldts.crystalclash'
@@ -21,8 +20,6 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     implementation group: 'com.googlecode.lanterna', name: 'lanterna', version: '3.1.1'
     errorprone "com.google.errorprone:error_prone_core:2.30.0"
-
-
 }
 
 test {
@@ -36,3 +33,4 @@ application {
 pitest {
     junit5PluginVersion = '1.2.1'
 }
+
